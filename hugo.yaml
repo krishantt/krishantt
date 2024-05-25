@@ -1,3 +1,4 @@
-baseURL: https://example.org/
+baseURL: https://krishant.com.np/
 languageCode: en-us
-title: My New Hugo Site
+title: Krishant Timilsina
+theme: ["PaperMod"]
