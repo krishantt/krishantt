@@ -40,7 +40,7 @@ params:
     limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
     keys: ["title", "permalink", "summary", "content"]
   editPost:
-    URL: "mailto:krishtimil@gmail.com=Suggesting changes for "
+    URL: "mailto:krishtimil@gmail.com?subject=Suggesting changes for "
     Text: "Suggest Changes" # edit text
     appendFilePath: true
 
