@@ -31,20 +31,21 @@ I am **Krishant Timilsina**, a Computer Engineering Student and a DevOps practit
 - AI/ML
 - Backend Development
 - DevOps with Docker and Kubernetes
-- Opject Oriented Programming
+- Object Oriented Programming
 - Software Engineering
 - Graphics Design and UI/UX
 
 
 ## Projects
 
-- [Binary-Plan-MLM](/projects) \- A DSA project for simulating network marketing with additional AVL trees, and Krushal's Algorithm's vizualization.
-- [NativeTunes](/projects) \- A story-telling platform for reservation of native languages.
-- [Chess](/projects) \- A multi-platform, multiplayer Chess game.
-- [Agrify](/projects) \- A comprehensive app for farmers.
-- [Jolo](/projects) \- Helping local business setup their site within seconds 
-- [Storish](/projects) \- Recommending products based on users action.
-- [Grapher-C](/projects) \- A 2d graph plotter in C .
+- [Voxel-Engine](https://github.com/krishantt/voxel_engine) \- A Minecraft like Voxel Engine for Computer Graphics project.
+- [Binary-Plan-MLM](https://github.com/krishantt/binary-plan-mlm) \- A DSA project for simulating network marketing with additional AVL trees, and Krushal's Algorithm's vizualization.
+- [NativeTunes](https://github.com/krishtimil/nativetunes) \- A story-telling platform for reservation of native languages.
+- [Chess](https://github.com/bigya01/chess_rl) \- A multi-platform, multiplayer Chess game.
+- [Agrify](https://github.com/krishtimil/agrify) \- A comprehensive app for farmers.
+- [Jolo](https://github.com/krishtimil/jolo) \- Helping local business setup their site within seconds
+- [Storish](https://github.com/krishtimil/storish) \- Recommending products based on users action.
+- [Grapher-C](https://github.com/krishtimil/grapher-c) \- A 2d graph plotter in C .
 
 
 
@@ -84,7 +85,7 @@ I am **Krishant Timilsina**, a Computer Engineering Student and a DevOps practit
 
 ## Cerfications
  - Machine Learning Specialization @ _Coursera_
- - Microsoft Certified: Azure AI Fundamentals 
+ - Microsoft Certified: Azure AI Fundamentals
 
  ## Awards
  - Best Idea Winner @ _UXCam CodeCamp 2022_
