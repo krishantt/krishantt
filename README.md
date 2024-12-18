@@ -1,51 +1,35 @@
-<div>
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=60&section=header"/>
-</p>
-</div>
+# 👋 Hello, World! I'm Krishant!
 
-<h1 align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Poppins&color=f1f1f1&duration=3000&center=true&vCenter=true&lines=Hi,+there!+👋;I'm+Krishant+Timilsina.;Nice+to+meet+you!&center=true&size=30">
-  </a>
-</h1>
+Welcome to my quirky corner of GitHub! Here, you'll find code, caffeine-fueled projects, and the occasional bug 🐛 that decided to befriend me (they're not welcome, but they keep showing up 😅).
 
-<p align="center">
-  <a href="https://krishant.com.np/">
-    <img src="https://img.shields.io/badge/personal_website-000000?style=for-the-badge&logoColor=white"/>
-  </a>&nbsp;
+## 🌟 About Me
+- 💻 Developer, problem-solver, and lifelong learner  
+- 🎨 I write code, build things, and sometimes break them just to fix them again 🚧  
+- 🛠️ Technologies I’m familiar with:  
+  **Languages:** Python, JavaScript, TypeScript, Dart, C++  
+  **Frameworks/Libraries:** React, Next.js, Remixjs, Flutter, Django, FastAPI  
+  **Tools:** Git, Docker, AWS, Firebase, OpenCV, and more!  
 
-  <a href="https://www.linkedin.com/in/krishtimil/">
-    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
-  </a>&nbsp;
-    <a href="https://github.com/krishantt?tab=followers">
-    <img src="https://img.shields.io/github/followers/krishantt.svg?style=social&label=Follow&maxAge=2592000" alt="Followers"/>
-  </a>
-</p>
-<div>
+---
 
-## 📊 &nbsp;GitHub Stats
+## 🌐 Let's Connect!
+- 🖥️ [Personal Website](https://krishant.com.np)  
+- 💼 [LinkedIn](https://linkedin.com/in/krishtimil)  
+- 📧 Email: [krishtimil@gmail.com](mailto:krishtimil@gmail.com)  
+- 📱 Phone: [+977-9869083012](tel:+9779869083012)  
 
-  <a href="https://github.com/krishantt">
-    <img width=450 height=170 align="center" alt="krishant" src="https://github-readme-stats.vercel.app/api?username=krishantt&theme=dark&show_icons=true&bg_color=0D1117&hide_border=true&count_private=true" />
-  </a>
-  <a href="https://github.com/krishantt">
-    <img align="center" alt="krishantt" src="https://github-readme-stats.vercel.app/api/top-langs/?username=krishantt&theme=dark&layout=compact&bg_color=0D1117&hide_border=true&count_private=true&hide=jupyter+notebook,html,scss,css,C" />
-  </a>
-</div>
+---
 
-<div>
+## 🛠️ Current Projects  
+- **Building:** A serverless platform 🚶‍♂️  
+- **Exploring:** Go and DevOps 🤓 
 
-## 🔥 &nbsp;Streak Stats
+---
 
-<p align="center">
-  <a href="https://github.com/krishant">
-    <img alt="Krishant Timilsina's streak" src="https://github-readme-streak-stats.herokuapp.com/?user=krishantt&fire=pink&theme=dark&background=0D1117&hide_border=true"/>
-  </a>
-</p>
+## 🧩 Fun Facts About Me  
+- 🕹️ I’m a gaming enthusiast—currently stuck in **Downport** and trying to ship to the mainland!  
+- 📚 I’m the proud owner of too many technical books I haven’t finished reading. 
 
-<p align="center">
-  <a href="https://github.com/krishant">
-    <img width="50%" alt="Github" src="https://raw.githubusercontent.com/onimur/.github/master/.resources/git-header.svg" />
-  </a>
-</p>
+---
+
+Feel free to **star** 🌟 my projects, **fork** 🍴 away, or just say hi if you're passing by! 😄  
