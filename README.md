@@ -17,7 +17,7 @@ Welcome to my quirky corner of GitHub! Here, you'll find code, caffeine-fueled p
 - 💼 [LinkedIn](https://linkedin.com/in/krishtimil)  
 - 📧 Email: [krishtimil@gmail.com](mailto:krishtimil@gmail.com)  
 - 📱 Phone: [+977-9869083012](tel:+9779869083012)  
-
+- Want to collaborate? [Hop on a call](https://calendly.com/krishtimil/hop-on-a-call)
 ---
 
 ## 🛠️ Current Projects  
