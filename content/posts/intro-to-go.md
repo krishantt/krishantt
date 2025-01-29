@@ -62,8 +62,8 @@ All other packages generally have repository information preceding them, as foll
 "github.com/kylelemons/godebug/pretty"
 ```
 
-And every imported package must be used at least once, otherwise if you need to do a *side effects* import, in which just loading the package causes something to happen, but you don't
-use the package. This should always be done in package main and requires prepending with an underscore (_):
+And every imported package must be used at least once, otherwise if you need to do a _side effects_ import, in which just loading the package causes something to happen, but you don't
+use the package. This should always be done in package main and requires prepending with an underscore (\_):
 
 ```go
 package main
@@ -93,7 +93,7 @@ Here := means create a variable and assign the string value to it. You could use
 
 ## Zero Values
 
-In some older languages, a variable declaration without an assignment has an unknown value. This is because the program creates a place in memory to store the value but doesn't put anything in it. So, the bits representing the value are set to whatever happened to be in that memory space before you created the variable. But in Go, declaring a variable without an assignment automatically assigns a value called the *zero value*.
+In some older languages, a variable declaration without an assignment has an unknown value. This is because the program creates a place in memory to store the value but doesn't put anything in it. So, the bits representing the value are set to whatever happened to be in that memory space before you created the variable. But in Go, declaring a variable without an assignment automatically assigns a value called the _zero value_.
 
 ![Zero Values in Go](/posts/images/intro-to-go.png)
 
@@ -101,7 +101,7 @@ In some older languages, a variable declaration without an assignment has an unk
 
 The rule here is that if you create a variable within a function or statement, it must be used. This is much for the same reason as package imports; declaring a variable that isn't used is almost always a mistake.
 
-This can be relaxed in much the same way as an import, using _.
+This can be relaxed in much the same way as an import, using \_.
 
 ```go
 _ = someVar
@@ -132,7 +132,7 @@ func main() {
 
 ### Varidac Arguments
 
-A *variadic argument* is when you want to provide 0 to infinite arguments. A good example would be calculating a sum of integers.
+A _variadic argument_ is when you want to provide 0 to infinite arguments. A good example would be calculating a sum of integers.
 
 Here is an example:
 

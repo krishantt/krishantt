@@ -8,23 +8,21 @@ author:
 params:
   env: production
   author: Krishant Timilsina
-  ShowShareButton: true
-  ShareButton: -linkedin
-    -twitter
+  ShowShareButtons: true
   ShowBreadCrumbs: true
   ShowReadingTime: true
   ShowPostNavLinks: true
-  ShowCodeCopyButton: true
+  ShowCodeCopyButtons: true
   hideSummary: false
   hideFooter: false
   profileMode:
     enabled: true
-    title: "👋 Hi, I’m Krishant" 
+    title: "👋 Hi, I’m Krishant"
     subtitle: "Creative software engineer crafting impactful solutions with code!"
-    imageUrl: "images/profile.jpg" 
+    imageUrl: "images/profile.jpg"
     imageTitle: "profile-photo"
-    imageWidth: 200 
-    imageHeight: 200 
+    imageWidth: 200
+    imageHeight: 200
     buttons:
       - name: Resume
         url: "/docs/resume.pdf"

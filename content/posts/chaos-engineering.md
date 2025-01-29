@@ -67,9 +67,9 @@ So here’s my challenge to you: embrace the chaos. Whether you’re running a s
 
 ## Further Reading:
 
-*   [Principles of Chaos Engineering (The Official Site)](https://principlesofchaos.org/)
-*   [Breaking Things on Purpose Podcast by Gremlin](https://www.gremlin.com/podcast)
-*   [The Netflix Tech Blog: Chaos Engineering](https://netflixtechblog.com/tagged/chaos-engineering)
-*   [A Guide to Chaos Engineering with Kubernetes](https://opensource.com/article/21/5/kubernetes-chaos)
-*   [Resilience Engineering and Chaos (InfoQ)](http://www.infoq.com/chaos-engineering/)
-*   [O’Reilly: Chaos Engineering Book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)
+- [Principles of Chaos Engineering (The Official Site)](https://principlesofchaos.org/)
+- [Breaking Things on Purpose Podcast by Gremlin](https://www.gremlin.com/podcast)
+- [The Netflix Tech Blog: Chaos Engineering](https://netflixtechblog.com/tagged/chaos-engineering)
+- [A Guide to Chaos Engineering with Kubernetes](https://opensource.com/article/21/5/kubernetes-chaos)
+- [Resilience Engineering and Chaos (InfoQ)](http://www.infoq.com/chaos-engineering/)
+- [O’Reilly: Chaos Engineering Book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)
