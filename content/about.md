@@ -1,6 +1,6 @@
 +++
-title = 'Who am I?'
-date = 2023-11-11T16:08:41+02:00
+title = '👨‍💻 Who Am I?'
+date = 2025-01-24T16:08:41+02:00
 draft = false
 
 searchHidden = true
@@ -11,88 +11,85 @@ hidemeta = true
 disableShare = true
 +++
 
-I am **Krishant Timilsina**, a Computer Engineering Student and a DevOps practitioner. I am passionate about software quality, clean code, deployment and good design.
 
+I'm a passionate Software Engineer who loves solving problems and creating impactful solutions. Whether it's building scalable web apps, crafting AI-driven tools, or experimenting with new tech, I thrive on turning ideas into reality. When I'm not coding, you can find me brainstorming over coffee ☕ or exploring the latest in tech trends. Let’s build something awesome together!
 
-## Education
+---
 
-- Bachelors in Computer Engineering, IOE Pulchowk Campus, Lalitpur
-- High School/SLC, SOS Herman Gmeiner Secondary School Gandaki, Pokhara
+## **⚡ Skills & Tech Stack**
 
+- **Languages:** C/C++, Python, Dart, Go, JavaScript, TypeScript  
+- **Frameworks & Tools:** Django, Flutter, Next.js, React.js, Remix.js, HTMX, Alpine.js  
+- **DevOps Magic:** Linux 🐧, Docker 🐳, Kubernetes 🚀  
+- **Interests:** Software Architecture 🏗️ | Blockchain 🔗 | Artificial Intelligence 🤖  
 
-## Skills
-- Programming Language and Frameworks
-  - Go
-  - Python, Django, FastAPI
-  - C/C++, SDL
-  - Javascipt, TypeScript
-  - React, NextJS
-  - Dart, Flutter
-- AI/ML
-- Backend Development
-- DevOps with Docker and Kubernetes
-- Object Oriented Programming
-- Software Engineering
-- Graphics Design and UI/UX
+---
 
+## **💼 Experience**
 
-## Projects
+### **Full Stack Web Developer @ Lelapa AI (Jan 2024 - Present)**  
+- Crafted sleek frontends using HTMX, AlpineJS, and ReactJS.  
+- Designed secure API key management systems for authentication and authorization.  
+- Played a key role in shaping the technical roadmap for platform delivery.
 
-- [Voxel-Engine](https://github.com/krishantt/voxel_engine) \- A Minecraft like Voxel Engine for Computer Graphics project.
-- [Binary-Plan-MLM](https://github.com/krishantt/binary-plan-mlm) \- A DSA project for simulating network marketing with additional AVL trees, and Krushal's Algorithm's vizualization.
-- [NativeTunes](https://github.com/krishtimil/nativetunes) \- A story-telling platform for reservation of native languages.
-- [Chess](https://github.com/bigya01/chess_rl) \- A multi-platform, multiplayer Chess game.
-- [Agrify](https://github.com/krishtimil/agrify) \- A comprehensive app for farmers.
-- [Jolo](https://github.com/krishtimil/jolo) \- Helping local business setup their site within seconds
-- [Storish](https://github.com/krishtimil/storish) \- Recommending products based on users action.
-- [Grapher-C](https://github.com/krishtimil/grapher-c) \- A 2d graph plotter in C .
+### **Software Engineer @ Himalayan Green Pvt. Ltd. (Dec 2024 - Present)**  
+- Built and managed web and mobile platforms for himaligreen.com.  
 
+### **Python Developer @ Sandbox Software Pvt. Ltd. (Oct - Nov 2024)**  
+- Automated business tasks with Computer Vision magic.
 
+### **Frontend Developer (Freelance) @ Lelapa AI (Aug 2024 - Jan 2024)**  
+- Developed demo apps with Next.js and integrated AI features like transcription and translation.
 
-## Professional Experience
-- Design Intern @ _Evakon Technologies_
-    - Jun - July 2023
-    - Worked on multiple UI design projects for the startup
-- Data Science Intern @ _Code Clause_
-    - April 2023
-    - Worked on various small prjects like Loan Prediction, Uber Data Analysis. etc.
+### **Design Intern @ Evakon Technologies (Jun - Jul 2023)**  
+- Worked on multiple design projects that honed my creative skills.
 
-## Leadership Experience and Activities
-- Coordinator @ _PDSC_
-    - April 2024 - Current
-    - Leading a team of enthusiastic members who want to create a change.
-- Technical Lead @ _IEEE, Pulchowk_
-    - May 2023 - Current
-- Creative Lead @ _PDSC_
-    - May 2023 - March 2024
-    - Leading a team of ten members for the creative team and redesigned the brand image.
-- Creative Team Member @ _PDSC_
-    - August 2022 - May 2023
-- Graphics Lead @ _Hult Prize at IOE, Pulchowk Campus_
-    - September 2023 - March 2024
-    - Designed all the graphics needs for the organization.
-- Design Chief @ _LOCUS 2024_
-    - May 2023 - Feburaury 2024
-    - Manage a team of five members of designers for multiple events.
-- Dashing Designer @ _LOCUS 2023_
-    - May 2022 - Feburaury 2023
-- Sponsorship Manager @ _CuriousWe_
-    - Jun - July 2023
-    - Helped reach various companies for sponsorship of the biggest entrepreneurship event on campus.
-- Graphics Designer @ _Coding Olympics Nepal_
-    - September 2022 - February 2023
-    - Designed illustrations and social media templates.
+---
 
-## Cerfications
- - Machine Learning Specialization @ _Coursera_
- - Microsoft Certified: Azure AI Fundamentals
+## **🎓 Education**
 
- ## Awards
- - Best Idea Winner @ _UXCam CodeCamp 2022_
- - Best Presentation Award @ _Lechathon 2022_
- - 2nd Runner Up @ _MBM IdeaX 2023_
+### Bachelor of Engineering | Computer Science  
+**Pulchowk Campus** *(2022 - Present)*  
+- Minor Project: Building a Serverless Platform.  
+- Ranked in the top 0.8% among 13,000 applicants in the entrance exam.
 
-## Languages
+### Grade 11/12 | Science | SOS Herman Gmeiner Secondary School Gandaki *(GPA: 3.54/4)*  
 
-- _Native_: Nepali
-- _Fluent_: English
+### SEE | Global Collegiate School *(GPA: 3.85/4)*  
+
+---
+
+## **🚀 Projects**
+
+### [Voxel Engine](https://github.com/krishantt/voxel_engine) 🧊  
+A Minecraft-inspired game engine to render 3D worlds.  
+- Developed efficient voxel meshes for real-time rendering of massive terrains.
+
+### [Binary Plan MLM](https://github.com/krishantt/binary-plan-mlm) 🌳  
+A platform simulating network marketing trees with algorithms like AVL Trees and Kruskal’s.
+
+### [Chess](https://github.com/bigya_01/chess_rl) ♟️  
+A multiplayer Chess game with AI logic and a custom UI built using SMFL graphics.
+
+### [Agrify](https://github.com/krishtimil/agrify) 🌾  
+An app for farmers designed using Flutter to simplify their work.
+
+---
+
+## **🌟 Leadership & Activities**
+
+- **Coordinator @ PDSC (Aug 2022 - Present):** Led a team of 50 to organize workshops for 300+ attendees.  
+- **Technical Lead @ IEEE Pulchowk (Apr - Dec 2024):** Managed all technical aspects of the club's activities.  
+- **Graphics Lead @ Hult Prize IOE (Sep 2023 - Apr 2024):** Designed eye-catching visuals for events.  
+
+---
+
+## **🏅 Certifications & Awards**
+
+### Certifications:
+- Microdegree in AI & Machine Learning – Fusemachines 🧠  
+- Azure AI Fundamentals – Microsoft  
+
+### Awards:
+- 🏆 *Best Presentation Award* | Mobile Reuse Hackathon: Built a smart assistant for the visually impaired using old phones.  
+- 🥉 *2nd Runner-Up* | MBM Ideax Hackathon: A platform to preserve languages through user-generated stories.

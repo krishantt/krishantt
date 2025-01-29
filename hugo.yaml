@@ -3,33 +3,44 @@ languageCode: en-us
 title: Krishant Timilsina
 theme: ["PaperMod"]
 author:
-  name: Krishant Timilsina  
+  name: Krishant Timilsina
 
 params:
   env: production
   author: Krishant Timilsina
   ShowShareButton: true
-  ShareButton:
-   -linkedin
-   -twitter
+  ShareButton: -linkedin
+    -twitter
   ShowBreadCrumbs: true
   ShowReadingTime: true
   ShowPostNavLinks: true
   ShowCodeCopyButton: true
   hideSummary: false
   hideFooter: false
-  homeInfoParams:
-    title: 👋 Hi, I’m Krishant
-    Content: "This is my personal blog. I write about topics that I enjoy, mostly about software engineering, DevOps and design. Read more about me [here](/about).  Want to collaborate on something bigger? [Hop on a Call.](https://calendly.com/krishtimil/hop-on-a-call)"
+  profileMode:
+    enabled: true
+    title: "👋 Hi, I’m Krishant" 
+    subtitle: "Creative software engineer crafting impactful solutions with code!"
+    imageUrl: "images/profile.jpg" 
+    imageTitle: "profile-photo"
+    imageWidth: 200 
+    imageHeight: 200 
+    buttons:
+      - name: Resume
+        url: "/docs/resume.pdf"
+      - name: Blog
+        url: "/blog/"
+      - name: Let's Collaborate
+        url: "https://calendly.com/krishtimil/hop-on-a-call"
   socialIcons:
+    - name: instagram
+      url: "https://www.instagram.com/krishtimil/"
     - name: linkedin
-      url: "https://gr.linkedin.com/in/krishtimil"
+      url: "https://www.linkedin.com/in/krishtimil/"
     - name: github
       url: "https://github.com/krishantt"
     - name: twitter
       url: "https://twitter.com/krishtimill"
-    - name: "rss"
-      url: "https://krishant.com.np/index.xml"
   fuseOpts:
     isCaseSensitive: false
     shouldSort: true
@@ -55,17 +66,9 @@ menu:
       name: About
       url: /about/
       weight: 10
-    - identifier: posts
-      name: Posts
-      url: /posts/
-      weight: 15
-    # - identifier: tags
-    #   name: Projects
-    #   url: /projects/
-    #   weight: 20
-    - identifier: archives
-      name: Archives
-      url: /archives/
+    - identifier: Blog
+      name: Blog
+      url: /blog/
       weight: 25
     - identifier: search
       name: Search
