@@ -29,7 +29,7 @@ params:
       - name: Blog
         url: "/blog/"
       - name: Let's Collaborate
-        url: "https://calendly.com/krishtimil/hop-on-a-call"
+        url: "https://calendar.app.google/k5gRRtwjw6TwwYCn8"
   socialIcons:
     - name: instagram
       url: "https://www.instagram.com/krishtimil/"
