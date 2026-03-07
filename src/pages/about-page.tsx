@@ -28,7 +28,7 @@ export function AboutPage() {
 
     try {
       const { downloadResume } = await import("@/lib/resume")
-      downloadResume()
+      await downloadResume()
     } finally {
       setIsDownloadingResume(false)
     }

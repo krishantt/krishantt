@@ -1,10 +1,6 @@
 import { jsPDF } from "jspdf"
 
-import {
-  formatRolePeriod,
-  getExperienceTotalDuration,
-  personalInfo,
-} from "@/lib/personal-info"
+import { getExperienceTotalDuration, personalInfo } from "@/lib/personal-info"
 
 type PdfCursor = { y: number }
 type FontStyle = "normal" | "bold" | "italic"
@@ -18,6 +14,81 @@ const LEFT_COLUMN_WIDTH = CONTENT_WIDTH - RIGHT_COLUMN_WIDTH - COLUMN_GAP
 const BLACK: [number, number, number] = [0, 0, 0]
 const GRAY: [number, number, number] = [70, 70, 70]
 const LIGHT_GRAY: [number, number, number] = [150, 150, 150]
+const LINK_PURPLE: [number, number, number] = [106, 13, 173]
+
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+]
+
+type ConnectionPart = {
+  text: string
+  url?: string
+  color?: [number, number, number]
+}
+
+const COMPUTER_MODERN_SOURCES = {
+  normal:
+    "https://unpkg.com/computer-modern@0.1.3/fonts/cmu-serif-500-roman.ttf",
+  bold: "https://unpkg.com/computer-modern@0.1.3/fonts/cmu-serif-700-roman.ttf",
+  italic:
+    "https://unpkg.com/computer-modern@0.1.3/fonts/cmu-serif-500-italic.ttf",
+} as const
+
+let computerModernReadyPromise: Promise<void> | null = null
+
+function bytesToBase64(bytes: Uint8Array) {
+  let binary = ""
+  const chunkSize = 0x8000
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    const chunk = bytes.subarray(index, index + chunkSize)
+    binary += String.fromCharCode(...chunk)
+  }
+
+  return btoa(binary)
+}
+
+async function fetchFontAsBase64(url: string) {
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`Failed to load font: ${url}`)
+  }
+
+  const buffer = await response.arrayBuffer()
+  return bytesToBase64(new Uint8Array(buffer))
+}
+
+async function registerComputerModern(doc: jsPDF) {
+  if (!computerModernReadyPromise) {
+    computerModernReadyPromise = (async () => {
+      const [regular, bold, italic] = await Promise.all([
+        fetchFontAsBase64(COMPUTER_MODERN_SOURCES.normal),
+        fetchFontAsBase64(COMPUTER_MODERN_SOURCES.bold),
+        fetchFontAsBase64(COMPUTER_MODERN_SOURCES.italic),
+      ])
+
+      doc.addFileToVFS("CMUSerif-Regular.ttf", regular)
+      doc.addFileToVFS("CMUSerif-Bold.ttf", bold)
+      doc.addFileToVFS("CMUSerif-Italic.ttf", italic)
+      doc.addFont("CMUSerif-Regular.ttf", "CMUSerif", "normal")
+      doc.addFont("CMUSerif-Bold.ttf", "CMUSerif", "bold")
+      doc.addFont("CMUSerif-Italic.ttf", "CMUSerif", "italic")
+    })()
+  }
+
+  await computerModernReadyPromise
+}
 
 function ensureSpace(doc: jsPDF, cursor: PdfCursor, heightNeeded: number) {
   const pageHeight = doc.internal.pageSize.getHeight()
@@ -33,7 +104,10 @@ function splitLines(doc: jsPDF, text: string, maxWidth: number) {
 }
 
 function setFont(doc: jsPDF, size: number, style: FontStyle, color = BLACK) {
-  doc.setFont("times", style)
+  const fontList = doc.getFontList() as Record<string, unknown>
+  const family = fontList.CMUSerif ? "CMUSerif" : "times"
+
+  doc.setFont(family, style)
   doc.setFontSize(size)
   doc.setTextColor(...color)
 }
@@ -98,6 +172,7 @@ function writeCentered(
 }
 
 function writeSectionTitle(doc: jsPDF, cursor: PdfCursor, title: string) {
+  cursor.y += 1.2
   ensureSpace(doc, cursor, 8)
   setFont(doc, 10.5, "bold", BLACK)
   doc.text(title.toUpperCase(), PAGE_MARGIN, cursor.y)
@@ -114,6 +189,60 @@ function writeSectionTitle(doc: jsPDF, cursor: PdfCursor, title: string) {
   )
 
   cursor.y += 4.8
+}
+
+function formatResumeRolePeriod(role: {
+  start: { year: number; month: number }
+  end?: { year: number; month: number }
+}) {
+  const start = `${MONTHS[role.start.month - 1]} ${role.start.year}`
+  const end = role.end
+    ? `${MONTHS[role.end.month - 1]} ${role.end.year}`
+    : "Present"
+
+  return `${start} - ${end}`
+}
+
+function writeCenteredConnections(
+  doc: jsPDF,
+  cursor: PdfCursor,
+  parts: ConnectionPart[]
+) {
+  if (parts.length === 0) return
+
+  setFont(doc, 9, "normal", GRAY)
+  const separator = " | "
+  const separatorWidth = doc.getTextWidth(separator)
+  const totalTextWidth =
+    parts.reduce((sum, part) => sum + doc.getTextWidth(part.text), 0) +
+    separatorWidth * Math.max(0, parts.length - 1)
+
+  const lineHeight = 4.2
+  ensureSpace(doc, cursor, lineHeight)
+
+  const y = cursor.y
+  let x = PAGE_MARGIN + (CONTENT_WIDTH - totalTextWidth) / 2
+
+  parts.forEach((part, index) => {
+    const width = doc.getTextWidth(part.text)
+    doc.setTextColor(...(part.color ?? GRAY))
+
+    if (part.url) {
+      doc.textWithLink(part.text, x, y, { url: part.url })
+    } else {
+      doc.text(part.text, x, y)
+    }
+
+    x += width
+
+    if (index < parts.length - 1) {
+      doc.setTextColor(...GRAY)
+      doc.text(separator, x, y)
+      x += separatorWidth
+    }
+  })
+
+  cursor.y += lineHeight
 }
 
 function drawRightColumn(
@@ -246,22 +375,36 @@ function writeHeader(doc: jsPDF, cursor: PdfCursor) {
     lineHeight: 4.8,
   })
 
-  const connections = [
-    personalInfo.basics.location,
-    personalInfo.basics.email,
-    personalInfo.basics.phone,
-    personalInfo.basics.website,
-    ...personalInfo.socials.map((social) => social.href),
-  ].filter(Boolean)
+  const socialByLabel = new Map(
+    personalInfo.socials.map((social) => [social.label.toLowerCase(), social])
+  )
+  const linkedin = socialByLabel.get("linkedin")
+  const github = socialByLabel.get("github")
 
-  if (connections.length > 0) {
-    writeCentered(doc, cursor, connections.join(" • "), {
-      size: 9,
-      style: "normal",
-      color: GRAY,
-      lineHeight: 4.2,
+  const parts: ConnectionPart[] = []
+  if (personalInfo.basics.location) {
+    parts.push({ text: personalInfo.basics.location })
+  }
+  if (personalInfo.basics.email) {
+    parts.push({
+      text: personalInfo.basics.email,
+      url: `mailto:${personalInfo.basics.email}`,
     })
   }
+  if (personalInfo.basics.phone) {
+    parts.push({
+      text: personalInfo.basics.phone,
+      url: `tel:${personalInfo.basics.phone}`,
+    })
+  }
+  if (linkedin) {
+    parts.push({ text: "LinkedIn", url: linkedin.href, color: LINK_PURPLE })
+  }
+  if (github) {
+    parts.push({ text: "GitHub", url: github.href, color: LINK_PURPLE })
+  }
+
+  writeCenteredConnections(doc, cursor, parts)
 
   cursor.y += 1.5
 }
@@ -327,9 +470,10 @@ function writeExperience(doc: jsPDF, cursor: PdfCursor) {
     }
 
     item.roles.forEach((role) => {
-      const rightLines = [role.location ?? "", formatRolePeriod(role)].filter(
-        Boolean
-      )
+      const rightLines = [
+        role.location ?? "",
+        formatResumeRolePeriod(role),
+      ].filter(Boolean)
 
       drawExperienceBlock(
         doc,
@@ -452,9 +596,15 @@ function addPageNumbers(doc: jsPDF) {
   }
 }
 
-function buildResumePdf() {
+async function buildResumePdf() {
   const doc = new jsPDF({ unit: "mm", format: "a4" })
   const cursor: PdfCursor = { y: PAGE_MARGIN }
+
+  try {
+    await registerComputerModern(doc)
+  } catch {
+    // Fallback to Times if loading Computer Modern fails.
+  }
 
   writeHeader(doc, cursor)
   writeSummaryAndSkills(doc, cursor)
@@ -470,7 +620,8 @@ function buildResumePdf() {
 }
 
 export function downloadResume() {
-  const doc = buildResumePdf()
-  const isoDate = new Date().toISOString().slice(0, 10)
-  doc.save(`krishant-timilsina-resume-${isoDate}.pdf`)
+  return buildResumePdf().then((doc) => {
+    const isoDate = new Date().toISOString().slice(0, 10)
+    doc.save(`krishant-timilsina-resume-${isoDate}.pdf`)
+  })
 }
