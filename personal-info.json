@@ -1,0 +1,210 @@
+{
+  "basics": {
+    "name": "Krishant Timilsina",
+    "headline": "Software Engineer",
+    "summary": "I am a software engineer who loves turning complex ideas into practical products. I work across full-stack systems, AI-driven tooling, and developer experience, with a strong bias for clarity, shipping, and long-term maintainability.",
+    "email": "krishtimil@gmail.com",
+    "phone": "+977 9869083012",
+    "location": "Lalitpur, Nepal",
+    "website": "https://krishant.com.np"
+  },
+  "socials": [
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/krishtimil/"
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/krishantt"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://www.instagram.com/krishtimil/"
+    },
+    {
+      "label": "Twitter",
+      "href": "https://twitter.com/krishtimill"
+    }
+  ],
+  "skills": [
+    {
+      "title": "Languages",
+      "items": [
+        "Python",
+        "TypeScript / JavaScript",
+        "Go",
+        "C/C++",
+        "SQL",
+        "Bash"
+      ]
+    },
+    {
+      "title": "Frameworks",
+      "items": ["FastAPI", "Django", "React", "Next.js", "HTMX", "Alpine.js"]
+    },
+    {
+      "title": "DevOps",
+      "items": [
+        "Linux",
+        "Docker",
+        "Kubernetes",
+        "OpenShift",
+        "ArgoCD (GitOps)",
+        "Gateway API",
+        "CI/CD pipelines",
+        "Caddy"
+      ]
+    }
+  ],
+  "focusAreas": [
+    "Platform Engineering",
+    "Kubernetes & Cloud-Native Infrastructure",
+    "Distributed Systems Architecture"
+  ],
+  "languages": [
+    {
+      "name": "Nepali",
+      "proficiency": "Native"
+    },
+    {
+      "name": "English",
+      "proficiency": "Professional working"
+    }
+  ],
+  "experience": [
+    {
+      "org": "Lelapa AI",
+      "roles": [
+        {
+          "title": "Full Stack Developer",
+          "employmentType": "Contract",
+          "location": "Remote",
+          "start": { "year": 2025, "month": 1 },
+          "points": [
+            "Deliver full solutions end-to-end that build on Lelapa's existing products and technical estate.",
+            "Introduce and implement unit and functional testing to uphold platform quality.",
+            "Communicate technical decisions and key implementation details with the team.",
+            "Collaborate with engineers and the product manager to deliver high-value work for the business and customers."
+          ],
+          "skills": [
+            "Django",
+            "Amazon Web Services (AWS)",
+            "React",
+            "HTMX",
+            "Alpine.js",
+            "Testing"
+          ]
+        },
+        {
+          "title": "Frontend Developer",
+          "employmentType": "Freelance",
+          "start": { "year": 2024, "month": 8 },
+          "end": { "year": 2024, "month": 12 },
+          "points": [
+            "Design and develop intuitive user interfaces for API key generation, rotation, and access control.",
+            "Implement secure authentication and authorization flows for API key management.",
+            "Co-manage platform delivery by proposing approaches and identifying key technical factors."
+          ],
+          "skills": ["Django", "React.js"]
+        }
+      ]
+    },
+    {
+      "org": "Himalayan Green Pvt. Ltd.",
+      "roles": [
+        {
+          "title": "Software Engineer",
+          "start": { "year": 2024, "month": 12 },
+          "end": { "year": 2025, "month": 1 },
+          "points": [
+            "Built and maintained web and mobile experiences for himaligreen.com."
+          ]
+        }
+      ]
+    },
+    {
+      "org": "Sandbox Software Pvt. Ltd.",
+      "roles": [
+        {
+          "title": "Python Developer",
+          "start": { "year": 2024, "month": 10 },
+          "end": { "year": 2024, "month": 11 },
+          "points": [
+            "Automated business workflows with computer vision systems."
+          ]
+        }
+      ]
+    },
+    {
+      "org": "Evakon Technologies",
+      "roles": [
+        {
+          "title": "Design Intern",
+          "start": { "year": 2023, "month": 6 },
+          "end": { "year": 2023, "month": 7 },
+          "points": [
+            "Contributed to multiple design projects and sharpened visual communication skills."
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Bachelor of Engineering, Computer Science",
+      "place": "Pulchowk Campus",
+      "period": "2022 - Present",
+      "details": [
+        "Minor project: building a serverless platform.",
+        "Ranked in the top 0.8% among 13,000 entrance applicants."
+      ]
+    },
+    {
+      "title": "Grade 11/12, Science",
+      "place": "SOS Herman Gmeiner Secondary School Gandaki",
+      "period": "GPA: 3.54/4",
+      "details": []
+    },
+    {
+      "title": "SEE",
+      "place": "Global Collegiate School",
+      "period": "GPA: 3.85/4",
+      "details": []
+    }
+  ],
+  "projects": [
+    {
+      "title": "Voxel Engine",
+      "href": "https://github.com/krishantt/voxel_engine",
+      "summary": "Minecraft-inspired engine for rendering 3D worlds with efficient voxel meshing."
+    },
+    {
+      "title": "Binary Plan MLM",
+      "href": "https://github.com/krishantt/binary-plan-mlm",
+      "summary": "Network marketing tree simulation using algorithmic structures such as AVL Trees and Kruskal's."
+    },
+    {
+      "title": "Chess",
+      "href": "https://github.com/bigya_01/chess_rl",
+      "summary": "Multiplayer chess with AI-backed logic and a custom interface built with SMFL graphics."
+    },
+    {
+      "title": "Agrify",
+      "href": "https://github.com/krishtimil/agrify",
+      "summary": "Flutter application built to simplify day-to-day work for farmers."
+    }
+  ],
+  "leadership": [
+    "Coordinator @ PDSC (Aug 2022 - Present): Led a team of 50 and organized workshops for 300+ attendees.",
+    "Technical Lead @ IEEE Pulchowk (Apr 2024 - Dec 2024): Managed technical execution for club initiatives.",
+    "Graphics Lead @ Hult Prize IOE (Sep 2023 - Apr 2024): Designed event visuals and communication assets."
+  ],
+  "certifications": [
+    "Microdegree in AI & Machine Learning - Fusemachines",
+    "Azure AI Fundamentals - Microsoft"
+  ],
+  "awards": [
+    "Best Presentation Award, Mobile Reuse Hackathon: Built a smart assistant for visually impaired users using old phones.",
+    "2nd Runner-Up, MBM Ideax Hackathon: Built a platform preserving languages through community stories."
+  ]
+}

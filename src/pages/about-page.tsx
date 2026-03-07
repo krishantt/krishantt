@@ -1,3 +1,5 @@
+import { Download } from "lucide-react"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -8,252 +10,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  formatRolePeriod,
+  getExperienceTotalDuration,
+  personalInfo,
+} from "@/lib/personal-info"
+import { downloadResume } from "@/lib/resume"
 import { usePageMetadata } from "@/lib/metadata"
-
-type ExperienceRole = {
-  title: string
-  start: { year: number; month: number }
-  end?: { year: number; month: number }
-  points: string[]
-  type?: string
-  location?: string
-  skills?: string
-}
-
-type Experience = {
-  org: string
-  roles: ExperienceRole[]
-}
-
-const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-]
-
-function getNowMonthValue() {
-  const now = new Date()
-
-  return {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,
-  }
-}
-
-function monthDiff(
-  start: { year: number; month: number },
-  end: { year: number; month: number }
-) {
-  return (end.year - start.year) * 12 + (end.month - start.month)
-}
-
-function durationInMonths(
-  start: { year: number; month: number },
-  end?: { year: number; month: number }
-) {
-  const resolvedEnd = end ?? getNowMonthValue()
-
-  return Math.max(1, monthDiff(start, resolvedEnd) + 1)
-}
-
-function formatDuration(monthsTotal: number) {
-  const years = Math.floor(monthsTotal / 12)
-  const months = monthsTotal % 12
-  const parts: string[] = []
-
-  if (years > 0) {
-    parts.push(`${years} yr${years > 1 ? "s" : ""}`)
-  }
-
-  if (months > 0 || parts.length === 0) {
-    parts.push(`${months} mo${months > 1 ? "s" : ""}`)
-  }
-
-  return parts.join(" ")
-}
-
-function formatMonthYear(value: { year: number; month: number }) {
-  return `${monthNames[value.month - 1]} ${value.year}`
-}
-
-function formatRolePeriod(role: ExperienceRole) {
-  const startLabel = formatMonthYear(role.start)
-  const endLabel = role.end ? formatMonthYear(role.end) : "Present"
-  const durationLabel = formatDuration(durationInMonths(role.start, role.end))
-
-  return `${startLabel} - ${endLabel} · ${durationLabel}`
-}
-
-function getExperienceTotalDuration(experience: Experience) {
-  if (experience.roles.length === 0) return null
-
-  const starts = experience.roles.map((role) => role.start)
-  const earliestStart = starts.reduce((earliest, current) => {
-    return monthDiff(current, earliest) > 0 ? current : earliest
-  })
-
-  const hasPresentRole = experience.roles.some((role) => !role.end)
-  if (hasPresentRole) {
-    return formatDuration(durationInMonths(earliestStart))
-  }
-
-  const ends = experience.roles
-    .map((role) => role.end)
-    .filter((value): value is { year: number; month: number } => Boolean(value))
-
-  if (ends.length === 0) return formatDuration(durationInMonths(earliestStart))
-
-  const latestEnd = ends.reduce((latest, current) => {
-    return monthDiff(latest, current) > 0 ? current : latest
-  })
-
-  return formatDuration(durationInMonths(earliestStart, latestEnd))
-}
-
-const skillGroups = [
-  {
-    title: "Languages",
-    items: ["Python", "TypeScript / JavaScript", "Go", "C/C++", "SQL", "Bash"],
-  },
-  {
-    title: "Frameworks",
-    items: ["FastAPI", "Django", "React", "Next.js", "HTMX", "Alpine.js"],
-  },
-  {
-    title: "DevOps",
-    items: [
-      "Linux",
-      "Docker",
-      "Kubernetes",
-      "OpenShift",
-      "ArgoCD (GitOps)",
-      "Gateway API",
-      "CI/CD pipelines",
-      "Caddy",
-    ],
-  },
-]
-
-const focusAreas = [
-  "Platform Engineering",
-  "Kubernetes & Cloud-Native Infrastructure",
-  "Distributed Systems Architecture",
-]
-
-const experiences: Experience[] = [
-  {
-    org: "Lelapa AI",
-    roles: [
-      {
-        title: "Full Stack Developer",
-        type: "Contract",
-        start: { year: 2025, month: 1 },
-        location: "Remote",
-        points: [
-          "Deliver full solutions end-to-end that build on Lelapa's existing products and technical estate.",
-          "Introduce and implement unit and functional testing to uphold platform quality.",
-          "Communicate technical decisions and key implementation details with the team.",
-          "Collaborate with engineers and the product manager to deliver high-value work for the business and customers.",
-        ],
-        skills: "Django, Amazon Web Services (AWS), and 4 more",
-      },
-      {
-        title: "Frontend Developer",
-        type: "Freelance",
-        start: { year: 2024, month: 8 },
-        end: { year: 2024, month: 12 },
-        points: [
-          "Design and develop intuitive user interfaces for API key generation, rotation, and access control.",
-          "Implement secure authentication and authorization flows for API key management.",
-          "Co-manage platform delivery by proposing approaches and identifying key technical factors.",
-        ],
-        skills: "Django and React.js",
-      },
-    ],
-  },
-]
-
-const education = [
-  {
-    title: "Bachelor of Engineering, Computer Science",
-    place: "Pulchowk Campus",
-    period: "2022 - Present",
-    details: [
-      "Minor project: building a serverless platform.",
-      "Ranked in the top 0.8% among 13,000 entrance applicants.",
-    ],
-  },
-  {
-    title: "Grade 11/12, Science",
-    place: "SOS Herman Gmeiner Secondary School Gandaki",
-    period: "GPA: 3.54/4",
-    details: [],
-  },
-  {
-    title: "SEE",
-    place: "Global Collegiate School",
-    period: "GPA: 3.85/4",
-    details: [],
-  },
-]
-
-const projects = [
-  {
-    title: "Voxel Engine",
-    href: "https://github.com/krishantt/voxel_engine",
-    summary:
-      "Minecraft-inspired engine for rendering 3D worlds with efficient voxel meshing.",
-  },
-  {
-    title: "Binary Plan MLM",
-    href: "https://github.com/krishantt/binary-plan-mlm",
-    summary:
-      "Network marketing tree simulation using algorithmic structures such as AVL Trees and Kruskal's.",
-  },
-  {
-    title: "Chess",
-    href: "https://github.com/bigya_01/chess_rl",
-    summary:
-      "Multiplayer chess with AI-backed logic and a custom interface built with SMFL graphics.",
-  },
-  {
-    title: "Agrify",
-    href: "https://github.com/krishtimil/agrify",
-    summary:
-      "Flutter application built to simplify day-to-day work for farmers.",
-  },
-]
-
-const leadership = [
-  "Coordinator @ PDSC (Aug 2022 - Present): Led a team of 50 and organized workshops for 300+ attendees.",
-  "Technical Lead @ IEEE Pulchowk (Apr 2024 - Dec 2024): Managed technical execution for club initiatives.",
-  "Graphics Lead @ Hult Prize IOE (Sep 2023 - Apr 2024): Designed event visuals and communication assets.",
-]
-
-const certifications = [
-  "Microdegree in AI & Machine Learning - Fusemachines",
-  "Azure AI Fundamentals - Microsoft",
-]
-
-const awards = [
-  "Best Presentation Award, Mobile Reuse Hackathon: Built a smart assistant for visually impaired users using old phones.",
-  "2nd Runner-Up, MBM Ideax Hackathon: Built a platform preserving languages through community stories.",
-]
 
 export function AboutPage() {
   usePageMetadata({
     title: "About",
-    description:
-      "Deep dive into Krishant Timilsina's engineering experience, projects, education, leadership, and technical focus areas.",
+    description: `Deep dive into ${personalInfo.basics.name}'s engineering experience, projects, education, leadership, and technical focus areas.`,
   })
 
   return (
@@ -265,11 +33,17 @@ export function AboutPage() {
           </Badge>
           <CardTitle className="text-2xl">Who am I?</CardTitle>
           <CardDescription className="max-w-3xl text-sm">
-            I am a software engineer who loves turning complex ideas into
-            practical products. I work across full-stack systems, AI-driven
-            tooling, and developer experience, with a strong bias for clarity,
-            shipping, and long-term maintainability.
+            {personalInfo.basics.summary}
           </CardDescription>
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-2 w-fit"
+            onClick={downloadResume}
+          >
+            <Download className="size-4" />
+            Download Resume/CV
+          </Button>
         </CardHeader>
       </Card>
 
@@ -279,7 +53,7 @@ export function AboutPage() {
             <CardTitle className="text-xl">Skills & Tech Stack</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
-            {skillGroups.map((group) => (
+            {personalInfo.skills.map((group) => (
               <div key={group.title} className="space-y-2">
                 <h3 className="text-sm font-semibold">{group.title}</h3>
                 <div className="flex flex-wrap gap-2">
@@ -296,15 +70,30 @@ export function AboutPage() {
 
         <Card className="bg-card/90">
           <CardHeader>
-            <CardTitle className="text-xl">Current Focus</CardTitle>
+            <CardTitle className="text-xl">Focus & Languages</CardTitle>
             <CardDescription>
-              Themes I actively explore and build around.
+              Themes I actively explore and languages I work in.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            {focusAreas.map((focus) => (
-              <Badge key={focus}>{focus}</Badge>
-            ))}
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold">Current Focus</h3>
+              <div className="flex flex-wrap gap-2">
+                {personalInfo.focusAreas.map((focus) => (
+                  <Badge key={focus}>{focus}</Badge>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold">Languages</h3>
+              <div className="flex flex-wrap gap-2">
+                {personalInfo.languages.map((language) => (
+                  <Badge key={language.name} variant="secondary">
+                    {language.name} ({language.proficiency})
+                  </Badge>
+                ))}
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -314,7 +103,7 @@ export function AboutPage() {
           <CardTitle className="text-xl">Experience</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-3">
-          {experiences.map((experience) => (
+          {personalInfo.experience.map((experience) => (
             <div
               key={experience.org}
               className="rounded-xl border border-border/70 p-4"
@@ -331,16 +120,18 @@ export function AboutPage() {
               <div className="mt-3 space-y-3">
                 {experience.roles.map((role) => (
                   <div
-                    key={`${experience.org}-${role.title}-${formatMonthYear(role.start)}`}
+                    key={`${experience.org}-${role.title}-${role.start.year}-${role.start.month}`}
                     className="rounded-lg border border-border/60 p-3"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <h4 className="text-sm font-medium">{role.title}</h4>
                       <Badge variant="outline">{formatRolePeriod(role)}</Badge>
                     </div>
-                    {role.type || role.location ? (
+                    {role.employmentType || role.location ? (
                       <p className="mt-1 text-xs text-muted-foreground">
-                        {[role.type, role.location].filter(Boolean).join(" · ")}
+                        {[role.employmentType, role.location]
+                          .filter(Boolean)
+                          .join(" · ")}
                       </p>
                     ) : null}
                     <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
@@ -348,9 +139,9 @@ export function AboutPage() {
                         <li key={point}>{point}</li>
                       ))}
                     </ul>
-                    {role.skills ? (
+                    {role.skills && role.skills.length > 0 ? (
                       <p className="mt-2 text-xs text-muted-foreground">
-                        {role.skills}
+                        {role.skills.join(", ")}
                       </p>
                     ) : null}
                   </div>
@@ -367,7 +158,7 @@ export function AboutPage() {
             <CardTitle className="text-xl">Education</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {education.map((item) => (
+            {personalInfo.education.map((item) => (
               <div
                 key={item.title}
                 className="rounded-xl border border-border/70 p-4"
@@ -401,7 +192,7 @@ export function AboutPage() {
             <div className="space-y-2">
               <h3 className="text-sm font-semibold">Leadership</h3>
               <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {leadership.map((item) => (
+                {personalInfo.leadership.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
@@ -409,7 +200,7 @@ export function AboutPage() {
             <div className="space-y-2">
               <h3 className="text-sm font-semibold">Certifications</h3>
               <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {certifications.map((item) => (
+                {personalInfo.certifications.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
@@ -417,7 +208,7 @@ export function AboutPage() {
             <div className="space-y-2">
               <h3 className="text-sm font-semibold">Awards</h3>
               <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {awards.map((item) => (
+                {personalInfo.awards.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
@@ -434,7 +225,7 @@ export function AboutPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-3 md:grid-cols-2">
-          {projects.map((project) => (
+          {personalInfo.projects.map((project) => (
             <Card key={project.title} size="sm" className="bg-background/70">
               <CardHeader>
                 <CardTitle className="text-base">{project.title}</CardTitle>
