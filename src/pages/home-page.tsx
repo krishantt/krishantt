@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { getAllPosts } from "@/lib/blog"
+import { usePageMetadata } from "@/lib/metadata"
 import { formatDate } from "@/utils/format-date"
 
 const socialLinks = [
@@ -22,6 +23,11 @@ const socialLinks = [
 
 export function HomePage() {
   const latestPosts = getAllPosts().slice(0, 2)
+
+  usePageMetadata({
+    description:
+      "Portfolio of Krishant Timilsina, a software engineer building full-stack products and DevOps-first systems.",
+  })
 
   return (
     <>

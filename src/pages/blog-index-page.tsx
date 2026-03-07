@@ -9,10 +9,17 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { getAllPosts } from "@/lib/blog"
+import { usePageMetadata } from "@/lib/metadata"
 import { formatDate } from "@/utils/format-date"
 
 export function BlogIndexPage() {
   const posts = getAllPosts()
+
+  usePageMetadata({
+    title: "Blog",
+    description:
+      "Articles on software engineering, systems design, and practical development lessons by Krishant Timilsina.",
+  })
 
   return (
     <section className="flex flex-col gap-4">

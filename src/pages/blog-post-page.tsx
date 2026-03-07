@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { getPostBySlug } from "@/lib/blog"
+import { usePageMetadata } from "@/lib/metadata"
 import { formatDate } from "@/utils/format-date"
 
 export function BlogPostPage() {
@@ -21,6 +22,19 @@ export function BlogPostPage() {
   }
 
   const post = getPostBySlug(slug)
+
+  usePageMetadata(
+    post
+      ? {
+          title: post.title,
+          description: post.summary,
+        }
+      : {
+          title: "Post not found",
+          description:
+            "The requested post could not be found. Explore other articles on the blog.",
+        }
+  )
 
   if (!post) {
     return (

@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { usePageMetadata } from "@/lib/metadata"
 
 const aboutSections = [
   {
@@ -27,6 +28,12 @@ const aboutSections = [
 ]
 
 export function AboutPage() {
+  usePageMetadata({
+    title: "About",
+    description:
+      "Learn about Krishant Timilsina's background, tech stack, and professional experience across product engineering.",
+  })
+
   return (
     <Card className="bg-card/90">
       <CardHeader>

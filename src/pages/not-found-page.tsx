@@ -8,8 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { usePageMetadata } from "@/lib/metadata"
 
 export function NotFoundPage() {
+  usePageMetadata({
+    title: "Page not found",
+    description:
+      "The page you are looking for does not exist. Return home to continue browsing.",
+  })
+
   return (
     <Card>
       <CardHeader>
