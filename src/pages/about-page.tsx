@@ -13,30 +13,31 @@ import { usePageMetadata } from "@/lib/metadata"
 const skillGroups = [
   {
     title: "Languages",
-    items: ["C/C++", "Python", "Dart", "Go", "JavaScript", "TypeScript"],
+    items: ["Python", "TypeScript / JavaScript", "Go", "C/C++", "SQL", "Bash"],
   },
   {
-    title: "Frameworks & Tools",
-    items: [
-      "Django",
-      "Flutter",
-      "Next.js",
-      "React",
-      "Remix",
-      "HTMX",
-      "Alpine.js",
-    ],
+    title: "Frameworks",
+    items: ["FastAPI", "Django", "React", "Next.js", "HTMX", "Alpine.js"],
   },
   {
     title: "DevOps",
-    items: ["Linux", "Docker", "Kubernetes"],
+    items: [
+      "Linux",
+      "Docker",
+      "Kubernetes",
+      "OpenShift",
+      "ArgoCD (GitOps)",
+      "Gateway API",
+      "CI/CD pipelines",
+      "Caddy",
+    ],
   },
 ]
 
 const focusAreas = [
-  "Software Architecture",
-  "Blockchain",
-  "Artificial Intelligence",
+  "Platform Engineering",
+  "Kubernetes & Cloud-Native Infrastructure",
+  "Distributed Systems Architecture",
 ]
 
 const experiences = [

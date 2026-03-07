@@ -73,9 +73,7 @@ export function HomePage() {
         </CardHeader>
         <CardContent className="flex flex-wrap gap-3">
           <Button asChild>
-            <a href="/docs/resume.pdf" target="_blank" rel="noreferrer">
-              Resume
-            </a>
+            <Link to="/about">Learn more about me!</Link>
           </Button>
           <Button asChild variant="outline">
             <a
