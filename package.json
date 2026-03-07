@@ -5,7 +5,10 @@
   "type": "module",
   "packageManager": "pnpm@10.30.3",
   "scripts": {
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "predev": "pnpm sitemap",
     "dev": "vite",
+    "prebuild": "pnpm sitemap",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
