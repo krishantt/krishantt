@@ -139,7 +139,7 @@ function SiteLayout({ children }: { children: ReactNode }) {
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,theme(colors.primary/10),transparent_45%),radial-gradient(circle_at_80%_20%,theme(colors.chart-2/20),transparent_35%)]" />
       <header className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6 md:py-6">
         <Link to="/" className="flex items-center gap-3 self-start">
-          <Avatar size="sm" className="md:h-10 md:w-10">
+          <Avatar size="default" className="md:h-10 md:w-10">
             <AvatarImage src="/images/profile.jpg" alt="Krishant Timilsina" />
             <AvatarFallback>KT</AvatarFallback>
           </Avatar>
