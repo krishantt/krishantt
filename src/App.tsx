@@ -91,7 +91,7 @@ function ThemeSwitcherButton() {
 function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative min-h-svh bg-background">
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,theme(colors.primary/10),transparent_45%),radial-gradient(circle_at_80%_20%,theme(colors.chart-2/20),transparent_35%)]" />
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,--theme(--color-primary/10),transparent_45%),radial-gradient(circle_at_80%_20%,--theme(--color-chart-2/20),transparent_35%)]" />
       <header className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6 md:py-6">
         <Link to="/" className="flex items-center gap-3 self-start">
           <Avatar size="default" className="md:h-10 md:w-10">
