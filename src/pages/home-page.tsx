@@ -81,7 +81,7 @@ export function HomePage() {
               target="_blank"
               rel="noreferrer"
             >
-              Let&apos;s Collaborate
+              Want to Collaborate?
             </a>
           </Button>
         </CardContent>
