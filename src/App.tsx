@@ -20,6 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { useTheme } from "@/components/theme-provider"
 import { getAllPosts, getPostBySlug } from "@/lib/blog"
 
 const socialLinks = [
@@ -62,6 +63,76 @@ function formatDate(date: string) {
   })
 }
 
+function getResolvedTheme(theme: "dark" | "light" | "system") {
+  if (theme !== "system") {
+    return theme
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light"
+}
+
+function ThemeSwitcherButton() {
+  const { theme, setTheme } = useTheme()
+  const resolvedTheme = getResolvedTheme(theme)
+  const isDark = resolvedTheme === "dark"
+
+  const toggleTheme = () => {
+    setTheme(isDark ? "light" : "dark")
+  }
+
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
+      className="size-8 rounded-full"
+      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+      title={`Switch to ${isDark ? "light" : "dark"} theme`}
+    >
+      {isDark ? (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="size-4"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" />
+          <path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+          <path d="m6.34 17.66-1.41 1.41" />
+          <path d="m19.07 4.93-1.41 1.41" />
+        </svg>
+      ) : (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="size-4"
+          aria-hidden="true"
+        >
+          <path d="M12 3a7.5 7.5 0 1 0 9 9A9 9 0 0 1 12 3" />
+        </svg>
+      )}
+    </Button>
+  )
+}
+
 function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative min-h-svh bg-background">
@@ -85,6 +156,7 @@ function SiteLayout({ children }: { children: ReactNode }) {
               <Link to={item.href}>{item.label}</Link>
             </Button>
           ))}
+          <ThemeSwitcherButton />
         </nav>
       </header>
 
