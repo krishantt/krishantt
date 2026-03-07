@@ -1,0 +1,172 @@
+export const meta = {
+  title: "The Myth of Simplicity in Software Systems",
+  date: "2026-03-08",
+  summary:
+    "Software systems rarely stay simple—over time, growing scale, requirements, and organizations inevitably transform initial simplicity into managed complexity.",
+  tags: ["SoftwareEngineering", "Complexity"],
+}
+
+
+![chaos_monkey](/posts/images/simplicity.png)
+
+Software engineers often talk about simplicity as an ideal. We strive to build simple systems, write simple code, and design simple architectures. Simplicity is treated almost like a moral virtue in engineering culture.
+
+Yet if we observe real software systems over time, we see a different pattern. Systems almost always begin simple—and then inevitably become complex.
+
+This is not necessarily a failure of engineering discipline. In many cases, complexity is the natural outcome of solving real problems at scale. Understanding this dynamic is crucial for designing systems that can survive long-term evolution.
+
+---
+
+## The Beginning: Artificial Simplicity
+
+Most systems begin in a state of artificial simplicity.
+
+At the early stages of a project, constraints are minimal:
+
+- a small number of users
+- a small codebase
+- a single development team
+- a limited feature set
+
+In this environment, it is relatively easy to keep the architecture clean. A single application server, a single database, and a handful of services may be enough.
+
+Developers often interpret this early simplicity as proof that the architecture is fundamentally simple. But what they are really observing is a system that has not yet been exposed to real-world pressures.
+
+Over time, those pressures begin to accumulate.
+
+---
+
+## Essential vs Accidental Complexity
+
+Computer scientist Fred Brooks famously distinguished between essential complexity and accidental complexity.
+
+Essential complexity arises from the problem itself.
+
+For example:
+
+- financial systems must handle consistency and transactions
+- distributed systems must tolerate network failures
+- machine learning infrastructure must handle large datasets and GPU workloads
+
+These complexities are intrinsic to the domain.
+
+Accidental complexity, on the other hand, comes from the tools and abstractions we build around the problem:
+
+- poorly designed frameworks
+- unnecessary layers of abstraction
+- overengineered architectures
+
+Engineers often believe that if accidental complexity is removed, systems will remain simple. But this overlooks an important reality: essential complexity grows as systems evolve.
+
+A system serving ten users is fundamentally simpler than one serving ten million.
+
+---
+
+## The Microservices Temptation
+
+Few architectural trends illustrate the myth of simplicity better than microservices.
+
+Microservices are often adopted with the promise of simplifying large systems. By decomposing a monolithic application into smaller services, each component becomes easier to reason about.
+
+At least in theory.
+
+In practice, microservices trade one form of complexity for another.
+
+A monolith concentrates complexity within the codebase. Microservices distribute that complexity across the network.
+
+Instead of debugging a function call, engineers must now debug:
+
+- network latency
+- service discovery
+- distributed tracing
+- version mismatches
+- partial failures
+
+A simple architecture diagram with five services can conceal a complex operational reality.
+
+This does not mean microservices are inherently bad. In many cases they are the right solution. But they demonstrate a broader lesson: architectural decisions rarely eliminate complexity—they relocate it.
+
+---
+
+## The Problem of Leaky Abstractions
+
+Abstractions are the primary tool engineers use to manage complexity. Programming languages, frameworks, and infrastructure platforms all exist to hide lower-level details.
+
+But abstractions are never perfect.
+
+Joel Spolsky famously described this phenomenon as the Law of Leaky Abstractions: eventually, the underlying complexity reveals itself.
+
+For example:
+
+- ORMs promise to hide SQL, yet developers eventually need to understand database queries.
+- Kubernetes abstracts infrastructure, yet operators must still understand networking, storage, and container behavior.
+- Serverless platforms hide servers, yet performance and cold-start behavior still matter.
+
+Abstractions are extremely useful, but they cannot eliminate complexity entirely. They merely delay the moment when engineers must confront it.
+
+---
+
+## Conway’s Law and Organizational Complexity
+
+Software systems do not evolve in isolation. They evolve within organizations.
+
+Conway’s Law states:
+
+> Organizations design systems that mirror their communication structure.
+
+This means architecture often reflects team boundaries rather than purely technical considerations.
+
+A small team might maintain a monolith because communication is easy. A large organization with many teams might naturally evolve toward microservices because independent teams need clear ownership boundaries.
+
+As organizations grow, their software systems inherit the complexity of coordination, communication, and decision-making.
+
+In other words, organizational complexity becomes architectural complexity.
+
+---
+
+## The Inevitability of Growth
+
+One of the hardest lessons in software engineering is accepting that complexity is not always avoidable.
+
+A successful system must support:
+
+- more users
+- more features
+- more integrations
+- more engineers contributing to the codebase
+
+Each of these introduces new constraints.
+
+The real challenge is therefore not eliminating complexity but managing its growth.
+
+This requires:
+
+- clear architectural boundaries
+- strong observability and debugging tools
+- disciplined refactoring
+- thoughtful platform design
+
+Without these practices, complexity accumulates silently until the system becomes difficult to change.
+
+---
+
+## Simplicity as a Direction, Not a State
+
+Simplicity in software should not be understood as a permanent condition. It is better thought of as a direction.
+
+Engineers continuously push systems toward simpler designs through refactoring, better abstractions, and improved tooling. But the forces pushing toward complexity never disappear.
+
+New requirements, scale, and organizational change constantly reshape the system.
+
+The goal, therefore, is not to create a system that is permanently simple. The goal is to <strong> build systems that remain understandable even as they grow more complex</strong>.
+
+---
+
+## Further Reading
+
+- [The Mythical Man-Month by Frederick P. Brooks Jr.](https://en.wikipedia.org/wiki/The_Mythical_Man-Month)
+- [No Silver Bullet: Essence and Accidents of Software Engineering by Frederick P. Brooks Jr.](https://en.wikipedia.org/wiki/No_Silver_Bullet)
+- [The Law of Leaky Abstractions by Joel Spolsky](https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/)
+- [Conway's Law by Melvin Conway](https://www.melconway.com/Home/Conways_Law.html)
+- [Designing Data-Intensive Applications by Martin Kleppmann](https://dataintensive.net/)
+- [A Philosophy of Software Design by John Ousterhout](https://web.stanford.edu/~ouster/cgi-bin/book.php)
