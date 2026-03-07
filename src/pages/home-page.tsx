@@ -51,7 +51,7 @@ const socialLinks: SocialLink[] = [
 ]
 
 export function HomePage() {
-  const latestPosts = getAllPosts().slice(0, 2)
+  const latestPosts = getAllPosts().slice(0, 4)
 
   usePageMetadata({
     description:
