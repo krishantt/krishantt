@@ -10,6 +10,115 @@ import {
 } from "@/components/ui/card"
 import { usePageMetadata } from "@/lib/metadata"
 
+type ExperienceRole = {
+  title: string
+  start: { year: number; month: number }
+  end?: { year: number; month: number }
+  points: string[]
+  type?: string
+  location?: string
+  skills?: string
+}
+
+type Experience = {
+  org: string
+  roles: ExperienceRole[]
+}
+
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+]
+
+function getNowMonthValue() {
+  const now = new Date()
+
+  return {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+  }
+}
+
+function monthDiff(
+  start: { year: number; month: number },
+  end: { year: number; month: number }
+) {
+  return (end.year - start.year) * 12 + (end.month - start.month)
+}
+
+function durationInMonths(
+  start: { year: number; month: number },
+  end?: { year: number; month: number }
+) {
+  const resolvedEnd = end ?? getNowMonthValue()
+
+  return Math.max(1, monthDiff(start, resolvedEnd) + 1)
+}
+
+function formatDuration(monthsTotal: number) {
+  const years = Math.floor(monthsTotal / 12)
+  const months = monthsTotal % 12
+  const parts: string[] = []
+
+  if (years > 0) {
+    parts.push(`${years} yr${years > 1 ? "s" : ""}`)
+  }
+
+  if (months > 0 || parts.length === 0) {
+    parts.push(`${months} mo${months > 1 ? "s" : ""}`)
+  }
+
+  return parts.join(" ")
+}
+
+function formatMonthYear(value: { year: number; month: number }) {
+  return `${monthNames[value.month - 1]} ${value.year}`
+}
+
+function formatRolePeriod(role: ExperienceRole) {
+  const startLabel = formatMonthYear(role.start)
+  const endLabel = role.end ? formatMonthYear(role.end) : "Present"
+  const durationLabel = formatDuration(durationInMonths(role.start, role.end))
+
+  return `${startLabel} - ${endLabel} · ${durationLabel}`
+}
+
+function getExperienceTotalDuration(experience: Experience) {
+  if (experience.roles.length === 0) return null
+
+  const starts = experience.roles.map((role) => role.start)
+  const earliestStart = starts.reduce((earliest, current) => {
+    return monthDiff(current, earliest) > 0 ? current : earliest
+  })
+
+  const hasPresentRole = experience.roles.some((role) => !role.end)
+  if (hasPresentRole) {
+    return formatDuration(durationInMonths(earliestStart))
+  }
+
+  const ends = experience.roles
+    .map((role) => role.end)
+    .filter((value): value is { year: number; month: number } => Boolean(value))
+
+  if (ends.length === 0) return formatDuration(durationInMonths(earliestStart))
+
+  const latestEnd = ends.reduce((latest, current) => {
+    return monthDiff(latest, current) > 0 ? current : latest
+  })
+
+  return formatDuration(durationInMonths(earliestStart, latestEnd))
+}
+
 const skillGroups = [
   {
     title: "Languages",
@@ -40,45 +149,35 @@ const focusAreas = [
   "Distributed Systems Architecture",
 ]
 
-const experiences = [
+const experiences: Experience[] = [
   {
-    role: "Full Stack Web Developer",
     org: "Lelapa AI",
-    period: "Jan 2025 - Present",
-    points: [
-      "Built product interfaces with HTMX, Alpine.js, and React.",
-      "Designed API key management for auth and access control.",
-      "Contributed to technical roadmap decisions for platform delivery.",
-    ],
-  },
-  {
-    role: "Software Engineer",
-    org: "Himalayan Green Pvt. Ltd.",
-    period: "Dec 2024 - Jan 2025",
-    points: [
-      "Built and maintained web and mobile experiences for himaligreen.com.",
-    ],
-  },
-  {
-    role: "Python Developer",
-    org: "Sandbox Software Pvt. Ltd.",
-    period: "Oct 2024 - Nov 2024",
-    points: ["Automated business workflows with computer vision systems."],
-  },
-  {
-    role: "Frontend Developer (Freelance)",
-    org: "Lelapa AI",
-    period: "Aug 2023 - Jan 2025",
-    points: [
-      "Developed demo applications in Next.js with AI features like transcription and translation.",
-    ],
-  },
-  {
-    role: "Design Intern",
-    org: "Evakon Technologies",
-    period: "Jun 2023 - Jul 2023",
-    points: [
-      "Contributed to multiple design projects and sharpened visual communication skills.",
+    roles: [
+      {
+        title: "Full Stack Developer",
+        type: "Contract",
+        start: { year: 2025, month: 1 },
+        location: "Remote",
+        points: [
+          "Deliver full solutions end-to-end that build on Lelapa's existing products and technical estate.",
+          "Introduce and implement unit and functional testing to uphold platform quality.",
+          "Communicate technical decisions and key implementation details with the team.",
+          "Collaborate with engineers and the product manager to deliver high-value work for the business and customers.",
+        ],
+        skills: "Django, Amazon Web Services (AWS), and 4 more",
+      },
+      {
+        title: "Frontend Developer",
+        type: "Freelance",
+        start: { year: 2024, month: 8 },
+        end: { year: 2024, month: 12 },
+        points: [
+          "Design and develop intuitive user interfaces for API key generation, rotation, and access control.",
+          "Implement secure authentication and authorization flows for API key management.",
+          "Co-manage platform delivery by proposing approaches and identifying key technical factors.",
+        ],
+        skills: "Django and React.js",
+      },
     ],
   },
 ]
@@ -217,20 +316,46 @@ export function AboutPage() {
         <CardContent className="grid gap-3">
           {experiences.map((experience) => (
             <div
-              key={`${experience.role}-${experience.org}`}
+              key={experience.org}
               className="rounded-xl border border-border/70 p-4"
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-sm font-semibold">
-                  {experience.role} @ {experience.org}
-                </h3>
-                <Badge variant="secondary">{experience.period}</Badge>
+                <h3 className="text-sm font-semibold">{experience.org}</h3>
+                {experience.roles.length > 1 ? (
+                  <Badge variant="secondary">
+                    {getExperienceTotalDuration(experience)}
+                  </Badge>
+                ) : null}
               </div>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {experience.points.map((point) => (
-                  <li key={point}>{point}</li>
+
+              <div className="mt-3 space-y-3">
+                {experience.roles.map((role) => (
+                  <div
+                    key={`${experience.org}-${role.title}-${formatMonthYear(role.start)}`}
+                    className="rounded-lg border border-border/60 p-3"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h4 className="text-sm font-medium">{role.title}</h4>
+                      <Badge variant="outline">{formatRolePeriod(role)}</Badge>
+                    </div>
+                    {role.type || role.location ? (
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {[role.type, role.location].filter(Boolean).join(" · ")}
+                      </p>
+                    ) : null}
+                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                      {role.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                    {role.skills ? (
+                      <p className="mt-2 text-xs text-muted-foreground">
+                        {role.skills}
+                      </p>
+                    ) : null}
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </CardContent>
