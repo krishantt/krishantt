@@ -137,20 +137,20 @@ function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative min-h-svh bg-background">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,theme(colors.primary/10),transparent_45%),radial-gradient(circle_at_80%_20%,theme(colors.chart-2/20),transparent_35%)]" />
-      <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-6 md:px-6">
-        <Link to="/" className="flex items-center gap-3">
-          <Avatar size="lg">
+      <header className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6 md:py-6">
+        <Link to="/" className="flex items-center gap-3 self-start">
+          <Avatar size="sm" className="md:h-10 md:w-10">
             <AvatarImage src="/images/profile.jpg" alt="Krishant Timilsina" />
             <AvatarFallback>KT</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <span className="text-sm font-semibold">Krishant Timilsina</span>
-            <span className="text-xs text-muted-foreground">
+            <span className="hidden text-xs text-muted-foreground sm:inline">
               Software Engineer
             </span>
           </div>
         </Link>
-        <nav className="flex items-center gap-2 rounded-full border border-border/80 bg-card/70 px-3 py-1.5 backdrop-blur">
+        <nav className="flex w-full items-center gap-1 overflow-x-auto rounded-full border border-border/80 bg-card/70 px-2 py-1.5 whitespace-nowrap backdrop-blur md:w-auto md:gap-2 md:px-3">
           {navLinks.map((item) => (
             <Button key={item.href} asChild variant="ghost" size="sm">
               <Link to={item.href}>{item.label}</Link>
