@@ -1,120 +1,185 @@
+import { jsPDF } from "jspdf"
+
 import {
   formatRolePeriod,
   getExperienceTotalDuration,
   personalInfo,
 } from "@/lib/personal-info"
 
-function section(title: string, rows: string[]) {
-  return `${title}\n${rows.join("\n")}`
+type PdfCursor = {
+  y: number
 }
 
-export function buildResumeText() {
-  const contactRows = [
-    `Location: ${personalInfo.basics.location ?? "N/A"}`,
-    `Email: ${personalInfo.basics.email ?? "N/A"}`,
-    `Phone: ${personalInfo.basics.phone ?? "N/A"}`,
-  ]
+const PAGE_MARGIN = 16
+const CONTENT_WIDTH = 178
 
-  const socialRows = personalInfo.socials.map(
-    (social) => `- ${social.label}: ${social.href}`
+function ensureSpace(doc: jsPDF, cursor: PdfCursor, requiredHeight: number) {
+  const pageHeight = doc.internal.pageSize.getHeight()
+  if (cursor.y + requiredHeight <= pageHeight - PAGE_MARGIN) return
+
+  doc.addPage()
+  cursor.y = PAGE_MARGIN
+}
+
+function writeLine(
+  doc: jsPDF,
+  cursor: PdfCursor,
+  text: string,
+  size = 10,
+  style: "normal" | "bold" = "normal",
+  indent = 0
+) {
+  doc.setFont("helvetica", style)
+  doc.setFontSize(size)
+
+  const lineHeight = size <= 10 ? 5 : 6
+  const lines = doc.splitTextToSize(text, CONTENT_WIDTH - indent)
+  ensureSpace(doc, cursor, lines.length * lineHeight)
+  doc.text(lines, PAGE_MARGIN + indent, cursor.y)
+  cursor.y += lines.length * lineHeight
+}
+
+function writeGap(cursor: PdfCursor, amount = 3) {
+  cursor.y += amount
+}
+
+function writeSectionTitle(doc: jsPDF, cursor: PdfCursor, title: string) {
+  ensureSpace(doc, cursor, 12)
+  writeLine(doc, cursor, title, 11, "bold")
+  doc.setDrawColor(170)
+  doc.setLineWidth(0.3)
+  doc.line(
+    PAGE_MARGIN,
+    cursor.y - 4,
+    PAGE_MARGIN + CONTENT_WIDTH,
+    cursor.y - 4 
   )
+  writeGap(cursor, 2)
+}
 
-  const skillRows = personalInfo.skills.flatMap((group) => [
-    `${group.title}: ${group.items.join(", ")}`,
-  ])
+function getRoleSkillsSummary(skills?: string[]) {
+  if (!skills || skills.length === 0) return null
+  if (skills.length <= 2) return skills.join(" and ")
 
-  const languageRows = personalInfo.languages.map(
-    (language) => `- ${language.name} (${language.proficiency})`
-  )
+  return `${skills[0]}, ${skills[1]}, and ${skills.length - 2} more`
+}
 
-  const experienceRows = personalInfo.experience.flatMap((item) => {
-    const groupDuration =
-      item.roles.length > 1 ? ` (${getExperienceTotalDuration(item)})` : ""
+function buildResumePdf() {
+  const doc = new jsPDF({ unit: "mm", format: "a4" })
+  const cursor: PdfCursor = { y: PAGE_MARGIN }
 
-    return [
-      `${item.org}${groupDuration}`,
-      ...item.roles.flatMap((role) => {
-        const roleMeta = [role.employmentType, role.location]
-          .filter(Boolean)
-          .join(" | ")
-        const roleSkills = role.skills?.length
-          ? [`    Skills: ${role.skills.join(", ")}`]
-          : []
+  writeLine(doc, cursor, personalInfo.basics.name, 18, "bold")
+  writeLine(doc, cursor, personalInfo.basics.headline, 11)
+  writeGap(cursor)
 
-        return [
-          `  - ${role.title} (${formatRolePeriod(role)})${roleMeta ? ` [${roleMeta}]` : ""}`,
-          ...role.points.map((point) => `    * ${point}`),
-          ...roleSkills,
-        ]
-      }),
-    ]
+  const contact = [
+    personalInfo.basics.location,
+    personalInfo.basics.email,
+    personalInfo.basics.phone,
+    personalInfo.basics.website,
+  ].filter(Boolean)
+  if (contact.length > 0) {
+    writeLine(doc, cursor, contact.join("  |  "), 9)
+  }
+
+  const socialsInline = personalInfo.socials
+    .map((social) => `${social.label}: ${social.href}`)
+    .join("  |  ")
+  if (socialsInline) {
+    writeLine(doc, cursor, socialsInline, 9)
+  }
+
+  writeGap(cursor)
+  writeSectionTitle(doc, cursor, "PROFILE")
+  writeLine(doc, cursor, personalInfo.basics.summary)
+
+  writeGap(cursor)
+  writeSectionTitle(doc, cursor, "SKILLS")
+  personalInfo.skills.forEach((group) => {
+    writeLine(doc, cursor, `${group.title}: ${group.items.join(", ")}`)
   })
 
-  const educationRows = personalInfo.education.flatMap((item) => [
-    `${item.title} - ${item.place} (${item.period})`,
-    ...item.details.map((detail) => `  * ${detail}`),
-  ])
+  writeGap(cursor)
+  writeSectionTitle(doc, cursor, "EXPERIENCE")
+  personalInfo.experience.forEach((item) => {
+    const groupDuration =
+      item.roles.length > 1 ? ` (${getExperienceTotalDuration(item)})` : ""
+    writeLine(doc, cursor, `${item.org}${groupDuration}`, 11, "bold")
 
-  const projectRows = personalInfo.projects.map(
-    (project) => `- ${project.title}: ${project.summary} (${project.href})`
-  )
+    item.roles.forEach((role) => {
+      const meta = [role.employmentType, role.location]
+        .filter(Boolean)
+        .join(" | ")
+      const heading = `${role.title} | ${formatRolePeriod(role)}${meta ? ` | ${meta}` : ""}`
+      writeLine(doc, cursor, heading, 10, "normal", 2)
 
-  const output = [
-    `${personalInfo.basics.name}`,
-    `${personalInfo.basics.headline}`,
-    "",
-    personalInfo.basics.summary,
-    "",
-    section("CONTACT", contactRows),
-    "",
-    section("SOCIALS", socialRows),
-    "",
-    section(
-      "FOCUS AREAS",
-      personalInfo.focusAreas.map((item) => `- ${item}`)
-    ),
-    "",
-    section("SKILLS", skillRows),
-    "",
-    section("LANGUAGES", languageRows),
-    "",
-    section("EXPERIENCE", experienceRows),
-    "",
-    section("EDUCATION", educationRows),
-    "",
-    section("PROJECTS", projectRows),
-    "",
-    section(
-      "LEADERSHIP",
-      personalInfo.leadership.map((item) => `- ${item}`)
-    ),
-    "",
-    section(
-      "CERTIFICATIONS",
-      personalInfo.certifications.map((item) => `- ${item}`)
-    ),
-    "",
-    section(
-      "AWARDS",
-      personalInfo.awards.map((item) => `- ${item}`)
-    ),
-    "",
-  ]
+      role.points.forEach((point) => {
+        writeLine(doc, cursor, `- ${point}`, 10, "normal", 5)
+      })
 
-  return output.join("\n")
+      const roleSkillsSummary = getRoleSkillsSummary(role.skills)
+      if (roleSkillsSummary) {
+        writeLine(doc, cursor, `Skills: ${roleSkillsSummary}`, 9, "normal", 5)
+      }
+
+      writeGap(cursor, 1)
+    })
+
+    writeGap(cursor, 1)
+  })
+
+  writeSectionTitle(doc, cursor, "EDUCATION")
+  personalInfo.education.forEach((item) => {
+    writeLine(doc, cursor, `${item.title} - ${item.place}`, 10, "bold")
+    writeLine(doc, cursor, item.period, 9)
+
+    item.details.forEach((detail) => {
+      writeLine(doc, cursor, `- ${detail}`, 10, "normal", 3)
+    })
+
+    writeGap(cursor, 1)
+  })
+
+  writeGap(cursor)
+  writeSectionTitle(doc, cursor, "PROJECTS")
+  personalInfo.projects.forEach((project) => {
+    writeLine(doc, cursor, project.title, 10, "bold")
+    writeLine(doc, cursor, project.summary, 10, "normal", 3)
+    writeLine(doc, cursor, project.href, 9, "normal", 3)
+    writeGap(cursor, 1)
+  })
+
+  writeGap(cursor)
+  writeSectionTitle(doc, cursor, "LEADERSHIP, CERTIFICATIONS & AWARDS")
+
+  if (personalInfo.leadership.length > 0) {
+    writeLine(doc, cursor, "Leadership", 10, "bold")
+    personalInfo.leadership.forEach((item) => {
+      writeLine(doc, cursor, `- ${item}`, 10, "normal", 3)
+    })
+    writeGap(cursor, 1)
+  }
+
+  if (personalInfo.certifications.length > 0) {
+    writeLine(doc, cursor, "Certifications", 10, "bold")
+    personalInfo.certifications.forEach((item) => {
+      writeLine(doc, cursor, `- ${item}`, 10, "normal", 3)
+    })
+    writeGap(cursor, 1)
+  }
+
+  if (personalInfo.awards.length > 0) {
+    writeLine(doc, cursor, "Awards", 10, "bold")
+    personalInfo.awards.forEach((item) => {
+      writeLine(doc, cursor, `- ${item}`, 10, "normal", 3)
+    })
+  }
+
+  return doc
 }
 
 export function downloadResume() {
-  const text = buildResumeText()
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" })
-  const blobUrl = URL.createObjectURL(blob)
-  const anchor = document.createElement("a")
+  const doc = buildResumePdf()
   const isoDate = new Date().toISOString().slice(0, 10)
-
-  anchor.href = blobUrl
-  anchor.download = `krishant-timilsina-resume-${isoDate}.txt`
-  document.body.append(anchor)
-  anchor.click()
-  anchor.remove()
-  URL.revokeObjectURL(blobUrl)
+  doc.save(`krishant-timilsina-resume-${isoDate}.pdf`)
 }

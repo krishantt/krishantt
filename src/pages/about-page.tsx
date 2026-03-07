@@ -1,4 +1,5 @@
 import { Download } from "lucide-react"
+import { useState } from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -15,10 +16,24 @@ import {
   getExperienceTotalDuration,
   personalInfo,
 } from "@/lib/personal-info"
-import { downloadResume } from "@/lib/resume"
 import { usePageMetadata } from "@/lib/metadata"
 
 export function AboutPage() {
+  const [isDownloadingResume, setIsDownloadingResume] = useState(false)
+
+  const handleDownloadResume = async () => {
+    if (isDownloadingResume) return
+
+    setIsDownloadingResume(true)
+
+    try {
+      const { downloadResume } = await import("@/lib/resume")
+      downloadResume()
+    } finally {
+      setIsDownloadingResume(false)
+    }
+  }
+
   usePageMetadata({
     title: "About",
     description: `Deep dive into ${personalInfo.basics.name}'s engineering experience, projects, education, leadership, and technical focus areas.`,
@@ -39,10 +54,11 @@ export function AboutPage() {
             variant="outline"
             size="sm"
             className="mt-2 w-fit"
-            onClick={downloadResume}
+            onClick={() => void handleDownloadResume()}
+            disabled={isDownloadingResume}
           >
             <Download className="size-4" />
-            Download Resume/CV
+            {isDownloadingResume ? "Preparing PDF..." : "Download Resume/CV"}
           </Button>
         </CardHeader>
       </Card>
