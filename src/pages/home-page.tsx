@@ -1,3 +1,10 @@
+import {
+  Github,
+  Instagram,
+  Linkedin,
+  Twitter,
+  type LucideIcon,
+} from "lucide-react"
 import { Link } from "react-router-dom"
 
 import { Badge } from "@/components/ui/badge"
@@ -14,11 +21,33 @@ import { getAllPosts } from "@/lib/blog"
 import { usePageMetadata } from "@/lib/metadata"
 import { formatDate } from "@/utils/format-date"
 
-const socialLinks = [
-  { label: "Instagram", href: "https://www.instagram.com/krishtimil/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/krishtimil/" },
-  { label: "GitHub", href: "https://github.com/krishantt" },
-  { label: "Twitter", href: "https://twitter.com/krishtimill" },
+type SocialLink = {
+  label: string
+  href: string
+  icon: LucideIcon
+}
+
+const socialLinks: SocialLink[] = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/krishtimil/",
+    icon: Instagram,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/krishtimil/",
+    icon: Linkedin,
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/krishantt",
+    icon: Github,
+  },
+  {
+    label: "Twitter",
+    href: "https://twitter.com/krishtimill",
+    icon: Twitter,
+  },
 ]
 
 export function HomePage() {
@@ -60,9 +89,16 @@ export function HomePage() {
         </CardContent>
         <CardFooter className="flex flex-wrap gap-2">
           {socialLinks.map((item) => (
-            <Button key={item.label} asChild variant="ghost" size="sm">
-              <a href={item.href} target="_blank" rel="noreferrer">
-                {item.label}
+            <Button key={item.label} asChild variant="ghost" size="icon">
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={item.label}
+                title={item.label}
+              >
+                <item.icon className="size-4" aria-hidden="true" />
+                <span className="sr-only">{item.label}</span>
               </a>
             </Button>
           ))}
