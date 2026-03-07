@@ -51,14 +51,13 @@ export function AboutPage() {
             {personalInfo.basics.summary}
           </CardDescription>
           <Button
-            variant="outline"
             size="sm"
             className="mt-2 w-fit"
             onClick={() => void handleDownloadResume()}
             disabled={isDownloadingResume}
           >
             <Download className="size-4" />
-            {isDownloadingResume ? "Preparing PDF..." : "Download Resume/CV"}
+            {isDownloadingResume ? "Preparing PDF..." : "Download Resume"}
           </Button>
         </CardHeader>
       </Card>
