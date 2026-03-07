@@ -1,0 +1,5 @@
+export { AboutPage } from "@/pages/about-page"
+export { BlogIndexPage } from "@/pages/blog-index-page"
+export { BlogPostPage } from "@/pages/blog-post-page"
+export { HomePage } from "@/pages/home-page"
+export { NotFoundPage } from "@/pages/not-found-page"
