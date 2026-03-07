@@ -141,6 +141,10 @@
     @apply text-sm text-card-foreground;
   }
 
+  .prose-content blockquote {
+    @apply border-l-4 border-border pl-4 text-muted-foreground italic;
+  }
+
   .prose-content ul,
   .prose-content ol {
     @apply flex list-inside flex-col gap-1 text-muted-foreground;
