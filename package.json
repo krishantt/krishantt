@@ -6,9 +6,10 @@
   "packageManager": "pnpm@10.30.3",
   "scripts": {
     "sitemap": "node scripts/generate-sitemap.mjs",
-    "predev": "pnpm sitemap",
+    "reading-time": "node scripts/generate-reading-times.mjs",
+    "predev": "pnpm sitemap && pnpm reading-time",
     "dev": "vite",
-    "prebuild": "pnpm sitemap",
+    "prebuild": "pnpm sitemap && pnpm reading-time",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
