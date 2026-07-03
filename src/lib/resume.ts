@@ -38,11 +38,9 @@ type ConnectionPart = {
 }
 
 const COMPUTER_MODERN_SOURCES = {
-  normal:
-    "https://unpkg.com/computer-modern@0.1.3/fonts/cmu-serif-500-roman.ttf",
-  bold: "https://unpkg.com/computer-modern@0.1.3/fonts/cmu-serif-700-roman.ttf",
-  italic:
-    "https://unpkg.com/computer-modern@0.1.3/fonts/cmu-serif-500-italic.ttf",
+  normal: "/fonts/CMUSerif-Regular.ttf",
+  bold: "/fonts/CMUSerif-Bold.ttf",
+  italic: "/fonts/CMUSerif-Italic.ttf",
 } as const
 
 let computerModernReadyPromise: Promise<void> | null = null
