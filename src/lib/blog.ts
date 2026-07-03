@@ -22,9 +22,27 @@ const postModules = import.meta.glob<PostModule>("../content/posts/*.mdx", {
   eager: true,
 })
 
-function estimateReadingTime(title: string, summary: string) {
-  const words = `${title} ${summary}`.trim().split(/\s+/).length
-  return Math.max(1, Math.round(words / 40))
+const postSources = import.meta.glob<string>("../content/posts/*.mdx", {
+  eager: true,
+  query: "?raw",
+  import: "default",
+})
+
+const AVERAGE_WORDS_PER_MINUTE = 200
+
+function estimateReadingTime(source: string) {
+  const words = source
+    .replace(/export const meta\s*=\s*{[\s\S]*?\n}\n?/, "")
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`]*`/g, "")
+    .replace(/!\[.*?\]\(.*?\)/g, "")
+    .replace(/\[([^\]]*)\]\(.*?\)/g, "$1")
+    .replace(/[#>*_~-]/g, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length
+
+  return Math.max(1, Math.round(words / AVERAGE_WORDS_PER_MINUTE))
 }
 
 const allPosts = Object.entries(postModules)
@@ -35,10 +53,7 @@ const allPosts = Object.entries(postModules)
       ...module.meta,
       slug,
       Content: module.default,
-      readingTimeMinutes: estimateReadingTime(
-        module.meta.title,
-        module.meta.summary
-      ),
+      readingTimeMinutes: estimateReadingTime(postSources[path]),
     } satisfies BlogPost
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
