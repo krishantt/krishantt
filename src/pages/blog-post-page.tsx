@@ -28,6 +28,20 @@ export function BlogPostPage() {
       ? {
           title: post.title,
           description: post.summary,
+          jsonLd: {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.summary,
+            datePublished: post.date,
+            keywords: post.tags.join(", "),
+            author: {
+              "@type": "Person",
+              name: "Krishant Timilsina",
+              url: "https://krishant.com.np/",
+            },
+            url: `https://krishant.com.np/blog/${post.slug}`,
+          },
         }
       : {
           title: "Post not found",

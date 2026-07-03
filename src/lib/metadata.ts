@@ -7,7 +7,10 @@ const DEFAULT_DESCRIPTION =
 type PageMetadata = {
   title?: string
   description?: string
+  jsonLd?: object
 }
+
+const JSON_LD_ELEMENT_ID = "page-jsonld"
 
 function upsertMetaTag(attribute: "name" | "property", key: string) {
   const selector = `meta[${attribute}='${key}']`
@@ -23,7 +26,7 @@ function upsertMetaTag(attribute: "name" | "property", key: string) {
   return meta as HTMLMetaElement
 }
 
-export function usePageMetadata({ title, description }: PageMetadata) {
+export function usePageMetadata({ title, description, jsonLd }: PageMetadata) {
   useEffect(() => {
     const resolvedDescription = description ?? DEFAULT_DESCRIPTION
     const resolvedTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME
@@ -47,5 +50,20 @@ export function usePageMetadata({ title, description }: PageMetadata) {
       "content",
       resolvedDescription
     )
-  }, [title, description])
+
+    const existingScript = document.getElementById(JSON_LD_ELEMENT_ID)
+    existingScript?.remove()
+
+    if (jsonLd) {
+      const script = document.createElement("script")
+      script.type = "application/ld+json"
+      script.id = JSON_LD_ELEMENT_ID
+      script.textContent = JSON.stringify(jsonLd)
+      document.head.appendChild(script)
+    }
+
+    return () => {
+      document.getElementById(JSON_LD_ELEMENT_ID)?.remove()
+    }
+  }, [title, description, jsonLd])
 }
