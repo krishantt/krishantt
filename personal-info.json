@@ -76,22 +76,22 @@
       "org": "Lelapa AI",
       "roles": [
         {
-          "title": "Full Stack Developer",
+          "title": "Full Stack/ Platform Engineer",
           "employmentType": "Contract",
           "location": "Remote",
           "start": { "year": 2025, "month": 1 },
           "points": [
+            "Lead infrastructure migration efforts, provisioning and managing cloud resources with Terraform and Kubernetes.",
             "Deliver full solutions end-to-end that build on Lelapa's existing products and technical estate.",
             "Introduce and implement unit and functional testing to uphold platform quality.",
-            "Communicate technical decisions and key implementation details with the team.",
-            "Collaborate with engineers and the product manager to deliver high-value work for the business and customers."
+            "Collaborate with engineers and the product manager to deliver high-value platform work for the business and customers."
           ],
           "skills": [
+            "Python",
+            "K8s",
+            "Terraform",
             "Django",
-            "Amazon Web Services (AWS)",
-            "React",
-            "HTMX",
-            "Alpine.js",
+            "FastAPI3",
             "Testing"
           ]
         },
@@ -153,9 +153,10 @@
     {
       "title": "Bachelor of Engineering, Computer Science",
       "place": "Pulchowk Campus",
-      "period": "2022 - Present",
+      "period": "2022 - 2026",
       "details": [
-        "Minor project: building a serverless platform.",
+        "Major Project: Dual-verifiable Federated Leaning using ZKPs.",
+        "Minor project: Built a serverless platform.",
         "Ranked in the top 0.8% among 13,000 entrance applicants."
       ]
     },
@@ -195,7 +196,7 @@
     }
   ],
   "leadership": [
-    "Coordinator @ PDSC (Aug 2022 - Present): Led a team of 50 and organized workshops for 300+ attendees.",
+    "Coordinator @ PDSC (Aug 2022 - May 2025): Led a team of 50 and organized workshops for 300+ attendees.",
     "Technical Lead @ IEEE Pulchowk (Apr 2024 - Dec 2024): Managed technical execution for club initiatives.",
     "Graphics Lead @ Hult Prize IOE (Sep 2023 - Apr 2024): Designed event visuals and communication assets."
   ],
