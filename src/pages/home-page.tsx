@@ -3,8 +3,8 @@ import {
   Instagram,
   Linkedin,
   Twitter,
-  type LucideIcon,
-} from "lucide-react"
+} from "@hugeicons/core-free-icons"
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react"
 import { Link } from "react-router-dom"
 
 import { Badge } from "@/components/ui/badge"
@@ -24,7 +24,7 @@ import { formatDate } from "@/utils/format-date"
 type SocialLink = {
   label: string
   href: string
-  icon: LucideIcon
+  icon: IconSvgElement
 }
 
 const socialLinks: SocialLink[] = [
@@ -95,7 +95,11 @@ export function HomePage() {
                 aria-label={item.label}
                 title={item.label}
               >
-                <item.icon className="size-4" aria-hidden="true" />
+                <HugeiconsIcon
+                  icon={item.icon}
+                  className="size-4"
+                  aria-hidden="true"
+                />
                 <span className="sr-only">{item.label}</span>
               </a>
             </Button>
