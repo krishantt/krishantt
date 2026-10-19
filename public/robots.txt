@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Machine-readable summary for AI agents
+# https://krishant.com.np/llms.txt
+
 Sitemap: https://krishant.com.np/sitemap.xml

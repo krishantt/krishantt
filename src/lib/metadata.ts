@@ -8,9 +8,11 @@ type PageMetadata = {
   title?: string
   description?: string
   jsonLd?: object
+  markdownPath?: string
 }
 
 const JSON_LD_ELEMENT_ID = "page-jsonld"
+const MARKDOWN_LINK_ID = "page-markdown"
 
 function upsertMetaTag(attribute: "name" | "property", key: string) {
   const selector = `meta[${attribute}='${key}']`
@@ -26,7 +28,12 @@ function upsertMetaTag(attribute: "name" | "property", key: string) {
   return meta as HTMLMetaElement
 }
 
-export function usePageMetadata({ title, description, jsonLd }: PageMetadata) {
+export function usePageMetadata({
+  title,
+  description,
+  jsonLd,
+  markdownPath,
+}: PageMetadata) {
   useEffect(() => {
     const resolvedDescription = description ?? DEFAULT_DESCRIPTION
     const resolvedTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME
@@ -54,6 +61,17 @@ export function usePageMetadata({ title, description, jsonLd }: PageMetadata) {
     const existingScript = document.getElementById(JSON_LD_ELEMENT_ID)
     existingScript?.remove()
 
+    document.getElementById(MARKDOWN_LINK_ID)?.remove()
+
+    if (markdownPath) {
+      const link = document.createElement("link")
+      link.id = MARKDOWN_LINK_ID
+      link.rel = "alternate"
+      link.type = "text/markdown"
+      link.href = markdownPath
+      document.head.appendChild(link)
+    }
+
     if (jsonLd) {
       const script = document.createElement("script")
       script.type = "application/ld+json"
@@ -64,6 +82,7 @@ export function usePageMetadata({ title, description, jsonLd }: PageMetadata) {
 
     return () => {
       document.getElementById(JSON_LD_ELEMENT_ID)?.remove()
+      document.getElementById(MARKDOWN_LINK_ID)?.remove()
     }
-  }, [title, description, jsonLd])
+  }, [title, description, jsonLd, markdownPath])
 }

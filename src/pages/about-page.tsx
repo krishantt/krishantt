@@ -37,6 +37,7 @@ export function AboutPage() {
   usePageMetadata({
     title: "About",
     description: `Deep dive into ${personalInfo.basics.name}'s engineering experience, projects, education, leadership, and technical focus areas.`,
+    markdownPath: "/about.md",
   })
 
   return (

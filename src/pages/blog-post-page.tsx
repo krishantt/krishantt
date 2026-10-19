@@ -28,6 +28,7 @@ export function BlogPostPage() {
       ? {
           title: post.title,
           description: post.summary,
+          markdownPath: `/blog/${post.slug}.md`,
           jsonLd: {
             "@context": "https://schema.org",
             "@type": "BlogPosting",

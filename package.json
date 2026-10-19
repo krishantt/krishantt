@@ -7,9 +7,10 @@
   "scripts": {
     "sitemap": "node scripts/generate-sitemap.mjs",
     "reading-time": "node scripts/generate-reading-times.mjs",
-    "predev": "pnpm sitemap && pnpm reading-time",
+    "llms": "node scripts/generate-llms.mjs",
+    "predev": "pnpm sitemap && pnpm reading-time && pnpm llms",
     "dev": "vite",
-    "prebuild": "pnpm sitemap && pnpm reading-time",
+    "prebuild": "pnpm sitemap && pnpm reading-time && pnpm llms",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",

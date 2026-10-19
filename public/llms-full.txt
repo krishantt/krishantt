@@ -1,0 +1,659 @@
+# Krishant Timilsina - Full Site Content
+
+Source: https://krishant.com.np
+
+# Krishant Timilsina
+
+Software Engineer based in Lalitpur, Nepal.
+
+I am a software engineer who loves turning complex ideas into practical products. I work across full-stack systems, AI-driven tooling, and developer experience, with a strong bias for clarity, shipping, and long-term maintainability.
+
+- Email: krishtimil@gmail.com
+- Website: https://krishant.com.np
+- LinkedIn: https://www.linkedin.com/in/krishtimil/
+- GitHub: https://github.com/krishantt
+- Instagram: https://www.instagram.com/krishtimil/
+- Twitter: https://twitter.com/krishtimill
+
+## Focus areas
+
+- Platform Engineering
+- Kubernetes & Cloud-Native Infrastructure
+- Distributed Systems Architecture
+
+## Skills
+
+### Languages
+
+- Python
+- TypeScript / JavaScript
+- Go
+- C/C++
+- SQL
+- Bash
+
+### Frameworks
+
+- FastAPI
+- Django
+- React
+- Next.js
+- HTMX
+- Alpine.js
+
+### DevOps
+
+- Linux
+- Docker
+- Kubernetes
+- OpenShift
+- ArgoCD (GitOps)
+- Gateway API
+- CI/CD pipelines
+- Caddy
+
+## Experience
+
+### Lelapa AI
+
+#### Full Stack/ Platform Engineer (Jan 2025 - Present, Contract, Remote)
+
+- Lead infrastructure migration efforts, provisioning and managing cloud resources with Terraform and Kubernetes.
+- Deliver full solutions end-to-end that build on Lelapa's existing products and technical estate.
+- Introduce and implement unit and functional testing to uphold platform quality.
+- Collaborate with engineers and the product manager to deliver high-value platform work for the business and customers.
+
+#### Frontend Developer (Aug 2024 - Dec 2024, Freelance)
+
+- Design and develop intuitive user interfaces for API key generation, rotation, and access control.
+- Implement secure authentication and authorization flows for API key management.
+- Co-manage platform delivery by proposing approaches and identifying key technical factors.
+
+### Himalayan Green Pvt. Ltd.
+
+#### Software Engineer (Dec 2024 - Jan 2025)
+
+- Built and maintained web and mobile experiences for himaligreen.com.
+
+### Sandbox Software Pvt. Ltd.
+
+#### Python Developer (Oct 2024 - Nov 2024)
+
+- Automated business workflows with computer vision systems.
+
+### Evakon Technologies
+
+#### Design Intern (Jun 2023 - Jul 2023)
+
+- Contributed to multiple design projects and sharpened visual communication skills.
+
+## Projects
+
+- [Voxel Engine](https://github.com/krishantt/voxel_engine): Minecraft-inspired engine for rendering 3D worlds with efficient voxel meshing.
+- [Binary Plan MLM](https://github.com/krishantt/binary-plan-mlm): Network marketing tree simulation using algorithmic structures such as AVL Trees and Kruskal's.
+- [Chess](https://github.com/bigya_01/chess_rl): Multiplayer chess with AI-backed logic and a custom interface built with SMFL graphics.
+- [Agrify](https://github.com/krishtimil/agrify): Flutter application built to simplify day-to-day work for farmers.
+
+## Education
+
+### Bachelor of Engineering, Computer Science
+
+- Pulchowk Campus (2022 - 2026)
+
+- Major Project: Dual-verifiable Federated Leaning using ZKPs.
+- Minor project: Built a serverless platform.
+- Ranked in the top 0.8% among 13,000 entrance applicants.
+
+### Grade 11/12, Science
+
+- SOS Herman Gmeiner Secondary School Gandaki (GPA: 3.54/4)
+
+### SEE
+
+- Global Collegiate School (GPA: 3.85/4)
+
+## Leadership
+
+- Coordinator @ PDSC (Aug 2022 - May 2025): Led a team of 50 and organized workshops for 300+ attendees.
+- Technical Lead @ IEEE Pulchowk (Apr 2024 - Dec 2024): Managed technical execution for club initiatives.
+- Graphics Lead @ Hult Prize IOE (Sep 2023 - Apr 2024): Designed event visuals and communication assets.
+
+## Certifications
+
+- Microdegree in AI & Machine Learning - Fusemachines
+- Azure AI Fundamentals - Microsoft
+
+## Awards
+
+- Best Presentation Award, Mobile Reuse Hackathon: Built a smart assistant for visually impaired users using old phones.
+- 2nd Runner-Up, MBM Ideax Hackathon: Built a platform preserving languages through community stories.
+
+## Languages
+
+- Nepali (Native)
+- English (Professional working)
+
+---
+
+# The Myth of Simplicity in Software Systems
+
+2026-03-08 | Tags: SoftwareEngineering, Complexity
+
+![chaos_monkey](/posts/images/simplicity.png)
+
+Software engineers often talk about simplicity as an ideal. We strive to build simple systems, write simple code, and design simple architectures. Simplicity is treated almost like a moral virtue in engineering culture.
+
+Yet if we observe real software systems over time, we see a different pattern. Systems almost always begin simple—and then inevitably become complex.
+
+This is not necessarily a failure of engineering discipline. In many cases, complexity is the natural outcome of solving real problems at scale. Understanding this dynamic is crucial for designing systems that can survive long-term evolution.
+
+---
+
+## The Beginning: Artificial Simplicity
+
+Most systems begin in a state of artificial simplicity.
+
+At the early stages of a project, constraints are minimal:
+
+- a small number of users
+- a small codebase
+- a single development team
+- a limited feature set
+
+In this environment, it is relatively easy to keep the architecture clean. A single application server, a single database, and a handful of services may be enough.
+
+Developers often interpret this early simplicity as proof that the architecture is fundamentally simple. But what they are really observing is a system that has not yet been exposed to real-world pressures.
+
+Over time, those pressures begin to accumulate.
+
+---
+
+## Essential vs Accidental Complexity
+
+Computer scientist Fred Brooks famously distinguished between essential complexity and accidental complexity.
+
+Essential complexity arises from the problem itself.
+
+For example:
+
+- financial systems must handle consistency and transactions
+- distributed systems must tolerate network failures
+- machine learning infrastructure must handle large datasets and GPU workloads
+
+These complexities are intrinsic to the domain.
+
+Accidental complexity, on the other hand, comes from the tools and abstractions we build around the problem:
+
+- poorly designed frameworks
+- unnecessary layers of abstraction
+- overengineered architectures
+
+Engineers often believe that if accidental complexity is removed, systems will remain simple. But this overlooks an important reality: essential complexity grows as systems evolve.
+
+A system serving ten users is fundamentally simpler than one serving ten million.
+
+---
+
+## The Microservices Temptation
+
+Few architectural trends illustrate the myth of simplicity better than microservices.
+
+Microservices are often adopted with the promise of simplifying large systems. By decomposing a monolithic application into smaller services, each component becomes easier to reason about.
+
+At least in theory.
+
+In practice, microservices trade one form of complexity for another.
+
+A monolith concentrates complexity within the codebase. Microservices distribute that complexity across the network.
+
+Instead of debugging a function call, engineers must now debug:
+
+- network latency
+- service discovery
+- distributed tracing
+- version mismatches
+- partial failures
+
+A simple architecture diagram with five services can conceal a complex operational reality.
+
+This does not mean microservices are inherently bad. In many cases they are the right solution. But they demonstrate a broader lesson: architectural decisions rarely eliminate complexity—they relocate it.
+
+---
+
+## The Problem of Leaky Abstractions
+
+Abstractions are the primary tool engineers use to manage complexity. Programming languages, frameworks, and infrastructure platforms all exist to hide lower-level details.
+
+But abstractions are never perfect.
+
+Joel Spolsky famously described this phenomenon as the Law of Leaky Abstractions: eventually, the underlying complexity reveals itself.
+
+For example:
+
+- ORMs promise to hide SQL, yet developers eventually need to understand database queries.
+- Kubernetes abstracts infrastructure, yet operators must still understand networking, storage, and container behavior.
+- Serverless platforms hide servers, yet performance and cold-start behavior still matter.
+
+Abstractions are extremely useful, but they cannot eliminate complexity entirely. They merely delay the moment when engineers must confront it.
+
+---
+
+## Conway’s Law and Organizational Complexity
+
+Software systems do not evolve in isolation. They evolve within organizations.
+
+Conway’s Law states:
+
+> Organizations design systems that mirror their communication structure.
+
+This means architecture often reflects team boundaries rather than purely technical considerations.
+
+A small team might maintain a monolith because communication is easy. A large organization with many teams might naturally evolve toward microservices because independent teams need clear ownership boundaries.
+
+As organizations grow, their software systems inherit the complexity of coordination, communication, and decision-making.
+
+In other words, organizational complexity becomes architectural complexity.
+
+---
+
+## The Inevitability of Growth
+
+One of the hardest lessons in software engineering is accepting that complexity is not always avoidable.
+
+A successful system must support:
+
+- more users
+- more features
+- more integrations
+- more engineers contributing to the codebase
+
+Each of these introduces new constraints.
+
+The real challenge is therefore not eliminating complexity but managing its growth.
+
+This requires:
+
+- clear architectural boundaries
+- strong observability and debugging tools
+- disciplined refactoring
+- thoughtful platform design
+
+Without these practices, complexity accumulates silently until the system becomes difficult to change.
+
+---
+
+## Simplicity as a Direction, Not a State
+
+Simplicity in software should not be understood as a permanent condition. It is better thought of as a direction.
+
+Engineers continuously push systems toward simpler designs through refactoring, better abstractions, and improved tooling. But the forces pushing toward complexity never disappear.
+
+New requirements, scale, and organizational change constantly reshape the system.
+
+The goal, therefore, is not to create a system that is permanently simple. The goal is to <strong> build systems that remain understandable even as they grow more complex</strong>.
+
+---
+
+## Further Reading
+
+- [The Mythical Man-Month by Frederick P. Brooks Jr.](https://en.wikipedia.org/wiki/The_Mythical_Man-Month)
+- [No Silver Bullet: Essence and Accidents of Software Engineering by Frederick P. Brooks Jr.](https://en.wikipedia.org/wiki/No_Silver_Bullet)
+- [The Law of Leaky Abstractions by Joel Spolsky](https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/)
+- [Conway's Law by Melvin Conway](https://www.melconway.com/Home/Conways_Law.html)
+- [Designing Data-Intensive Applications by Martin Kleppmann](https://dataintensive.net/)
+- [A Philosophy of Software Design by John Ousterhout](https://web.stanford.edu/~ouster/cgi-bin/book.php)
+
+---
+
+# When the System Fights Back: A Journey into Chaos Engineering
+
+2025-01-15 | Tags: DevOps, ChaosEngineering
+
+![chaos_monkey](/posts/images/chaos-monkey.webp)
+
+Let me set the stage. It's Black Friday, and our e-commerce platform is humming along, soaking in the adrenaline of record-breaking traffic. Dashboards were glowing, engineers cautiously sipping their coffee, trying not to jinx the magic. For a moment, it felt like we were invincible.
+
+Then, as if on cue, disaster struck. The error rate graph took a nosedive off a cliff. Orders froze mid-flight. Twitter, the unkindest of mirrors, erupted with complaints. "What now?" Ravi, my perpetually skeptical colleague, asked. His voice carried the weariness of someone who'd seen too many systems fail spectacularly.
+
+The post-mortem wasn't pretty. A cascading failure in an external payment gateway had rippled through our system. The result? A glorified pile-up of transactions waiting for a miracle. "How did we miss this?" someone muttered, and for once, no one had an answer.
+
+"Because," I finally said, "we keep assuming the universe plays fair. Clearly, it doesn't."
+
+Enter chaos engineering - the art of deliberately creating disaster to build stronger systems. I'd read about Netflix's Chaos Monkey, a tool designed to randomly kill servers in production, and I couldn't help but admire the audacity. What if we could turn our system into a fighter - one that could take a punch and still come out swinging?
+
+The heart of chaos engineering lies in controlled chaos. It's not just about breaking things; it's about breaking them with intent. The concept itself is straightforward: you simulate failures in a controlled environment and observe how your system behaves. But here's the catch - it's a lot harder than it sounds.
+
+"So, what? We just... start breaking stuff?" Ravi asked when I pitched the idea.
+
+"Exactly," I said, grinning. "But, you know, scientifically."
+
+![(Image Source: How chaos engineering will guarantee the resilience of your services)](/posts/images/chaos-diagram.webp)
+
+We started with a replica of our production environment - a Kubernetes cluster spinning away like a miniature universe. If Kubernetes is new to you, think of it as an orchestration platform for containers (tiny, self-sufficient environments where your apps run). Within this cluster, we created our sandbox: pods, namespaces, and service meshes ready to face the chaos.
+
+To introduce the madness, I picked Chaos Mesh - a tool that specializes in orchestrating controlled experiments in Kubernetes. It works by defining chaos scenarios in YAML files.
+
+Our first experiment was simple: inject 500ms latency into the payment gateway service. The goal? Test whether our retry mechanisms and circuit breakers would hold up. Here's how it looked in code:
+
+```yaml
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: payment-gateway-latency
+spec:
+  action: delay
+  mode: one
+  selector:
+    labelSelectors:
+      app: payment-gateway
+  delay:
+    latency: "500ms"
+  duration: "30s"
+```
+
+When I hit deploy, Ravi leaned in. "So, what happens if this crashes everything?"
+
+"Then we fix it," I said. "And I owe you lunch."
+
+The system initially seemed fine. Hystrix, our circuit breaker library, kicked in like a pro, cutting off failing requests. But then... the unexpected happened. Our retry logic went berserk, spawning an avalanche of redundant requests. Instead of handling the delay gracefully, we'd created a self-inflicted DDoS (Distributed Denial-of-Service). Ravi just raised an eyebrow and said, "You're really bad at keeping lunch money."
+
+Fixing the fallout was a journey of discovery. First, we revamped our retry logic with exponential backoff - a strategy that makes each retry wait progressively longer, like a kid testing a parent's patience. Then, we fine-tuned our load balancer to handle spikes more gracefully. Finally, we expanded our observability stack, adding metrics for retries, circuit breaker activity, and overall system health.
+
+By the time we ran the experiment again, the system behaved like a seasoned boxer. Latency? No problem. The retries worked without creating chaos, circuit breakers stepped in where needed, and the load balancer handled the traffic without breaking a sweat. Ravi even bought me lunch - though he made me pick the cheapest place in town.
+
+Chaos engineering taught me more than I expected. It's not just a technical exercise; it's a mindset. It's about questioning assumptions, confronting fears, and embracing failure as a teacher. We integrated chaos experiments into our CI/CD pipeline, turning them into regular tests. Post-mortems became celebrations of what we'd learned, rather than finger-pointing sessions. And our systems? Stronger than ever.
+
+But chaos engineering isn't just about the tech. It's about the culture you build around it. It's about teaching your team to think like detectives, to dig into logs and metrics with curiosity instead of dread. It's about laughing at the absurdity of breaking things on purpose and marveling at how much you learn when you do.
+
+So here's my challenge to you: embrace the chaos. Whether you're running a small app or a massive platform, the principles hold true. Build your gladiator arena, unleash the chaos, and watch your system evolve. It's scary, sure. But it's also exhilarating. _Because resilience isn't something you stumble into - it's something you engineer, one glorious failure at a time._
+
+## Further Reading:
+
+- [Principles of Chaos Engineering (The Official Site)](https://principlesofchaos.org/)
+- [Breaking Things on Purpose Podcast by Gremlin](https://www.gremlin.com/podcast)
+- [The Netflix Tech Blog: Chaos Engineering](https://netflixtechblog.com/tagged/chaos-engineering)
+- [A Guide to Chaos Engineering with Kubernetes](https://opensource.com/article/21/5/kubernetes-chaos)
+- [Resilience Engineering and Chaos (InfoQ)](http://www.infoq.com/chaos-engineering/)
+- [O'Reilly: Chaos Engineering Book](https://www.oreilly.com/library/view/chaos-engineering/9781492043850/)
+
+---
+
+# Introduction to Golang
+
+2024-06-01 | Tags: 60DaysOfLearning2024, LearningWithLeapfrog, Go
+
+## Introduction
+
+**This is a part of #60DaysOfLearning challenge by Leapfrog.**
+
+I want to start my journey with DevOps. So, I am starting with learning Go. I will explore Go in depth for this week and move on to more tools.
+
+Go has become a de facto language for cloud orchestration and software in the larger world.(from Kubernetes to Docker). I used to do Python. But seems like Python has some problems at scale, from running out of memory to The Global Interpreter Lock|(GIL) preventing true multi threading. And, the runtime errors due to dynamic typing are a bit of pain.
+
+This is a collection of things I learned today.
+
+This post assumes you have knowledge of at least one programming language, preferably C and/or Python.
+
+## Package Management
+
+Go divides programs into packages, and all go files in a directory must belong to the same package.
+
+Declaring a package is as simple as the following:
+
+```go
+package main
+```
+
+`package main` is special. All other package names declare a package that must be imported into another package to be used. Package main will declare `func main()`, which is the starting point for a binary to run.
+
+Let's say you have a directory structure as follows:
+
+```go
+mypackage/
+	file1.go
+	file2.go
+```
+
+Then, `file1.go` and `file2.go` should have the following:
+
+```go
+package main
+```
+
+When `mypackage` is imported by another package, it will include everything declared in all files in the `mypackage` directory.
+
+To import a package, you basically have two general types.Standard library packages stand out because they don't list some repository information in their path, such as the following:
+
+```go
+"fmt"
+"encoding/json"
+"archive/zip"
+```
+
+All other packages generally have repository information preceding them, as follows:
+
+```go
+"github.com/johnsiilver/golib/lru"
+"github.com/kylelemons/godebug/pretty"
+```
+
+And every imported package must be used at least once, otherwise if you need to do a _side effects_ import, in which just loading the package causes something to happen, but you don't use the package. This should always be done in package main and requires prepending with an underscore (`_`):
+
+```go
+package main
+import (
+  "fmt"
+  _ "github.com/kylelemons/godebug/pretty"//Just an example
+)
+func main() {
+ fmt.Println("Hello, playground")
+}
+```
+
+## A basic Hello World program
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	hello := "Hello World!"
+	fmt.Println(hello)
+}
+```
+
+Here := means create a variable and assign the string value to it. You could use `var hello` to just initialize. Go syntax is similar to C and scopes are defined with curly braces.
+
+## Zero Values
+
+In some older languages, a variable declaration without an assignment has an unknown value. This is because the program creates a place in memory to store the value but doesn't put anything in it. So, the bits representing the value are set to whatever happened to be in that memory space before you created the variable. But in Go, declaring a variable without an assignment automatically assigns a value called the _zero value_.
+
+![Zero Values in Go](/posts/images/intro-to-go.png)
+
+## Function/statement variable should be used
+
+The rule here is that if you create a variable within a function or statement, it must be used. This is much for the same reason as package imports; declaring a variable that isn't used is almost always a mistake.
+
+This can be relaxed in much the same way as an import, using `_`.
+
+```go
+_ = someVar
+```
+
+## Looping, Branching, and Functions
+
+As it is just some syntactical changes, I will not be discussing these in the post.
+
+However, as in Python, functions in Go supports multiple variables to return.
+
+```go
+package main
+
+import "fmt"
+
+func divide(num, div int) (res, rem int) {
+	result = num / div
+	remainder = num % div
+	return res, rem
+}
+
+func main() {
+	result, remainder := divide(3, 2)
+	fmt.Printf("Result: %d, Remainder %d", result, remainder)
+}
+```
+
+### Varidac Arguments
+
+A _variadic argument_ is when you want to provide 0 to infinite arguments. A good example would be calculating a sum of integers.
+
+Here is an example:
+
+```go
+package main
+
+import "fmt"
+
+func sum(nums ...int) {
+    total := 0
+    for _, num := range nums {
+        total += num
+    }
+    fmt.Println(total)
+}
+
+func main() {
+    sum(1, 2)
+    sum(1, 2, 3)
+}
+
+```
+
+In this example, `nums` is a slice of integers. The `range` keyword is used to iterate over each element of the `nums` .
+
+### Anonymous Functions
+
+Go has a concept of **anonymous functions**, which means a function without a name (also called a function closure).
+
+```go
+func main() {
+	result := func(word1, word2 string) string {
+							return word1 + " " + word2
+				 }("hello", "world")
+	fmt.Println(result)
+}
+```
+
+### Defining Private and Public
+
+Just remember a rule: To be public, the constant/variable/function/method must simply start with an uppercase letter. If it starts with a lowercase letter, it is private.
+
+## Structures, Methods and Pointers
+
+Go supports the use of pointers, as every call to a function is call by value, it is necessary. However, in most use cases, we need not go overboard with pointers. Structures and methods are defined as the code example below.
+
+```go
+type Record struct{
+ Name string
+ Age int
+}
+// a method for the struct
+func (r Record) String() string {
+ return fmt.Sprintf("%s,%d", r.Name, r.Age)
+}
+```
+
+And, Go doesn't provide any specialized code for that, instead, we use a constructor pattern using simple functions.
+
+```go
+func NewRecord(name string, age int) (*Record, error) {
+	if name == "" {
+		return nil, fmt.Errorf("name cannot be the empty string")
+	}
+	if age <= 0 {
+		return nil, fmt.Errorf("age cannot be <= 0")
+	}
+	return &Record{Name: name, Age: age}, nil
+}
+```
+
+This can be then implemented in code as:
+
+```go
+rec, err := NewRecord("John Doak", 100)
+ if err != nil {
+ return err
+}
+```
+
+We will explore errors in the coming days.
+
+## Understanding Interface in GO
+
+In Go, an interface is a set of method signatures. When a type provides the definition for all the methods in the interface, it is said to implement the interface. It provides a way to achieve runtime polymorphism. An interface can be defined using the `type` keyword, followed by the name of the interface and the `interface` keyword.
+
+Here is an example:
+
+```go
+type Writer interface {
+	Write([]byte) (int, error)
+}
+
+```
+
+In this example, any type that defines a method `Write` with the exact signature is said to satisfy the `Writer` interface. Interfaces can be embedded in other interfaces to create composite interfaces.
+
+```go
+type Reader interface {
+	Read([]byte) (int, error)
+}
+
+type Writer interface {
+	Write([]byte) (int, error)
+}
+
+type ReadWriter interface {
+	Reader
+	Writer
+}
+
+```
+
+In this case, any type that satisfies both `Reader` and `Writer` interfaces satisfies the `ReadWriter` interface. Remember, Go interfaces are implemented implicitly, so there's no need to explicitly declare that a type implements an interface.
+
+## Conclusion
+
+As we've explored in this post, understanding Go's package management, functions, loops, and interfaces provides a solid foundation for diving deeper into the language in the further days. Feel free to suggest changes in the article and look out for more posts.
+
+1. **Packages:** every file in a directory belongs to one package.
+2. **Zero values:** uninitialized variables are still valid.
+3. **Short declarations:** `:=` keeps local code concise.
+4. **Interfaces:** implemented implicitly, no extra keywords.
+
+## Practical examples
+
+```go
+package main
+
+import "fmt"
+
+func divide(num, div int) (int, int) {
+  return num / div, num % div
+}
+
+func main() {
+  result, remainder := divide(3, 2)
+  fmt.Printf("Result: %d, Remainder: %d\n", result, remainder)
+}
+```
+
+```go
+type Writer interface {
+  Write([]byte) (int, error)
+}
+```
+
+## Takeaway
+
+Go gives you enough abstraction to move fast and enough constraints to avoid accidental complexity. For systems work, that balance is a huge advantage.
