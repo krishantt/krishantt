@@ -13,6 +13,9 @@ dist-ssr
 .wrangler
 *.local
 
+# Web Bot Auth signing key (never commit)
+.webbotauth-private.jwk.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

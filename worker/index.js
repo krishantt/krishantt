@@ -15,6 +15,11 @@ const STATIC_OVERRIDES = {
     contentType: "application/json",
     cacheControl: "public, max-age=3600",
   },
+  "/.well-known/http-message-signatures-directory": {
+    path: "/http-message-signatures-directory.json",
+    contentType: "application/json",
+    cacheControl: "public, max-age=3600",
+  },
 }
 
 const SITE = "https://krishant.com.np"
