@@ -1,0 +1,40 @@
+{
+  "name": "Krishant Timilsina Site Agent",
+  "description": "Read-only agent that helps other agents find Krishant Timilsina's profile, resume and blog content. It answers with links to the site's machine-readable resources.",
+  "url": "https://krishant.com.np/a2a",
+  "version": "1.0.0",
+  "supportedInterfaces": [
+    {
+      "url": "https://krishant.com.np/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "organization": "Krishant Timilsina",
+    "url": "https://krishant.com.np/"
+  },
+  "documentationUrl": "https://krishant.com.np/llms.txt",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "skills": [
+    {
+      "id": "profile",
+      "name": "Profile lookup",
+      "description": "Summarizes Krishant Timilsina's background and links to his full profile, resume and contact details.",
+      "tags": ["profile", "resume", "bio", "contact"],
+      "examples": ["Who is Krishant Timilsina?", "How can I contact Krishant?"]
+    },
+    {
+      "id": "content-index",
+      "name": "Content index",
+      "description": "Lists where to find Krishant's blog posts and the site's machine-readable content.",
+      "tags": ["blog", "content", "llms.txt"],
+      "examples": ["What has Krishant written about?", "Where is the machine-readable content?"]
+    }
+  ]
+}

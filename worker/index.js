@@ -10,7 +10,35 @@ const STATIC_OVERRIDES = {
     path: "/api-catalog.json",
     contentType: "application/linkset+json",
   },
+  "/.well-known/agent-card.json": {
+    path: "/agent-card.json",
+    contentType: "application/json",
+    cacheControl: "public, max-age=3600",
+  },
 }
+
+const SITE = "https://krishant.com.np"
+
+const ANSWERS = [
+  {
+    match: /contact|email|hire|reach/i,
+    text: `Email: krishtimil@gmail.com. Profile: ${SITE}/about.md.`,
+  },
+  {
+    match: /resume|cv|curriculum/i,
+    text: `Resume (PDF): ${SITE}/docs/resume.pdf. Profile: ${SITE}/about.md.`,
+  },
+  {
+    match: /blog|post|wrote|written|article|writing/i,
+    text: `All posts: ${SITE}/blog.md. Full text: ${SITE}/llms-full.txt.`,
+  },
+  {
+    match: /experience|work|job|career|skill/i,
+    text: `Krishant is a software engineer working across full-stack systems, AI tooling and platform/DevOps. Details: ${SITE}/about.md.`,
+  },
+]
+
+const DEFAULT_ANSWER = `Krishant Timilsina is a software engineer based in Lalitpur, Nepal. Full profile: ${SITE}/about.md. Site index: ${SITE}/llms.txt. Blog: ${SITE}/blog.md.`
 
 const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no"
 
@@ -31,7 +59,16 @@ export default {
 
     if (override) {
       const asset = await env.ASSETS.fetch(new URL(override.path, url))
-      return withAgentHeaders(asset, url, override.contentType)
+      return withAgentHeaders(
+        asset,
+        url,
+        override.contentType,
+        override.cacheControl
+      )
+    }
+
+    if (url.pathname === "/a2a") {
+      return handleA2A(request)
     }
 
     // The SPA fallback must not answer discovery probes with HTML.
@@ -69,16 +106,68 @@ export default {
   },
 }
 
-function withAgentHeaders(response, url, contentType) {
+function withAgentHeaders(response, url, contentType, cacheControl) {
   const headers = new Headers(response.headers)
 
   if (contentType) headers.set("Content-Type", contentType)
+  if (cacheControl) headers.set("Cache-Control", cacheControl)
   applyAgentHeaders(headers, url)
 
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
     headers,
+  })
+}
+
+async function handleA2A(request) {
+  if (request.method !== "POST") {
+    return new Response("Method Not Allowed\n", {
+      status: 405,
+      headers: { Allow: "POST" },
+    })
+  }
+
+  let body
+  try {
+    body = await request.json()
+  } catch {
+    return rpcError(null, -32700, "Parse error")
+  }
+
+  // v1.0 uses "SendMessage"; v0.3 used "message/send".
+  const legacy = body?.method === "message/send"
+  if (body?.method !== "SendMessage" && !legacy) {
+    return rpcError(body?.id ?? null, -32601, "Method not found")
+  }
+
+  const parts = body?.params?.message?.parts
+  const prompt = (Array.isArray(parts) ? parts : [])
+    .map((part) => part?.text ?? "")
+    .join(" ")
+
+  const text = ANSWERS.find((entry) => entry.match.test(prompt))?.text ?? DEFAULT_ANSWER
+  const messageId = crypto.randomUUID()
+
+  return Response.json({
+    jsonrpc: "2.0",
+    id: body.id ?? null,
+    result: legacy
+      ? {
+          kind: "message",
+          messageId,
+          role: "agent",
+          parts: [{ kind: "text", text }],
+        }
+      : { message: { messageId, role: "ROLE_AGENT", parts: [{ text }] } },
+  })
+}
+
+function rpcError(id, code, message) {
+  return Response.json({
+    jsonrpc: "2.0",
+    id,
+    error: { code, message },
   })
 }
 
@@ -93,6 +182,7 @@ function applyAgentHeaders(headers, url) {
       `<${url.origin}/openapi.json>; rel="service-desc"; type="application/vnd.oai.openapi+json"`,
       `<${url.origin}/llms.txt>; rel="service-doc"; type="text/plain"`,
       `<${url.origin}/llms-full.txt>; rel="describedby"; type="text/plain"`,
+      `<${url.origin}/.well-known/agent-card.json>; rel="agent-card"; type="application/json"`,
     ].join(", ")
   )
 }
