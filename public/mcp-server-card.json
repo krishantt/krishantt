@@ -8,6 +8,8 @@
   },
   "description": "Read-only agent that answers questions about Krishant Timilsina from his public site content.",
   "websiteUrl": "https://krishant.com.np/llms.txt",
+  "endpoint": "https://krishant.com.np/mcp",
+  "tools": ["ask_about_krishant"],
   "transports": [
     {
       "type": "streamable-http",
