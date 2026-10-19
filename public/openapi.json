@@ -1,0 +1,89 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Krishant Timilsina site content API",
+    "version": "1.0.0",
+    "description": "Read-only API for the content on krishant.com.np. Every endpoint returns HTML by default; send `Accept: text/markdown` to receive a Markdown representation.",
+    "contact": {
+      "name": "Krishant Timilsina",
+      "url": "https://krishant.com.np/about",
+      "email": "krishtimil@gmail.com"
+    },
+    "license": {
+      "name": "All rights reserved"
+    }
+  },
+  "servers": [{ "url": "https://krishant.com.np" }],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Portfolio landing page",
+        "operationId": "getHome",
+        "responses": {
+          "200": {
+            "description": "Home page content",
+            "content": {
+              "text/html": { "schema": { "type": "string" } },
+              "text/markdown": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/about": {
+      "get": {
+        "summary": "Profile, experience, skills, education and projects",
+        "operationId": "getAbout",
+        "responses": {
+          "200": {
+            "description": "About page content",
+            "content": {
+              "text/html": { "schema": { "type": "string" } },
+              "text/markdown": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/blog": {
+      "get": {
+        "summary": "Blog index, newest first",
+        "operationId": "listPosts",
+        "responses": {
+          "200": {
+            "description": "All blog posts",
+            "content": {
+              "text/html": { "schema": { "type": "string" } },
+              "text/markdown": { "schema": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "/blog/{slug}": {
+      "get": {
+        "summary": "A single blog post",
+        "operationId": "getPost",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "Post slug, e.g. `intro-to-go`",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Blog post content",
+            "content": {
+              "text/html": { "schema": { "type": "string" } },
+              "text/markdown": { "schema": { "type": "string" } }
+            }
+          },
+          "404": { "description": "Post not found" }
+        }
+      }
+    }
+  }
+}

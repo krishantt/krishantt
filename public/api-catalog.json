@@ -1,0 +1,25 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://krishant.com.np/",
+      "service-desc": [
+        {
+          "href": "https://krishant.com.np/openapi.json",
+          "type": "application/vnd.oai.openapi+json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://krishant.com.np/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://krishant.com.np/",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}
