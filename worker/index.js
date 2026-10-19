@@ -25,6 +25,11 @@ const STATIC_OVERRIDES = {
     contentType: "application/json",
     cacheControl: "public, max-age=3600",
   },
+  "/.well-known/mcp/server-card.json": {
+    path: "/mcp-server-card.json",
+    contentType: "application/json",
+    cacheControl: "public, max-age=3600",
+  },
 }
 
 const SITE = "https://krishant.com.np"
@@ -79,6 +84,10 @@ export default {
 
     if (url.pathname === "/a2a") {
       return handleA2A(request)
+    }
+
+    if (url.pathname === "/mcp") {
+      return handleMcp(request)
     }
 
     // The SPA fallback must not answer discovery probes with HTML.
@@ -179,6 +188,72 @@ function rpcError(id, code, message) {
     id,
     error: { code, message },
   })
+}
+
+const MCP_TOOLS = [
+  {
+    name: "ask_about_krishant",
+    description:
+      "Answer a question about Krishant Timilsina using his public site content (profile, resume, blog, contact).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        question: { type: "string", description: "Question to answer." },
+      },
+      required: ["question"],
+    },
+  },
+]
+
+async function handleMcp(request) {
+  if (request.method !== "POST") {
+    return new Response("Method Not Allowed\n", {
+      status: 405,
+      headers: { Allow: "POST" },
+    })
+  }
+
+  let body
+  try {
+    body = await request.json()
+  } catch {
+    return rpcError(null, -32700, "Parse error")
+  }
+
+  const { id = null, method, params } = body ?? {}
+
+  if (method === "initialize") {
+    return Response.json({
+      jsonrpc: "2.0",
+      id,
+      result: {
+        protocolVersion: params?.protocolVersion ?? "2025-06-18",
+        capabilities: { tools: {} },
+        serverInfo: { name: "krishant.com.np/site", version: "1.0.0" },
+      },
+    })
+  }
+
+  if (method === "tools/list") {
+    return Response.json({ jsonrpc: "2.0", id, result: { tools: MCP_TOOLS } })
+  }
+
+  if (method === "tools/call") {
+    const question = String(params?.arguments?.question ?? "")
+    const text =
+      ANSWERS.find((entry) => entry.match.test(question))?.text ?? DEFAULT_ANSWER
+    return Response.json({
+      jsonrpc: "2.0",
+      id,
+      result: { content: [{ type: "text", text }], isError: false },
+    })
+  }
+
+  if (method?.startsWith("notifications/")) {
+    return new Response(null, { status: 202 })
+  }
+
+  return rpcError(id, -32601, "Method not found")
 }
 
 function applyAgentHeaders(headers, url) {

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+  "name": "krishant.com.np/site",
+  "version": "1.0.0",
+  "serverInfo": {
+    "name": "krishant.com.np/site",
+    "version": "1.0.0"
+  },
+  "description": "Read-only agent that answers questions about Krishant Timilsina from his public site content.",
+  "websiteUrl": "https://krishant.com.np/llms.txt",
+  "transports": [
+    {
+      "type": "streamable-http",
+      "endpoint": "https://krishant.com.np/mcp"
+    }
+  ],
+  "capabilities": {
+    "tools": {}
+  }
+}
