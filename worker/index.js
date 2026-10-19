@@ -1,3 +1,5 @@
+import { createResumePdf } from "../src/lib/resume.ts"
+
 const MARKDOWN_PAGES = {
   "/": "/home.md",
   "/about": "/about.md",
@@ -57,6 +59,39 @@ const DEFAULT_ANSWER = `Krishant Timilsina is a software engineer based in Lalit
 
 const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no"
 
+function bytesToBase64(bytes) {
+  let binary = ""
+  const chunkSize = 0x8000
+
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize))
+  }
+
+  return btoa(binary)
+}
+
+async function handleResume(env, url) {
+  const bytes = await createResumePdf(async (path) => {
+    const asset = await env.ASSETS.fetch(new URL(path, url))
+    if (!asset.ok) throw new Error(`Missing font asset: ${path}`)
+    return bytesToBase64(new Uint8Array(await asset.arrayBuffer()))
+  })
+
+  const isoDate = new Date().toISOString().slice(0, 10)
+
+  return withAgentHeaders(
+    new Response(bytes, {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="krishant-timilsina-resume-${isoDate}.pdf"`,
+        "Cache-Control": "public, max-age=3600",
+      },
+    }),
+    url
+  )
+}
+
+
 function acceptsMarkdown(request) {
   return (request.headers.get("Accept") ?? "").includes("text/markdown")
 }
@@ -88,6 +123,10 @@ export default {
 
     if (url.pathname === "/mcp") {
       return handleMcp(request)
+    }
+
+    if (url.pathname === "/docs/resume.pdf") {
+      return handleResume(env, url)
     }
 
     // The SPA fallback must not answer discovery probes with HTML.

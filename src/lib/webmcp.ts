@@ -70,6 +70,7 @@ const tools: ModelContextTool[] = [
       location: personalInfo.basics.location,
       email: personalInfo.basics.email,
       website: personalInfo.basics.website,
+      resumeUrl: "/docs/resume.pdf",
       skills: personalInfo.skills,
       focusAreas: personalInfo.focusAreas,
       socials: personalInfo.socials,

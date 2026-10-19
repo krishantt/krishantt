@@ -43,8 +43,6 @@ const COMPUTER_MODERN_SOURCES = {
   italic: "/fonts/CMUSerif-Italic.ttf",
 } as const
 
-let computerModernReadyPromise: Promise<void> | null = null
-
 function bytesToBase64(bytes: Uint8Array) {
   let binary = ""
   const chunkSize = 0x8000
@@ -67,25 +65,21 @@ async function fetchFontAsBase64(url: string) {
   return bytesToBase64(new Uint8Array(buffer))
 }
 
-async function registerComputerModern(doc: jsPDF) {
-  if (!computerModernReadyPromise) {
-    computerModernReadyPromise = (async () => {
-      const [regular, bold, italic] = await Promise.all([
-        fetchFontAsBase64(COMPUTER_MODERN_SOURCES.normal),
-        fetchFontAsBase64(COMPUTER_MODERN_SOURCES.bold),
-        fetchFontAsBase64(COMPUTER_MODERN_SOURCES.italic),
-      ])
+export type FontLoader = (path: string) => Promise<string>
 
-      doc.addFileToVFS("CMUSerif-Regular.ttf", regular)
-      doc.addFileToVFS("CMUSerif-Bold.ttf", bold)
-      doc.addFileToVFS("CMUSerif-Italic.ttf", italic)
-      doc.addFont("CMUSerif-Regular.ttf", "CMUSerif", "normal")
-      doc.addFont("CMUSerif-Bold.ttf", "CMUSerif", "bold")
-      doc.addFont("CMUSerif-Italic.ttf", "CMUSerif", "italic")
-    })()
-  }
+async function registerComputerModern(doc: jsPDF, loadFont: FontLoader) {
+  const [regular, bold, italic] = await Promise.all([
+    loadFont(COMPUTER_MODERN_SOURCES.normal),
+    loadFont(COMPUTER_MODERN_SOURCES.bold),
+    loadFont(COMPUTER_MODERN_SOURCES.italic),
+  ])
 
-  await computerModernReadyPromise
+  doc.addFileToVFS("CMUSerif-Regular.ttf", regular)
+  doc.addFileToVFS("CMUSerif-Bold.ttf", bold)
+  doc.addFileToVFS("CMUSerif-Italic.ttf", italic)
+  doc.addFont("CMUSerif-Regular.ttf", "CMUSerif", "normal")
+  doc.addFont("CMUSerif-Bold.ttf", "CMUSerif", "bold")
+  doc.addFont("CMUSerif-Italic.ttf", "CMUSerif", "italic")
 }
 
 function ensureSpace(doc: jsPDF, cursor: PdfCursor, heightNeeded: number) {
@@ -594,12 +588,12 @@ function addPageNumbers(doc: jsPDF) {
   }
 }
 
-async function buildResumePdf() {
+async function buildResumePdf(loadFont: FontLoader = fetchFontAsBase64) {
   const doc = new jsPDF({ unit: "mm", format: "a4" })
   const cursor: PdfCursor = { y: PAGE_MARGIN }
 
   try {
-    await registerComputerModern(doc)
+    await registerComputerModern(doc, loadFont)
   } catch {
     // Fallback to Times if loading Computer Modern fails.
   }
@@ -622,4 +616,9 @@ export function downloadResume() {
     const isoDate = new Date().toISOString().slice(0, 10)
     doc.save(`krishant-timilsina-resume-${isoDate}.pdf`)
   })
+}
+
+export async function createResumePdf(loadFont?: FontLoader) {
+  const doc = await buildResumePdf(loadFont)
+  return doc.output("arraybuffer")
 }

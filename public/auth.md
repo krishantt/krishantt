@@ -27,6 +27,7 @@ No credentials are issued or accepted. Use the public resources directly:
 - <https://krishant.com.np/openapi.json> — OpenAPI description of content endpoints
 - <https://krishant.com.np/.well-known/api-catalog> — API catalog (RFC 9727)
 - <https://krishant.com.np/about.md> — profile and resume content
+- <https://krishant.com.np/docs/resume.pdf> — resume, generated from the profile data on request
 
 ## Contact
 
