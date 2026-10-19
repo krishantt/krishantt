@@ -6,11 +6,12 @@ Krishant Timilsina is a Software Engineer based in Lalitpur, Nepal. Contact: kri
 
 ## Pages
 
-- [Home](https://krishant.com.np/): Portfolio landing page.
-- [About (Markdown)](https://krishant.com.np/about.md): Full profile with experience, skills, education, projects, leadership and awards.
-- [About](https://krishant.com.np/about): HTML version of the same profile.
-- [Blog](https://krishant.com.np/blog): Index of all posts.
+- [Home](https://krishant.com.np/home.md): Portfolio landing page.
+- [About](https://krishant.com.np/about.md): Full profile with experience, skills, education, projects, leadership and awards.
+- [Blog](https://krishant.com.np/blog.md): Index of all posts, newest first.
 - [Resume (PDF)](https://krishant.com.np/docs/resume.pdf): Latest resume.
+
+The same pages without the `.md` extension serve the HTML version.
 
 ## Blog posts
 

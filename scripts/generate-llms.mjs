@@ -181,6 +181,53 @@ function buildAboutMarkdown(info) {
   return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim() + "\n"
 }
 
+function buildPostListMarkdown(posts, baseUrl) {
+  return posts.map(
+    (post) =>
+      `- [${post.meta.title}](${baseUrl}/blog/${post.slug}.md): ${
+        post.meta.summary
+      } (${toDateOnly(post.meta.date)})`
+  )
+}
+
+function buildHomeMarkdown({ baseUrl, info, posts }) {
+  return [
+    `# ${info.basics.name}`,
+    "",
+    `${info.basics.headline} based in ${info.basics.location}.`,
+    "",
+    info.basics.summary,
+    "",
+    `- Email: ${info.basics.email}`,
+    `- Website: ${info.basics.website}`,
+    ...info.socials.map((social) => `- ${social.label}: ${social.href}`),
+    "",
+    "## Latest posts",
+    "",
+    ...buildPostListMarkdown(posts.slice(0, 4), baseUrl),
+    "",
+    "## Explore",
+    "",
+    `- [About](${baseUrl}/about.md): Full profile with experience, skills, education and projects.`,
+    `- [Blog](${baseUrl}/blog.md): Every post, newest first.`,
+    `- [Resume (PDF)](${baseUrl}/docs/resume.pdf): Latest resume.`,
+    "",
+  ].join("\n")
+}
+
+function buildBlogIndexMarkdown({ baseUrl, posts }) {
+  return [
+    "# Blog",
+    "",
+    `Posts by Krishant Timilsina, newest first.`,
+    "",
+    "## Posts",
+    "",
+    ...buildPostListMarkdown(posts, baseUrl),
+    "",
+  ].join("\n")
+}
+
 function buildLlmsTxt({ baseUrl, info, posts }) {
   const lines = [
     `# ${info.basics.name}`,
@@ -193,20 +240,16 @@ function buildLlmsTxt({ baseUrl, info, posts }) {
     "",
     "## Pages",
     "",
-    `- [Home](${baseUrl}/): Portfolio landing page.`,
-    `- [About (Markdown)](${baseUrl}/about.md): Full profile with experience, skills, education, projects, leadership and awards.`,
-    `- [About](${baseUrl}/about): HTML version of the same profile.`,
-    `- [Blog](${baseUrl}/blog): Index of all posts.`,
+    `- [Home](${baseUrl}/home.md): Portfolio landing page.`,
+    `- [About](${baseUrl}/about.md): Full profile with experience, skills, education, projects, leadership and awards.`,
+    `- [Blog](${baseUrl}/blog.md): Index of all posts, newest first.`,
     `- [Resume (PDF)](${baseUrl}/docs/resume.pdf): Latest resume.`,
+    "",
+    "The same pages without the `.md` extension serve the HTML version.",
     "",
     "## Blog posts",
     "",
-    ...posts.map(
-      (post) =>
-        `- [${post.meta.title}](${baseUrl}/blog/${post.slug}.md): ${
-          post.meta.summary
-        } (${toDateOnly(post.meta.date)})`
-    ),
+    ...buildPostListMarkdown(posts, baseUrl),
     "",
     "## Full content",
     "",
@@ -264,6 +307,16 @@ async function generate() {
   await Promise.all([
     fs.writeFile(path.join(publicDir, "about.md"), aboutMarkdown, "utf8"),
     fs.writeFile(
+      path.join(publicDir, "home.md"),
+      buildHomeMarkdown({ baseUrl, info, posts }),
+      "utf8"
+    ),
+    fs.writeFile(
+      path.join(publicDir, "blog.md"),
+      buildBlogIndexMarkdown({ baseUrl, posts }),
+      "utf8"
+    ),
+    fs.writeFile(
       path.join(publicDir, "llms.txt"),
       buildLlmsTxt({ baseUrl, info, posts }),
       "utf8"
@@ -276,7 +329,7 @@ async function generate() {
   ])
 
   console.log(
-    `Generated llms.txt, llms-full.txt, about.md and ${posts.length} post markdown files`
+    `Generated llms.txt, llms-full.txt and markdown pages for ${posts.length} posts`
   )
 }
 
