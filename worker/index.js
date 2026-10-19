@@ -83,7 +83,7 @@ async function handleResume(env, url) {
     new Response(bytes, {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": `attachment; filename="krishant-timilsina-resume-${isoDate}.pdf"`,
+        "Content-Disposition": `inline; filename="krishant-timilsina-resume-${isoDate}.pdf"`,
         "Cache-Control": "public, max-age=3600",
       },
     }),
