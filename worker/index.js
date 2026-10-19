@@ -20,6 +20,11 @@ const STATIC_OVERRIDES = {
     contentType: "application/json",
     cacheControl: "public, max-age=3600",
   },
+  "/.well-known/agent-skills/index.json": {
+    path: "/agent-skills/index.json",
+    contentType: "application/json",
+    cacheControl: "public, max-age=3600",
+  },
 }
 
 const SITE = "https://krishant.com.np"

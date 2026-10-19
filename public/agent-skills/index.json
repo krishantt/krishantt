@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "profile-lookup",
+      "type": "skill-md",
+      "description": "Look up Krishant Timilsina's profile, background, resume and contact details.",
+      "url": "https://krishant.com.np/agent-skills/profile-lookup/SKILL.md",
+      "digest": "sha256:508d14bcced8c46e44fb6f94d5b6039956220c0d058799209cdc6cdd8b076776"
+    },
+    {
+      "name": "blog-search",
+      "type": "skill-md",
+      "description": "Find and read Krishant Timilsina's blog posts as Markdown.",
+      "url": "https://krishant.com.np/agent-skills/blog-search/SKILL.md",
+      "digest": "sha256:633ec65285d6ed94950b8c83ea9473015ba1daac0b0ff25d90bbac3547717000"
+    }
+  ]
+}
