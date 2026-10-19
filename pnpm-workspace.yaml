@@ -1,6 +1,26 @@
-onlyBuiltDependencies:
-  - core-js
-  - esbuild
-  - msw
-  - sharp
-  - workerd
+allowBuilds:
+  core-js: true
+  esbuild: true
+  msw: true
+  sharp: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - '@cloudflare/workerd-darwin-64@1.20261019.1'
+  - '@cloudflare/workerd-darwin-arm64@1.20261019.1'
+  - '@cloudflare/workerd-linux-64@1.20261019.1'
+  - '@cloudflare/workerd-linux-arm64@1.20261019.1'
+  - '@cloudflare/workerd-windows-64@1.20261019.1'
+  - '@typescript-eslint/eslint-plugin@8.72.0'
+  - '@typescript-eslint/parser@8.72.0'
+  - '@typescript-eslint/project-service@8.72.0'
+  - '@typescript-eslint/scope-manager@8.72.0'
+  - '@typescript-eslint/tsconfig-utils@8.72.0'
+  - '@typescript-eslint/type-utils@8.72.0'
+  - '@typescript-eslint/types@8.72.0'
+  - '@typescript-eslint/typescript-estree@8.72.0'
+  - '@typescript-eslint/utils@8.72.0'
+  - '@typescript-eslint/visitor-keys@8.72.0'
+  - miniflare@5.20261019.0-beta
+  - typescript-eslint@8.72.0
+  - workerd@1.20261019.1
+  - wrangler@4.151.2
