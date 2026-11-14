@@ -64,7 +64,7 @@ export function AboutPage() {
             alt="Krishant Timilsina"
             width={112}
             height={112}
-            className="size-24 shrink-0 rounded-sm border border-border object-cover sm:size-28"
+            className="size-24 shrink-0 rounded-sm border border-border object-cover grayscale transition-[filter] duration-300 hover:grayscale-0 sm:size-28"
           />
         </div>
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-[0.9375rem]">
@@ -97,7 +97,7 @@ export function AboutPage() {
           {flatRoles.map(({ org, role }) => (
             <li
               key={`${org}-${role.title}-${role.start.year}-${role.start.month}`}
-              className="rule grid grid-cols-[4.25rem_1fr] gap-x-5 py-5 sm:grid-cols-[6rem_1fr] sm:gap-x-8"
+              className="rule grid grid-cols-[5rem_1fr] gap-x-4 py-5 sm:grid-cols-[6rem_1fr] sm:gap-x-8"
             >
               <span className="pt-0.5 text-meta text-muted-foreground tabular-nums">
                 {roleYears(role)}
@@ -137,7 +137,7 @@ export function AboutPage() {
           <dd className="text-[0.9375rem]">
             {personalInfo.focusAreas.join(", ")}
           </dd>
-          <dt className="text-meta text-muted-foreground">Languages</dt>
+          <dt className="text-meta text-muted-foreground">Speaks</dt>
           <dd className="text-[0.9375rem]">
             {personalInfo.languages
               .map((language) => `${language.name} (${language.proficiency})`)
@@ -181,7 +181,7 @@ export function AboutPage() {
                 href={project.href}
                 target="_blank"
                 rel="noreferrer"
-                className="row-link text-[0.9375rem] font-medium"
+                className="row-link text-[0.9375rem] font-medium underline decoration-foreground/20 decoration-1 underline-offset-4 hover:decoration-brand"
               >
                 {project.title}
               </a>
@@ -195,7 +195,7 @@ export function AboutPage() {
 
       <section className="mt-16 sm:mt-20">
         <SectionHeading title="Leadership, certifications and awards" />
-        <div className="mt-5 grid gap-x-10 gap-y-8 sm:grid-cols-3">
+        <div className="mt-5 grid gap-x-12 gap-y-8 sm:grid-cols-[1.15fr_1fr]">
           <div>
             <h3 className="text-meta text-muted-foreground">Leadership</h3>
             <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
@@ -204,21 +204,25 @@ export function AboutPage() {
               ))}
             </ul>
           </div>
-          <div>
-            <h3 className="text-meta text-muted-foreground">Certifications</h3>
-            <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
-              {personalInfo.certifications.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-meta text-muted-foreground">Awards</h3>
-            <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
-              {personalInfo.awards.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+          <div className="flex flex-col gap-6">
+            <div>
+              <h3 className="text-meta text-muted-foreground">
+                Certifications
+              </h3>
+              <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
+                {personalInfo.certifications.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-meta text-muted-foreground">Awards</h3>
+              <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
+                {personalInfo.awards.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>

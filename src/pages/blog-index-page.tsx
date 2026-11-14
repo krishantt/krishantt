@@ -16,7 +16,7 @@ export function BlogIndexPage() {
       <h1 className="voice text-[2rem] leading-[1.1] tracking-[-0.02em] sm:text-[2.5rem]">
         Writing
       </h1>
-      <p className="measure mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">
+      <p className="measure mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground text-balance">
         Notes on software and systems, mostly about the parts that never make it
         into a README.
       </p>
