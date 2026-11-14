@@ -28,7 +28,7 @@ function estimateReadingTime(source) {
 
 async function generateReadingTimes() {
   const files = await fs.readdir(postsDir)
-  const mdxFiles = files.filter((file) => file.endsWith(".mdx"))
+  const mdxFiles = files.filter((file) => file.endsWith(".mdx")).sort()
 
   const entries = await Promise.all(
     mdxFiles.map(async (fileName) => {

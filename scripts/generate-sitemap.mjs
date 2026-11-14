@@ -74,7 +74,7 @@ async function getBaseUrl() {
 
 async function getBlogPosts() {
   const files = await fs.readdir(postsDir)
-  const mdxFiles = files.filter((file) => file.endsWith(".mdx"))
+  const mdxFiles = files.filter((file) => file.endsWith(".mdx")).sort()
 
   return Promise.all(
     mdxFiles.map(async (fileName) => {

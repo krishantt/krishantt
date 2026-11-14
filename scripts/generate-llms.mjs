@@ -60,7 +60,7 @@ async function readPersonalInfo() {
 }
 
 async function readPosts() {
-  const files = (await fs.readdir(postsDir)).filter((file) =>
+  const files = (await fs.readdir(postsDir)).sort().filter((file) =>
     file.endsWith(".mdx")
   )
 
