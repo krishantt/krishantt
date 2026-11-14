@@ -13,11 +13,9 @@ const footerLinks = [
 export function SiteFooter() {
   return (
     <footer className="shell mt-24 pb-14">
-      <div className="rule flex flex-col gap-3 pt-6 text-meta text-muted-foreground sm:flex-row sm:items-baseline sm:justify-between">
-        <p>
-          {new Date().getFullYear()} Krishant Timilsina, Pokhara, Nepal
-        </p>
-        <ul className="flex flex-wrap gap-x-5 gap-y-1">
+      <div className="rule flex flex-col gap-3 pt-6 text-[0.75rem] text-muted-foreground sm:flex-row sm:items-baseline sm:justify-between sm:text-meta">
+        <p>© {new Date().getFullYear()} Krishant Timilsina</p>
+        <ul className="flex flex-wrap gap-x-3 gap-y-1 sm:gap-x-5">
           {footerLinks.map((item) => (
             <li key={item.label}>
               <a

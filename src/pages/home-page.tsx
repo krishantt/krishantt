@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 
 import { PostRow } from "@/components/post-row"
+import { ResumeDownload } from "@/components/resume-download"
 import { SectionHeading } from "@/components/section-heading"
 import { getAllPosts } from "@/lib/blog"
 import { usePageMetadata } from "@/lib/metadata"
@@ -21,28 +22,28 @@ export function HomePage() {
           I build software that has to keep working after the interesting part is
           over.
         </h1>
-        <p className="measure mt-6 text-[1.0625rem] leading-relaxed text-muted-foreground sm:mt-7">
-          Software engineer in Pokhara, Nepal. Most of my work is platform and
-          product engineering: terraform, kubernetes, the API layer, and the
-          interface on top of it.
-        </p>
-
-        <div className="rule mt-8 flex flex-col gap-2 pt-4 sm:flex-row sm:items-baseline sm:gap-6">
-          <span className="shrink-0 text-meta text-muted-foreground sm:w-9">
-            Now
-          </span>
-          <p className="measure flex-1 text-[0.9375rem] leading-relaxed">
-            Contract platform engineer at Lelapa AI. Open to new work.
-          </p>
+        <p className="measure mt-6 text-[1.0625rem] leading-relaxed text-muted-foreground text-balance sm:mt-7">
+          Software engineer at{" "}
           <a
-            href={BOOKING_URL}
+            href="https://lelapa.ai"
             target="_blank"
             rel="noreferrer"
-            className="link shrink-0 text-[0.9375rem]"
+            className="link whitespace-nowrap"
           >
+            Lelapa AI
+          </a>
+          . Based in Pokhara, Nepal.
+        </p>
+        <p className="measure mt-2 text-[1.0625rem] leading-relaxed text-balance">
+          Ask me about migrations, retries, and the cutover nobody blogs about.
+        </p>
+
+        <p className="mt-6 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-[0.9375rem]">
+          <ResumeDownload />
+          <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="link">
             Book a call
           </a>
-        </div>
+        </p>
       </section>
 
       <section className="mt-16 sm:mt-20">
