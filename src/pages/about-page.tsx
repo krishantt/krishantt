@@ -7,9 +7,8 @@ import {
   personalInfo,
 } from "@/lib/personal-info"
 import { usePageMetadata } from "@/lib/metadata"
+import { BOOKING_URL } from "@/lib/site"
 import type { ExperienceRole } from "@/types/personal-info"
-
-const BOOKING_URL = "https://calendar.app.google/k5gRRtwjw6TwwYCn8"
 
 function roleYears(role: ExperienceRole) {
   const start = role.start.year
@@ -26,6 +25,10 @@ function roleYears(role: ExperienceRole) {
 const flatRoles = personalInfo.experience.flatMap((experience) =>
   experience.roles.map((role) => ({ org: experience.org, role }))
 )
+
+// The data carries the full sentence for the résumé PDF; the page shows the part
+// before the colon, which fits on one line.
+const headline = (item: string) => item.split(": ")[0]
 
 export function AboutPage() {
   const [isDownloadingResume, setIsDownloadingResume] = useState(false)
@@ -195,35 +198,26 @@ export function AboutPage() {
 
       <section className="mt-16 sm:mt-20">
         <SectionHeading title="Leadership, certifications and awards" />
-        <div className="mt-5 grid gap-x-12 gap-y-8 sm:grid-cols-[1.15fr_1fr]">
-          <div>
-            <h3 className="text-meta text-muted-foreground">Leadership</h3>
-            <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
-              {personalInfo.leadership.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col gap-6">
-            <div>
+        <div className="mt-5 flex flex-col gap-5">
+          {[
+            { title: "Leadership", items: personalInfo.leadership },
+            { title: "Certifications", items: personalInfo.certifications },
+            { title: "Awards", items: personalInfo.awards },
+          ].map((group, index) => (
+            <div
+              key={group.title}
+              className={index === 0 ? undefined : "rule pt-5"}
+            >
               <h3 className="text-meta text-muted-foreground">
-                Certifications
+                {group.title}
               </h3>
-              <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
-                {personalInfo.certifications.map((item) => (
-                  <li key={item}>{item}</li>
+              <ul className="mt-2 flex flex-col gap-1.5 text-sm leading-relaxed">
+                {group.items.map((item) => (
+                  <li key={item}>{headline(item)}</li>
                 ))}
               </ul>
             </div>
-            <div>
-              <h3 className="text-meta text-muted-foreground">Awards</h3>
-              <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
-                {personalInfo.awards.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>
