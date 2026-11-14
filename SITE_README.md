@@ -1,6 +1,6 @@
 # Personal Site (Hugo Replacement)
 
-A `pnpm` + Vite + React site that replaces the old Hugo site in `hugo.old`.
+A `bun` + Vite + React site that replaces the old Hugo site in `hugo.old`.
 It uses shadcn/ui components and MDX-based blog posts.
 
 ## Stack
@@ -13,15 +13,15 @@ It uses shadcn/ui components and MDX-based blog posts.
 ## Run locally
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 ## Build
 
 ```bash
-pnpm build
-pnpm preview
+bun run build
+bun run preview
 ```
 
 ## Add a new blog post

@@ -36,7 +36,8 @@ const tools: ModelContextTool[] = [
       properties: {
         query: {
           type: "string",
-          description: "Keyword to match against post titles, summaries and tags.",
+          description:
+            "Keyword to match against post titles, summaries and tags.",
         },
       },
       required: ["query"],

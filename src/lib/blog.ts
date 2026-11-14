@@ -32,8 +32,7 @@ const allPosts = Object.entries(postModules)
       ...module.meta,
       slug,
       Content: module.default,
-      readingTimeMinutes:
-        (readingTimes as Record<string, number>)[slug] ?? 1,
+      readingTimeMinutes: (readingTimes as Record<string, number>)[slug] ?? 1,
     } satisfies BlogPost
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

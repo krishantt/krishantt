@@ -1,0 +1,25 @@
+[install]
+
+# Packages exempt from the minimumReleaseAge check (when it is enabled).
+# Ported from pnpm-workspace.yaml `minimumReleaseAgeExclude`; Bun matches names only.
+minimumReleaseAgeExcludes = [
+  "@cloudflare/workerd-darwin-64",
+  "@cloudflare/workerd-darwin-arm64",
+  "@cloudflare/workerd-linux-64",
+  "@cloudflare/workerd-linux-arm64",
+  "@cloudflare/workerd-windows-64",
+  "@typescript-eslint/eslint-plugin",
+  "@typescript-eslint/parser",
+  "@typescript-eslint/project-service",
+  "@typescript-eslint/scope-manager",
+  "@typescript-eslint/tsconfig-utils",
+  "@typescript-eslint/type-utils",
+  "@typescript-eslint/types",
+  "@typescript-eslint/typescript-estree",
+  "@typescript-eslint/utils",
+  "@typescript-eslint/visitor-keys",
+  "miniflare",
+  "typescript-eslint",
+  "workerd",
+  "wrangler",
+]

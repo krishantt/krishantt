@@ -16,12 +16,7 @@ import { formatDate } from "@/utils/format-date"
 
 export function BlogPostPage() {
   const { slug } = useParams()
-
-  if (!slug) {
-    return <Navigate to="/blog" replace />
-  }
-
-  const post = getPostBySlug(slug)
+  const post = slug ? getPostBySlug(slug) : undefined
 
   usePageMetadata(
     post
@@ -50,6 +45,10 @@ export function BlogPostPage() {
             "The requested post could not be found. Explore other articles on the blog.",
         }
   )
+
+  if (!slug) {
+    return <Navigate to="/blog" replace />
+  }
 
   if (!post) {
     return (
