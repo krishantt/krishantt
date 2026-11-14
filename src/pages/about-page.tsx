@@ -1,22 +1,31 @@
 import { Download } from "lucide-react"
 import { useState } from "react"
 
-import { Badge } from "@/components/ui/badge"
+import { SectionHeading } from "@/components/section-heading"
 import { Button } from "@/components/ui/button"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  formatRolePeriod,
-  getExperienceTotalDuration,
   personalInfo,
 } from "@/lib/personal-info"
 import { usePageMetadata } from "@/lib/metadata"
+import type { ExperienceRole } from "@/types/personal-info"
+
+const BOOKING_URL = "https://calendar.app.google/k5gRRtwjw6TwwYCn8"
+
+function roleYears(role: ExperienceRole) {
+  const start = role.start.year
+
+  if (!role.end) {
+    return `${start} – now`
+  }
+
+  return role.end.year === start
+    ? `${start}`
+    : `${start} – ${role.end.year}`
+}
+
+const flatRoles = personalInfo.experience.flatMap((experience) =>
+  experience.roles.map((role) => ({ org: experience.org, role }))
+)
 
 export function AboutPage() {
   const [isDownloadingResume, setIsDownloadingResume] = useState(false)
@@ -41,223 +50,178 @@ export function AboutPage() {
   })
 
   return (
-    <section className="flex flex-col gap-4">
-      <Card className="border-border/70 bg-card/90">
-        <CardHeader>
-          <Badge variant="secondary" className="w-fit">
-            About me
-          </Badge>
-          <CardTitle className="text-2xl">Who am I?</CardTitle>
-          <CardDescription className="max-w-3xl text-sm">
+    <div className="flex flex-col">
+      <section>
+        <h1 className="voice text-[2rem] leading-[1.1] tracking-[-0.02em] sm:text-[2.5rem]">
+          About
+        </h1>
+        <div className="mt-6 flex flex-col-reverse gap-8 sm:mt-7 sm:flex-row sm:items-start sm:justify-between">
+          <p className="voice measure text-[1.1875rem] leading-[1.6] text-foreground">
             {personalInfo.basics.summary}
-          </CardDescription>
+          </p>
+          <img
+            src="/images/profile.jpg"
+            alt="Krishant Timilsina"
+            width={112}
+            height={112}
+            className="size-24 shrink-0 rounded-sm border border-border object-cover sm:size-28"
+          />
+        </div>
+        <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-[0.9375rem]">
           <Button
             size="sm"
-            className="mt-2 w-fit"
+            variant="outline"
             onClick={() => void handleDownloadResume()}
             disabled={isDownloadingResume}
           >
-            <Download className="size-4" />
-            {isDownloadingResume ? "Preparing PDF..." : "Download Resume"}
+            <Download className="size-4" aria-hidden="true" />
+            {isDownloadingResume ? "Preparing PDF" : "Download résumé"}
           </Button>
-        </CardHeader>
-      </Card>
+          <a href={`mailto:${personalInfo.basics.email}`} className="link">
+            {personalInfo.basics.email}
+          </a>
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            Book a call
+          </a>
+        </div>
+      </section>
 
-      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-        <Card className="bg-card/90">
-          <CardHeader>
-            <CardTitle className="text-xl">Skills & Tech Stack</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-5">
-            {personalInfo.skills.map((group) => (
-              <div key={group.title} className="space-y-2">
-                <h3 className="text-sm font-semibold">{group.title}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <Badge key={item} variant="outline">
-                      {item}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card/90">
-          <CardHeader>
-            <CardTitle className="text-xl">Focus & Languages</CardTitle>
-            <CardDescription>
-              Themes I actively explore and languages I work in.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold">Current Focus</h3>
-              <div className="flex flex-wrap gap-2">
-                {personalInfo.focusAreas.map((focus) => (
-                  <Badge key={focus}>{focus}</Badge>
-                ))}
-              </div>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold">Languages</h3>
-              <div className="flex flex-wrap gap-2">
-                {personalInfo.languages.map((language) => (
-                  <Badge key={language.name} variant="secondary">
-                    {language.name} ({language.proficiency})
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="bg-card/90">
-        <CardHeader>
-          <CardTitle className="text-xl">Experience</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-3">
-          {personalInfo.experience.map((experience) => (
-            <div
-              key={experience.org}
-              className="rounded-xl border border-border/70 p-4"
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading title="Experience" />
+        <ol>
+          {flatRoles.map(({ org, role }) => (
+            <li
+              key={`${org}-${role.title}-${role.start.year}-${role.start.month}`}
+              className="rule grid grid-cols-[4.25rem_1fr] gap-x-5 py-5 sm:grid-cols-[6rem_1fr] sm:gap-x-8"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-sm font-semibold">{experience.org}</h3>
-                {experience.roles.length > 1 ? (
-                  <Badge variant="secondary">
-                    {getExperienceTotalDuration(experience)}
-                  </Badge>
-                ) : null}
+              <span className="pt-0.5 text-meta text-muted-foreground tabular-nums">
+                {roleYears(role)}
+              </span>
+              <div>
+                <h3 className="text-[0.9375rem] leading-snug font-medium">
+                  {role.title}
+                </h3>
+                <p className="mt-1 text-meta text-muted-foreground">
+                  {[org, role.employmentType, role.location]
+                    .filter(Boolean)
+                    .join(", ")}
+                </p>
+                <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed text-muted-foreground marker:text-border">
+                  {role.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
               </div>
+            </li>
+          ))}
+        </ol>
+      </section>
 
-              <div className="mt-3 space-y-3">
-                {experience.roles.map((role) => (
-                  <div
-                    key={`${experience.org}-${role.title}-${role.start.year}-${role.start.month}`}
-                    className="rounded-lg border border-border/60 p-3"
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <h4 className="text-sm font-medium">{role.title}</h4>
-                      <Badge variant="outline">{formatRolePeriod(role)}</Badge>
-                    </div>
-                    {role.employmentType || role.location ? (
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        {[role.employmentType, role.location]
-                          .filter(Boolean)
-                          .join(" · ")}
-                      </p>
-                    ) : null}
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                      {role.points.map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                    {role.skills && role.skills.length > 0 ? (
-                      <p className="mt-2 text-xs text-muted-foreground">
-                        {role.skills.join(", ")}
-                      </p>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading title="Things I work with" />
+        <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-[7.5rem_1fr]">
+          {personalInfo.skills.map((group) => (
+            <div key={group.title} className="contents">
+              <dt className="text-meta text-muted-foreground">
+                {group.title}
+              </dt>
+              <dd className="text-[0.9375rem]">{group.items.join(", ")}</dd>
             </div>
           ))}
-        </CardContent>
-      </Card>
+          <dt className="text-meta text-muted-foreground">Focus</dt>
+          <dd className="text-[0.9375rem]">
+            {personalInfo.focusAreas.join(", ")}
+          </dd>
+          <dt className="text-meta text-muted-foreground">Languages</dt>
+          <dd className="text-[0.9375rem]">
+            {personalInfo.languages
+              .map((language) => `${language.name} (${language.proficiency})`)
+              .join(", ")}
+          </dd>
+        </dl>
+      </section>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="bg-card/90">
-          <CardHeader>
-            <CardTitle className="text-xl">Education</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {personalInfo.education.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-border/70 p-4"
-              >
-                <h3 className="text-sm font-semibold">{item.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {item.place}
-                </p>
-                <p className="mt-1 text-xs text-muted-foreground">
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading title="Education" />
+        <ul>
+          {personalInfo.education.map((item) => (
+            <li key={item.title} className="rule py-5">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-[0.9375rem] font-medium">{item.title}</h3>
+                <span className="text-meta text-muted-foreground tabular-nums">
                   {item.period}
-                </p>
-                {item.details.length > 0 ? (
-                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                    {item.details.map((detail) => (
-                      <li key={detail}>{detail}</li>
-                    ))}
-                  </ul>
-                ) : null}
+                </span>
               </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="bg-card/90">
-          <CardHeader>
-            <CardTitle className="text-xl">
-              Leadership, Certifications & Awards
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold">Leadership</h3>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {personalInfo.leadership.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold">Certifications</h3>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {personalInfo.certifications.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-sm font-semibold">Awards</h3>
-              <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {personalInfo.awards.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="bg-card/90">
-        <CardHeader>
-          <CardTitle className="text-xl">Selected Projects</CardTitle>
-          <CardDescription>
-            A few projects spanning systems, algorithms, and product interfaces.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-3 md:grid-cols-2">
-          {personalInfo.projects.map((project) => (
-            <Card key={project.title} size="sm" className="bg-background/70">
-              <CardHeader>
-                <CardTitle className="text-base">{project.title}</CardTitle>
-                <CardDescription>{project.summary}</CardDescription>
-              </CardHeader>
-              <CardFooter>
-                <Button asChild variant="outline" size="sm">
-                  <a href={project.href} target="_blank" rel="noreferrer">
-                    View project
-                  </a>
-                </Button>
-              </CardFooter>
-            </Card>
+              <p className="mt-1 text-meta text-muted-foreground">
+                {item.place}
+              </p>
+              {item.details.length > 0 ? (
+                <ul className="mt-3 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed text-muted-foreground marker:text-border">
+                  {item.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
           ))}
-        </CardContent>
-      </Card>
-    </section>
+        </ul>
+      </section>
+
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading title="Selected projects" />
+        <ul>
+          {personalInfo.projects.map((project) => (
+            <li key={project.title} className="rule py-5">
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                className="row-link text-[0.9375rem] font-medium"
+              >
+                {project.title}
+              </a>
+              <p className="measure mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                {project.summary}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading title="Leadership, certifications and awards" />
+        <div className="mt-5 grid gap-x-10 gap-y-8 sm:grid-cols-3">
+          <div>
+            <h3 className="text-meta text-muted-foreground">Leadership</h3>
+            <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
+              {personalInfo.leadership.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-meta text-muted-foreground">Certifications</h3>
+            <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
+              {personalInfo.certifications.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-meta text-muted-foreground">Awards</h3>
+            <ul className="mt-2 flex list-disc flex-col gap-1.5 pl-4 text-sm leading-relaxed marker:text-border">
+              {personalInfo.awards.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }

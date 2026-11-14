@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 const SITE_NAME = "Krishant Timilsina"
 const DEFAULT_DESCRIPTION =
-  "Software engineer crafting full-stack products, thoughtful interfaces, and practical DevOps systems."
+  "Software engineer in Pokhara, Nepal, working on platform and product engineering: cloud infrastructure, APIs, and the interfaces on top."
 
 type PageMetadata = {
   title?: string

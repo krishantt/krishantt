@@ -1,6 +1,6 @@
 # Krishant Timilsina
 
-Software Engineer based in Lalitpur, Nepal.
+Software Engineer based in Pokhara, Nepal.
 
 I am a software engineer who loves turning complex ideas into practical products. I work across full-stack systems, AI-driven tooling, and developer experience, with a strong bias for clarity, shipping, and long-term maintainability.
 

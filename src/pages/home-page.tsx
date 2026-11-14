@@ -1,138 +1,76 @@
-import {
-  Github,
-  Instagram,
-  Linkedin,
-  Twitter,
-} from "@hugeicons/core-free-icons"
-import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react"
+import { Fragment } from "react"
 import { Link } from "react-router-dom"
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { PostRow } from "@/components/post-row"
+import { SectionHeading } from "@/components/section-heading"
 import { getAllPosts } from "@/lib/blog"
 import { usePageMetadata } from "@/lib/metadata"
-import { formatDate } from "@/utils/format-date"
-
-type SocialLink = {
-  label: string
-  href: string
-  icon: IconSvgElement
-}
-
-const socialLinks: SocialLink[] = [
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/krishtimil/",
-    icon: Instagram,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/krishtimil/",
-    icon: Linkedin,
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/krishantt",
-    icon: Github,
-  },
-  {
-    label: "Twitter",
-    href: "https://twitter.com/krishtimill",
-    icon: Twitter,
-  },
-]
+import { personalInfo } from "@/lib/personal-info"
 
 export function HomePage() {
   const latestPosts = getAllPosts().slice(0, 4)
 
   usePageMetadata({
     description:
-      "Portfolio of Krishant Timilsina, a software engineer building full-stack products and DevOps-first systems.",
+      "Krishant Timilsina is a software engineer in Pokhara, Nepal, working on platform and product engineering: cloud infrastructure, APIs, and the interfaces on top.",
   })
 
   return (
-    <>
-      <Card className="border-border/70 bg-card/90 shadow-sm">
-        <CardHeader>
-          <Badge variant="secondary" className="w-fit">
-            Building on the web
-          </Badge>
-          <CardTitle className="text-2xl">Hi, I&apos;m Krishant</CardTitle>
-          <CardDescription className="max-w-xl text-sm">
-            Creative software engineer crafting impactful solutions with code. I
-            work across full-stack product engineering and DevOps-first systems.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-3">
-          <Button asChild>
-            <Link to="/about">Learn more about me!</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <a
-              href="https://calendar.app.google/k5gRRtwjw6TwwYCn8"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Want to Collaborate?
-            </a>
-          </Button>
-        </CardContent>
-        <CardFooter className="flex flex-wrap gap-2">
-          {socialLinks.map((item) => (
-            <Button key={item.label} asChild variant="ghost" size="icon">
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={item.label}
-                title={item.label}
-              >
-                <HugeiconsIcon
-                  icon={item.icon}
-                  className="size-4"
-                  aria-hidden="true"
-                />
-                <span className="sr-only">{item.label}</span>
-              </a>
-            </Button>
-          ))}
-        </CardFooter>
-      </Card>
-
-      <section className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Latest from the blog</h2>
-          <Button asChild variant="ghost" size="sm">
-            <Link to="/blog">View all</Link>
-          </Button>
-        </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          {latestPosts.map((post) => (
-            <Card key={post.slug} size="sm">
-              <CardHeader>
-                <CardTitle>
-                  <Link to={`/blog/${post.slug}`} className="hover:underline">
-                    {post.title}
-                  </Link>
-                </CardTitle>
-                <CardDescription>{post.summary}</CardDescription>
-              </CardHeader>
-              <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{formatDate(post.date)}</span>
-                <span>{post.readingTimeMinutes} min read</span>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+    <div className="flex flex-col">
+      <section>
+        <h1 className="voice text-[2rem] leading-[1.1] tracking-[-0.02em] text-balance sm:text-statement max-w-[24ch]">
+          I build software that has to keep working after the interesting part is
+          over.
+        </h1>
+        <p className="measure mt-6 text-[1.0625rem] leading-relaxed text-muted-foreground sm:mt-7">
+          Software engineer in Pokhara, Nepal. Most of my work is platform and
+          product engineering: terraform, kubernetes, the API layer, and the
+          interface on top of it. I am currently on contract with Lelapa AI.
+        </p>
+        <p className="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-[0.9375rem]">
+          <Link to="/about" className="link">
+            More about me
+          </Link>
+          <a href={`mailto:${personalInfo.basics.email}`} className="link">
+            {personalInfo.basics.email}
+          </a>
+        </p>
       </section>
-    </>
+
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading
+          title="Writing"
+          action={
+            <Link
+              to="/blog"
+              className="text-meta text-muted-foreground transition-colors hover:text-foreground"
+            >
+              All posts
+            </Link>
+          }
+        />
+        <ul className="mt-1">
+          {latestPosts.map((post) => (
+            <PostRow key={post.slug} post={post} />
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-16 sm:mt-20">
+        <SectionHeading title="What I work with" />
+        <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-[7.5rem_1fr]">
+          {personalInfo.skills.map((group) => (
+            <Fragment key={group.title}>
+              <dt className="text-meta text-muted-foreground">
+                {group.title}
+              </dt>
+              <dd className="text-[0.9375rem] text-foreground">
+                {group.items.join(", ")}
+              </dd>
+            </Fragment>
+          ))}
+        </dl>
+      </section>
+    </div>
   )
 }

@@ -1,54 +1,31 @@
-import { Link } from "react-router-dom"
-
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { PostRow } from "@/components/post-row"
 import { getAllPosts } from "@/lib/blog"
 import { usePageMetadata } from "@/lib/metadata"
-import { formatDate } from "@/utils/format-date"
 
 export function BlogIndexPage() {
   const posts = getAllPosts()
 
   usePageMetadata({
-    title: "Blog",
+    title: "Writing",
     description:
       "Articles on software engineering, systems design, and practical development lessons by Krishant Timilsina.",
   })
 
   return (
-    <section className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold">Blog</h1>
-      <div className="grid gap-4">
+    <div>
+      <h1 className="voice text-[2rem] leading-[1.1] tracking-[-0.02em] sm:text-[2.5rem]">
+        Writing
+      </h1>
+      <p className="measure mt-4 text-[1.0625rem] leading-relaxed text-muted-foreground">
+        Notes on software and systems, mostly about the parts that never make it
+        into a README.
+      </p>
+
+      <ul className="mt-12">
         {posts.map((post) => (
-          <Card key={post.slug}>
-            <CardHeader>
-              <div className="flex flex-wrap items-center gap-2">
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="outline">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              <CardTitle>
-                <Link to={`/blog/${post.slug}`} className="hover:underline">
-                  {post.title}
-                </Link>
-              </CardTitle>
-              <CardDescription>{post.summary}</CardDescription>
-            </CardHeader>
-            <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>{formatDate(post.date)}</span>
-              <span>{post.readingTimeMinutes} min read</span>
-            </CardFooter>
-          </Card>
+          <PostRow key={post.slug} post={post} showSummary />
         ))}
-      </div>
-    </section>
+      </ul>
+    </div>
   )
 }
