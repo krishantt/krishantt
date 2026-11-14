@@ -93,10 +93,13 @@ export function SiteHeader() {
         </nav>
       </div>
 
-      <div className="mt-7 sm:mt-9">
+      <div className="group mt-7 sm:mt-9">
         <MachhapuchhreRidge />
         <div className="shell">
-          <p className="mt-1.5 text-right text-[0.6875rem] leading-none text-muted-foreground">
+          <p
+            className="mt-3 text-right text-[0.6875rem] leading-none text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            aria-hidden="false"
+          >
             Machhapuchhre, 6,993 m, seen from Pokhara
           </p>
         </div>
