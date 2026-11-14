@@ -1,8 +1,6 @@
-import { Download } from "lucide-react"
-import { useState } from "react"
 
+import { ResumeDownload } from "@/components/resume-download"
 import { SectionHeading } from "@/components/section-heading"
-import { Button } from "@/components/ui/button"
 import {
   personalInfo,
 } from "@/lib/personal-info"
@@ -31,20 +29,6 @@ const flatRoles = personalInfo.experience.flatMap((experience) =>
 const headline = (item: string) => item.split(": ")[0]
 
 export function AboutPage() {
-  const [isDownloadingResume, setIsDownloadingResume] = useState(false)
-
-  const handleDownloadResume = async () => {
-    if (isDownloadingResume) return
-
-    setIsDownloadingResume(true)
-
-    try {
-      const { downloadResume } = await import("@/lib/resume")
-      await downloadResume()
-    } finally {
-      setIsDownloadingResume(false)
-    }
-  }
 
   usePageMetadata({
     title: "About",
@@ -71,15 +55,7 @@ export function AboutPage() {
           />
         </div>
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-[0.9375rem]">
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => void handleDownloadResume()}
-            disabled={isDownloadingResume}
-          >
-            <Download className="size-4" aria-hidden="true" />
-            {isDownloadingResume ? "Preparing PDF" : "Download résumé"}
-          </Button>
+          <ResumeDownload />
           <a href={`mailto:${personalInfo.basics.email}`} className="link">
             {personalInfo.basics.email}
           </a>

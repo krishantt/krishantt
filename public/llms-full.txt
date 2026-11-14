@@ -96,10 +96,11 @@ I am a software engineer who loves turning complex ideas into practical products
 
 ## Education
 
-### Bachelor of Engineering, Computer Science
+### Bachelor of Engineering, Computer Engineering
 
 - Pulchowk Campus (2022 - 2026)
 
+- Graduated July 2026.
 - Major Project: Dual-verifiable Federated Leaning using ZKPs.
 - Minor project: Built a serverless platform.
 - Ranked in the top 0.8% among 13,000 entrance applicants.

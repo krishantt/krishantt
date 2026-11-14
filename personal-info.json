@@ -40,7 +40,14 @@
     },
     {
       "title": "Frameworks",
-      "items": ["FastAPI", "Django", "React", "Next.js", "HTMX", "Alpine.js"]
+      "items": [
+        "FastAPI",
+        "Django",
+        "React",
+        "Next.js",
+        "HTMX",
+        "Alpine.js"
+      ]
     },
     {
       "title": "DevOps",
@@ -79,7 +86,10 @@
           "title": "Full Stack/ Platform Engineer",
           "employmentType": "Contract",
           "location": "Remote",
-          "start": { "year": 2025, "month": 1 },
+          "start": {
+            "year": 2025,
+            "month": 1
+          },
           "points": [
             "Lead infrastructure migration efforts, provisioning and managing cloud resources with Terraform and Kubernetes.",
             "Deliver full solutions end-to-end that build on Lelapa's existing products and technical estate.",
@@ -98,14 +108,23 @@
         {
           "title": "Frontend Developer",
           "employmentType": "Freelance",
-          "start": { "year": 2024, "month": 8 },
-          "end": { "year": 2024, "month": 12 },
+          "start": {
+            "year": 2024,
+            "month": 8
+          },
+          "end": {
+            "year": 2024,
+            "month": 12
+          },
           "points": [
             "Design and develop intuitive user interfaces for API key generation, rotation, and access control.",
             "Implement secure authentication and authorization flows for API key management.",
             "Co-manage platform delivery by proposing approaches and identifying key technical factors."
           ],
-          "skills": ["Django", "React.js"]
+          "skills": [
+            "Django",
+            "React.js"
+          ]
         }
       ]
     },
@@ -114,8 +133,14 @@
       "roles": [
         {
           "title": "Software Engineer",
-          "start": { "year": 2024, "month": 12 },
-          "end": { "year": 2025, "month": 1 },
+          "start": {
+            "year": 2024,
+            "month": 12
+          },
+          "end": {
+            "year": 2025,
+            "month": 1
+          },
           "points": [
             "Built and maintained web and mobile experiences for himaligreen.com."
           ]
@@ -127,8 +152,14 @@
       "roles": [
         {
           "title": "Python Developer",
-          "start": { "year": 2024, "month": 10 },
-          "end": { "year": 2024, "month": 11 },
+          "start": {
+            "year": 2024,
+            "month": 10
+          },
+          "end": {
+            "year": 2024,
+            "month": 11
+          },
           "points": [
             "Automated business workflows with computer vision systems."
           ]
@@ -140,8 +171,14 @@
       "roles": [
         {
           "title": "Design Intern",
-          "start": { "year": 2023, "month": 6 },
-          "end": { "year": 2023, "month": 7 },
+          "start": {
+            "year": 2023,
+            "month": 6
+          },
+          "end": {
+            "year": 2023,
+            "month": 7
+          },
           "points": [
             "Contributed to multiple design projects and sharpened visual communication skills."
           ]
@@ -151,10 +188,11 @@
   ],
   "education": [
     {
-      "title": "Bachelor of Engineering, Computer Science",
+      "title": "Bachelor of Engineering, Computer Engineering",
       "place": "Pulchowk Campus",
       "period": "2022 - 2026",
       "details": [
+        "Graduated July 2026.",
         "Major Project: Dual-verifiable Federated Leaning using ZKPs.",
         "Minor project: Built a serverless platform.",
         "Ranked in the top 0.8% among 13,000 entrance applicants."
