@@ -73,15 +73,39 @@ await fs.writeFile(
   })
 )
 
-await fs.rm(ogDir, { recursive: true, force: true })
+// Cards are committed and only re-rendered when their text changes, so a CI
+// machine without the same fonts never overwrites them.
 await fs.mkdir(ogDir, { recursive: true })
-await writeCard("default.png", {
-  title: "I build software that has to keep working after the interesting part is over.",
-  eyebrow: name,
-})
-for (const post of posts) {
-  await writeCard(`${post.slug}.png`, { title: post.title, eyebrow: `${name} · Writing` })
+const manifestPath = path.join(ogDir, "manifest.json")
+const previous = JSON.parse(await fs.readFile(manifestPath, "utf8").catch(() => "{}"))
+const cards = {
+  "default.png": {
+    title: "I build software that has to keep working after the interesting part is over.",
+    eyebrow: name,
+  },
+  ...Object.fromEntries(
+    posts.map((post) => [`${post.slug}.png`, { title: post.title, eyebrow: `${name} · Writing` }])
+  ),
 }
+let rendered = 0
+for (const [fileName, card] of Object.entries(cards)) {
+  const key = `${card.eyebrow}\n${card.title}`
+  const exists = await fs.access(path.join(ogDir, fileName)).then(() => true, () => false)
+  if (exists && previous[fileName] === key) continue
+  await writeCard(fileName, card)
+  rendered++
+}
+for (const fileName of Object.keys(previous)) {
+  if (!cards[fileName]) await fs.rm(path.join(ogDir, fileName), { force: true })
+}
+await fs.writeFile(
+  manifestPath,
+  JSON.stringify(
+    Object.fromEntries(Object.entries(cards).map(([f, c]) => [f, `${c.eyebrow}\n${c.title}`])),
+    null,
+    2
+  ) + "\n"
+)
 
 await fs.writeFile(
   path.join(rootDir, "src", "content", "post-index.json"),
@@ -92,4 +116,4 @@ await fs.writeFile(
   ) + "\n"
 )
 
-console.log(`Feed, ${posts.length + 1} share cards and post index generated`)
+console.log(`Feed and post index generated; ${rendered} share card(s) re-rendered`)
