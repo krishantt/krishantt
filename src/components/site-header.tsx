@@ -9,48 +9,46 @@ const navLinks = [
 ]
 
 function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const isDark =
-    theme === "dark" ||
-    (theme === "system" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  const { setTheme } = useTheme()
 
   return (
     <button
       type="button"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={() =>
+        setTheme(
+          document.documentElement.classList.contains("dark") ? "light" : "dark"
+        )
+      }
       className="text-muted-foreground transition-colors hover:text-foreground"
-      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-      title={`Switch to ${isDark ? "light" : "dark"} theme`}
+      aria-label="Toggle light and dark theme"
+      title="Toggle light and dark theme"
     >
-      {isDark ? (
-        <svg
+      {/* The <html> class is set before paint, so CSS picks the icon on the server-rendered page too. */}
+      <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          className="size-[1.05rem] translate-y-[0.1rem]"
+          className="hidden size-[1.05rem] translate-y-[0.1rem] dark:block"
           aria-hidden="true"
         >
           <circle cx="12" cy="12" r="4" />
           <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" />
         </svg>
-      ) : (
-        <svg
+      <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          className="size-[1.05rem] translate-y-[0.1rem]"
+          className="size-[1.05rem] translate-y-[0.1rem] dark:hidden"
           aria-hidden="true"
         >
           <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
         </svg>
-      )}
     </button>
   )
 }
@@ -93,11 +91,11 @@ export function SiteHeader() {
         </nav>
       </div>
 
-      <div className="group mt-7 sm:mt-9">
+      <div className="group mt-6 sm:mt-8">
         <MachhapuchhreRidge />
         <div className="shell">
           <p
-            className="mt-3 text-right text-[0.6875rem] leading-none text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            className="mt-2 text-right text-[0.6875rem] leading-none text-muted-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             aria-hidden="false"
           >
             Machhapuchhre, 6,993 m, seen from Pokhara

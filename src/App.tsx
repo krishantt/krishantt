@@ -1,5 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 
+import { ScrollToTop } from "@/components/scroll-to-top"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import {
@@ -12,7 +13,8 @@ import {
 
 export function App() {
   return (
-    <BrowserRouter>
+    <>
+      <ScrollToTop />
       <div className="flex min-h-svh flex-col">
         <a
           href="#main"
@@ -21,7 +23,7 @@ export function App() {
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="shell mt-14 flex-1 sm:mt-20">
+        <main id="main" className="shell mt-10 flex-1 sm:mt-12">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -32,7 +34,7 @@ export function App() {
         </main>
         <SiteFooter />
       </div>
-    </BrowserRouter>
+    </>
   )
 }
 

@@ -8,6 +8,7 @@ const footerLinks = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/krishtimil/" },
   { label: "Instagram", href: "https://www.instagram.com/krishtimil/" },
   { label: "Twitter", href: "https://twitter.com/krishtimill" },
+  { label: "RSS", href: "/rss.xml" },
 ]
 
 export function SiteFooter() {

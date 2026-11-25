@@ -1,4 +1,7 @@
+import postIndex from "../src/content/post-index.json"
 import { createResumePdf } from "../src/lib/resume.ts"
+import { rewriteHead } from "./head.js"
+import { NOT_FOUND_META, looksLikeFile, pageMetaFor } from "./page-meta.js"
 
 const MARKDOWN_PAGES = {
   "/": "/home.md",
@@ -7,7 +10,15 @@ const MARKDOWN_PAGES = {
 }
 
 // Requests that map to a static asset but need a different Content-Type.
+const RSS = {
+  path: "/rss.xml",
+  contentType: "application/rss+xml; charset=utf-8",
+  cacheControl: "public, max-age=3600",
+}
+
 const STATIC_OVERRIDES = {
+  "/rss.xml": RSS,
+  "/feed.xml": RSS,
   "/.well-known/api-catalog": {
     path: "/api-catalog.json",
     contentType: "application/linkset+json",
@@ -55,7 +66,7 @@ const ANSWERS = [
   },
 ]
 
-const DEFAULT_ANSWER = `Krishant Timilsina is a software engineer based in Lalitpur, Nepal. Full profile: ${SITE}/about.md. Site index: ${SITE}/llms.txt. Blog: ${SITE}/blog.md.`
+const DEFAULT_ANSWER = `Krishant Timilsina is a software engineer based in Pokhara, Nepal. Full profile: ${SITE}/about.md. Site index: ${SITE}/llms.txt. Blog: ${SITE}/blog.md.`
 
 const CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no"
 
@@ -160,8 +171,45 @@ export default {
       }
     }
 
-    return withAgentHeaders(await env.ASSETS.fetch(request), url)
+    return withAgentHeaders(await servePage(request, env, url), url)
   },
+}
+
+// Serves the SPA shell with per-route <head> tags, a real 404 status for
+// unknown routes, and a plain 404 for missing files instead of the shell.
+async function servePage(request, env, url) {
+  const isPageRequest =
+    (request.method === "GET" || request.method === "HEAD") &&
+    !looksLikeFile(url.pathname)
+
+  // Conditional headers would let the asset server answer 304 for HTML we rewrite.
+  const response = await env.ASSETS.fetch(
+    isPageRequest ? new Request(url, { method: request.method }) : request
+  )
+  const isHtml = (response.headers.get("Content-Type") ?? "").includes("text/html")
+
+  if (!isHtml || !response.ok) return response
+
+  if (!isPageRequest) {
+    // A missing /foo.png or /rss.xml must not come back as the HTML shell.
+    return new Response("Not Found\n", {
+      status: 404,
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    })
+  }
+
+  const meta = pageMetaFor(url.pathname, postIndex)
+  // Unknown routes get the empty shell (not the prerendered home page); the
+  // client renders its not-found view.
+  const page = meta
+    ? response
+    : await env.ASSETS.fetch(new Request(new URL("/shell", url)))
+  const rewritten = rewriteHead(page, meta ?? NOT_FOUND_META)
+
+  return new Response(rewritten.body, {
+    status: meta ? 200 : 404,
+    headers: rewritten.headers,
+  })
 }
 
 function withAgentHeaders(response, url, contentType, cacheControl) {

@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "building-the-software-factory",
+    "title": "Building the Factory, Not the Feature: How I Work with AI Agents",
+    "date": "2026-11-25",
+    "summary": "Coding agents made writing code cheap. The work moved to everything around it: written-down context, session logs, tests that replace manual checks, and guardrails that live in config instead of vigilance.",
+    "tags": [
+      "AIAgents",
+      "SoftwareEngineering",
+      "DeveloperExperience"
+    ]
+  },
+  {
+    "slug": "the-myth-of-simplicity",
+    "title": "The Myth of Simplicity in Software Systems",
+    "date": "2026-03-08",
+    "summary": "Software systems rarely stay simple—over time, growing scale, requirements, and organizations inevitably transform initial simplicity into managed complexity.",
+    "tags": [
+      "SoftwareEngineering",
+      "Complexity"
+    ]
+  },
+  {
+    "slug": "when-system-fights-back",
+    "title": "When the System Fights Back: A Journey into Chaos Engineering",
+    "date": "2025-01-15",
+    "summary": "How controlled failure testing exposed retry storms, strengthened resilience, and changed the team's engineering culture.",
+    "tags": [
+      "DevOps",
+      "ChaosEngineering"
+    ]
+  },
+  {
+    "slug": "intro-to-go",
+    "title": "Introduction to Golang",
+    "date": "2024-06-01",
+    "summary": "A day-one Go learning log covering packages, variables, loops, functions, structs, pointers, and interfaces.",
+    "tags": [
+      "60DaysOfLearning2024",
+      "LearningWithLeapfrog",
+      "Go"
+    ]
+  }
+]

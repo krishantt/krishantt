@@ -9,15 +9,17 @@
     "reading-time": "bun scripts/generate-reading-times.mjs",
     "llms": "bun scripts/generate-llms.mjs",
     "agent-skills": "bun scripts/generate-agent-skills.mjs",
-    "predev": "bun run sitemap && bun run reading-time && bun run llms && bun run agent-skills",
+    "feed": "bun scripts/generate-feed.mjs",
+    "predev": "bun run sitemap && bun run reading-time && bun run llms && bun run agent-skills && bun run feed",
     "dev": "vite",
-    "prebuild": "bun run sitemap && bun run reading-time && bun run llms && bun run agent-skills",
-    "build": "tsc -b && vite build",
+    "prebuild": "bun run sitemap && bun run reading-time && bun run llms && bun run agent-skills && bun run feed",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && bun scripts/prerender.mjs",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
-    "deploy": "bun run build && wrangler deploy"
+    "deploy": "bun run build && wrangler deploy",
+    "test": "bun test"
   },
   "trustedDependencies": [
     "core-js",

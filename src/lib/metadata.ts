@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 
 const SITE_NAME = "Krishant Timilsina"
+const SITE_URL = "https://krishant.com.np"
+const DEFAULT_IMAGE = `${SITE_URL}/og/default.png`
 const DEFAULT_DESCRIPTION =
   "Software engineer in Pokhara, Nepal, working on platform and product engineering: cloud infrastructure, APIs, and the interfaces on top."
 
@@ -9,6 +11,10 @@ type PageMetadata = {
   description?: string
   jsonLd?: object
   markdownPath?: string
+  /** Site-relative path of this page; defaults to the current location. */
+  path?: string
+  /** Absolute share-card URL; defaults to the site card. */
+  image?: string
 }
 
 const JSON_LD_ELEMENT_ID = "page-jsonld"
@@ -33,6 +39,8 @@ export function usePageMetadata({
   description,
   jsonLd,
   markdownPath,
+  path,
+  image,
 }: PageMetadata) {
   useEffect(() => {
     const resolvedDescription = description ?? DEFAULT_DESCRIPTION
@@ -57,6 +65,20 @@ export function usePageMetadata({
       "content",
       resolvedDescription
     )
+
+    const canonicalUrl = `${SITE_URL}${path ?? window.location.pathname}`
+    const resolvedImage = image ?? DEFAULT_IMAGE
+
+    let canonical = document.querySelector<HTMLLinkElement>("link[rel='canonical']")
+    if (!canonical) {
+      canonical = document.createElement("link")
+      canonical.rel = "canonical"
+      document.head.appendChild(canonical)
+    }
+    canonical.href = canonicalUrl
+    upsertMetaTag("property", "og:url").setAttribute("content", canonicalUrl)
+    upsertMetaTag("property", "og:image").setAttribute("content", resolvedImage)
+    upsertMetaTag("name", "twitter:image").setAttribute("content", resolvedImage)
 
     const existingScript = document.getElementById(JSON_LD_ELEMENT_ID)
     existingScript?.remove()
@@ -84,5 +106,5 @@ export function usePageMetadata({
       document.getElementById(JSON_LD_ELEMENT_ID)?.remove()
       document.getElementById(MARKDOWN_LINK_ID)?.remove()
     }
-  }, [title, description, jsonLd, markdownPath])
+  }, [title, description, jsonLd, markdownPath, path, image])
 }

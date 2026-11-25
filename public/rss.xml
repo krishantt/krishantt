@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Krishant Timilsina — Writing</title>
+    <link>https://krishant.com.np/blog</link>
+    <description>Essays and notes on software systems by Krishant Timilsina.</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 25 Nov 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://krishant.com.np/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building the Factory, Not the Feature: How I Work with AI Agents</title>
+      <link>https://krishant.com.np/blog/building-the-software-factory</link>
+      <guid isPermaLink="true">https://krishant.com.np/blog/building-the-software-factory</guid>
+      <pubDate>Wed, 25 Nov 2026 00:00:00 GMT</pubDate>
+      <description>Coding agents made writing code cheap. The work moved to everything around it: written-down context, session logs, tests that replace manual checks, and guardrails that live in config instead of vigilance.</description>
+      <category>AIAgents</category>
+      <category>SoftwareEngineering</category>
+      <category>DeveloperExperience</category>
+    </item>
+    <item>
+      <title>The Myth of Simplicity in Software Systems</title>
+      <link>https://krishant.com.np/blog/the-myth-of-simplicity</link>
+      <guid isPermaLink="true">https://krishant.com.np/blog/the-myth-of-simplicity</guid>
+      <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Software systems rarely stay simple—over time, growing scale, requirements, and organizations inevitably transform initial simplicity into managed complexity.</description>
+      <category>SoftwareEngineering</category>
+      <category>Complexity</category>
+    </item>
+    <item>
+      <title>When the System Fights Back: A Journey into Chaos Engineering</title>
+      <link>https://krishant.com.np/blog/when-system-fights-back</link>
+      <guid isPermaLink="true">https://krishant.com.np/blog/when-system-fights-back</guid>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 GMT</pubDate>
+      <description>How controlled failure testing exposed retry storms, strengthened resilience, and changed the team&apos;s engineering culture.</description>
+      <category>DevOps</category>
+      <category>ChaosEngineering</category>
+    </item>
+    <item>
+      <title>Introduction to Golang</title>
+      <link>https://krishant.com.np/blog/intro-to-go</link>
+      <guid isPermaLink="true">https://krishant.com.np/blog/intro-to-go</guid>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 GMT</pubDate>
+      <description>A day-one Go learning log covering packages, variables, loops, functions, structs, pointers, and interfaces.</description>
+      <category>60DaysOfLearning2024</category>
+      <category>LearningWithLeapfrog</category>
+      <category>Go</category>
+    </item>
+  </channel>
+</rss>
