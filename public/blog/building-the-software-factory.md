@@ -1,0 +1,130 @@
+---
+title: "Building the Factory, Not the Feature: How I Work with AI Agents"
+date: "2026-11-25"
+summary: "Coding agents made writing code cheap. The work moved to everything around it: written-down context, session logs, tests that replace manual checks, and guardrails that live in config instead of vigilance."
+tags: ["AIAgents", "SoftwareEngineering", "DeveloperExperience"]
+---
+
+A year ago most of my time went into typing code. Now most of it goes into the system that produces the code.
+
+That shift is easy to describe badly. "AI writes the code now" is wrong in the ways that matter. The agent writes a draft. Whether that draft becomes a working change depends on everything around it: what the agent knew before it started, what it was allowed to touch, how it found out it was wrong, and what it left behind for the next session.
+
+I have started calling that surrounding system the **software factory**. This post is about how I build it, and what I have learned running it across a dozen personal repositories.
+
+---
+
+## The agent is the cheapest part of the line
+
+A factory has inputs, stations, quality gates, and outputs. Mapped onto agent work:
+
+- **Inputs** are intent and context: what I want, and what the agent has to know to do it.
+- **Stations** are agents, often several in parallel, each with a narrow job.
+- **Quality gates** are typechecks, tests, builds, and smoke checks against the real thing.
+- **Outputs** are a commit and a written record of what changed and why.
+
+The model is the most impressive part of this picture and the least interesting to optimise. It gets better every few months without me doing anything. The inputs, gates, and outputs are mine, and they decide whether a fast model produces fast progress or fast mess.
+
+---
+
+## 1. Context is written down once
+
+Every agent session starts cold. Whatever it does not read, it does not know.
+
+So the rules for how I work live in one file, `AGENTS.md`, at the root of my workspace. It is short on purpose. A few lines from it:
+
+- If you have to wait, start a background task and do something productive.
+- Split independent work across parallel subagents.
+- Whatever we test manually first should get an automated test.
+- Keep session docs in `~/dev/personal/docs`.
+- Each repo is its own clone, with no parent repo. Use `mani` for cross-repo git and never assume a single repo root.
+
+That last rule exists because an agent got it wrong. Every rule in the file traces back to a mistake I did not want to correct twice.
+
+I use more than one agent tool, and they each look for a different filename. Rather than keep copies in sync, `CLAUDE.md` contains a single line, `@AGENTS.md`. One source of truth means one place to fix things.
+
+---
+
+## 2. Every session leaves a document
+
+The most useful habit I have picked up is that every non-trivial session ends with a dated markdown file: `2026-11-10-termux-media-box-audit-followups.md`, `2026-11-23-claude-code-opencode-parity.md`, and so on. There are more than forty of them now.
+
+Each one answers the same questions:
+
+- What changed, and in which files?
+- How was it verified? (Which commands, and what passed.)
+- What is still open?
+- What surprised us? (The gotcha that cost twenty minutes.)
+
+These documents are written for two readers. One is me in three months. The other is the next agent, which can read the last session's notes instead of rediscovering the codebase. Notes tie the factory together across days. Without them, every session is a new hire's first morning.
+
+A status line at the top helps more than I expected. "**Status (2026-11-11): implemented.**" tells the next reader immediately whether they are looking at a plan or a record.
+
+---
+
+## 3. A manual check is a test that hasn't been written yet
+
+Agents are very good at producing code that looks right. The defence is not reading harder. It is making "right" something a machine can check.
+
+My rule: if I checked something by hand, an automated test should exist for it afterwards. On my home media server, the music player was only ever tested by me clicking around. One audit pass replaced that with a small DOM harness: a fake `document`, `Audio`, `localStorage`, and `fetch`, around 240 lines, importing the real modules and checking that next and previous wrap at both ends, that play requests the right URL, and that the queue renders.
+
+The test count went from 65 to 78 in that batch. More importantly, the next agent that touches the player gets told immediately when it breaks something, instead of me finding out on the sofa.
+
+A related lesson: **audit twice.** The first audit on that project found small races and two test gaps, and all of it got fixed. The second audit then found the gaps the fixes had left behind. Agent-made fixes are code like any other code, and they need their own check.
+
+---
+
+## 4. Parallel by default, but split on real seams
+
+Agents are cheap to start and expensive to wait on. When a task has independent parts, such as researching one library while another agent refactors a module, I run them at the same time.
+
+The catch is that each subagent starts with no context. Parallelism pays when the pieces are actually independent, with separate files, separate questions, and a clear interface between them. When the pieces are tangled, splitting them only produces two agents rediscovering the same codebase and merge conflicts at the end. Before splitting work I ask the same question I would ask about splitting a team: where is the seam?
+
+---
+
+## 5. Build for agents as users
+
+This is the change that surprised me most. Once agents are doing real work in your systems, they become users of those systems, and most of our software is hostile to them.
+
+When I reviewed my media server for agent experience, I scored it on discoverability, task shape, determinism, safety, observability, auth, and composability. It had 81 HTTP routes and not one machine-readable description. Playing an episode took five calls, because the API mirrored the UI's steps instead of the user's task. Delete had no dry-run.
+
+The fix improved every experience at once:
+
+- a manifest and OpenAPI spec, so the API describes itself,
+- one search endpoint and one `POST /api/play` that goes from title to playable URL in a single call,
+- idempotency keys, dry-runs, a read-only token, and an audit log,
+- a thin CLI and MCP server on top, so agents and scripts use the same typed layer as the UI.
+
+The UI got simpler because it uses the same task-shaped endpoints. The UI, the developer, and the agent all benefited from one change, because they were all clients of the same underlying API.
+
+This site follows the same idea. Every page has a markdown version, there is an `llms.txt`, and agents can ask it questions directly. If you want software that agents can operate, treat them as a user persona with their own needs, not as an afterthought.
+
+---
+
+## 6. Guardrails belong in config, not vigilance
+
+"I'll watch what it does" does not scale past one agent, and it doesn't hold up at 11pm.
+
+So permissions are written down. Read-only operations such as `kubectl get`, `aws describe-*`, and log tailing are allowed without asking. Mutating ones such as `terraform apply`, `kubectl delete` and `exec`, and anything that creates, deletes, or modifies cloud resources are denied outright or require a prompt. The agent can investigate an incident freely. It cannot change production without me.
+
+One detail matters when you run several tools. They evaluate rules differently. One of my tools uses last-match-wins, so "deny everything, then allow the read-only verbs" works. Another evaluates deny before allow, so the same rules would block everything. When I ported the rules between them, I had to list the mutating verbs explicitly instead. Guardrails are code too, and they need to be checked like code.
+
+---
+
+## What hasn't gotten easier
+
+The factory moves the bottleneck. It does not remove it.
+
+- **Review is now the slow part.** Producing a change is quick. Knowing that it is right is not. That is exactly why the investment goes into tests and verification, not into prompts.
+- **Plausible and wrong is the default failure mode.** Agents rarely fail loudly. They write confident code against an API that changed last month. Every rule above is a way of making that kind of failure loud.
+- **Taste does not delegate.** An agent can implement a design critique. Deciding what the product should feel like, or which of three reasonable architectures to choose, is still my job.
+- **Cold starts are real.** Without written context, each session wastes its first stretch rediscovering things. The session docs and `AGENTS.md` exist to make that stretch shorter.
+
+---
+
+## The point
+
+The home page of this site says I build software that has to keep working after the interesting part is over. Agent-driven development tests that sentence harder than anything else I have done. The interesting part, generating the code, is now nearly free. Everything that makes the code keep working is still engineering, and it is where the work is.
+
+So I build the factory: written context, recorded sessions, tests that replace manual checks, agent-friendly interfaces, and guardrails in config. The features come out of it.
+
+If you are building something similar, I would like to compare notes. Reply by email.
