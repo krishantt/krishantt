@@ -46,7 +46,7 @@ export function HomePage() {
         </p>
       </section>
 
-      <section className="mt-16 sm:mt-20">
+      <section className="mt-14 sm:mt-16">
         <SectionHeading
           title="Writing"
           action={

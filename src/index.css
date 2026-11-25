@@ -184,8 +184,35 @@
     transition: color 150ms ease;
   }
 
-  .row-link:hover {
+  .row-link:hover,
+  a:hover > .row-link,
+  a:hover .row-link {
     color: var(--brand);
+  }
+
+  /* Heading anchors: a quiet "#" after the heading, shown on hover or focus. */
+  .anchored {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .anchor {
+    margin-left: 0.4em;
+    color: var(--muted-foreground);
+    font-weight: 400;
+    text-decoration: none !important;
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  .anchored:hover .anchor,
+  .anchor:focus-visible {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .anchor {
+      display: none;
+    }
   }
 
   .rule {
